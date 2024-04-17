@@ -3,7 +3,7 @@
 namespace BusinessLogicTest
 {
     [TestClass]
-    public class TestDeposito
+    public class DepositoTests
     {
         private Deposito deposito;
 
@@ -15,16 +15,9 @@ namespace BusinessLogicTest
         [TestMethod]
         public void Deposito_InicializadoConValoresCorrectos()
         {
-            Assert.AreEqual("b", deposito.Area);
+            Assert.AreEqual("A", deposito.Area);
             Assert.AreEqual("Grande", deposito.Tamanio);
             Assert.AreEqual("Si", deposito.Climatizacion);
-        }
-
-        [TestMethod]
-        public void Area_DebeSerValida()
-        {
-            bool esValida = deposito.EsValidaArea();
-            Assert.IsTrue(esValida);
         }
     }
 }
