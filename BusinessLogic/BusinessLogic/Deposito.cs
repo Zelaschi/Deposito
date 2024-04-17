@@ -29,6 +29,11 @@
             return new string[] {"Pequenio", "Mediano", "Grande"}.Contains(tamanio);
         }
 
+        public static void ResetId()
+        {
+            UltimoID = 0;
+        }
+
     }
 }
 

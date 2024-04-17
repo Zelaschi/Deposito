@@ -31,6 +31,8 @@ namespace BusinessLogicTest
         [TestMethod]
         public void Incrementar_Id_Cuando_Se_Crea_Deposito()
         {
+            Deposito.ResetId();
+
             Deposito deposito1 = new Deposito("A", "Grande", false);
             Deposito deposito2 = new Deposito("C", "Mediano", false);
             Deposito deposito3 = new Deposito("B", "Pequenio", true);
