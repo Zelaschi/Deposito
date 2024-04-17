@@ -17,7 +17,7 @@ namespace BusinessLogicTest
         {
             Assert.AreEqual("A", deposito.Area);
             Assert.AreEqual("Grande", deposito.Tamanio);
-            Assert.AreEqual("Si", deposito.Climatizacion);
+            Assert.IsTrue(deposito.Climatizacion);
             Assert.AreEqual(1, deposito.Id);
         }
 
@@ -25,7 +25,7 @@ namespace BusinessLogicTest
 
         public void Deposito_Lanzar_Excepcion_Si_Invalido()
         {
-            var exepcion = Assert.ThrowsException<ArgumentException>(() => new Deposito('Z', "Gigante", true, 1));
+            var exepcion = Assert.ThrowsException<ArgumentException>(() => new Deposito("Z", "Gigante", true, 1));
             Assert.AreEqual("Deposito invalido", exepcion.Message);
         }
     }
