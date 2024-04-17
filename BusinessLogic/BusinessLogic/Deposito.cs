@@ -2,12 +2,13 @@
 {   
     public class Deposito
     {
+        public static int UltimoID { get; set; } = 0;
         public int Id { get; set; }
         public String Area { get; set; }
         public String Tamanio { get; set; }
         public bool Climatizacion { get; set; }
 
-        public Deposito(string area, string tamanio, bool climatizacion, int id)
+        public Deposito(string area, string tamanio, bool climatizacion)
         {
             if(!ValidarArea(area) || !ValidarTamanio(tamanio))
             {
@@ -16,7 +17,7 @@
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
-            Id = id;
+            Id = ++UltimoID;
         }
         private bool ValidarArea(String area)
         {
