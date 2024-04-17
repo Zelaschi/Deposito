@@ -9,7 +9,7 @@ namespace BusinessLogicTest
 
         [TestInitialize]
         public void TestInitialize(){
-            deposito = new Deposito("A", "Grande", "Si");
+            deposito = new Deposito("A", "Grande", true, 1);
         }
 
         [TestMethod]
@@ -18,6 +18,7 @@ namespace BusinessLogicTest
             Assert.AreEqual("A", deposito.Area);
             Assert.AreEqual("Grande", deposito.Tamanio);
             Assert.AreEqual("Si", deposito.Climatizacion);
+            Assert.AreEqual(1, deposito.Id);
         }
     }
 }
