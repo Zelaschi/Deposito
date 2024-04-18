@@ -31,7 +31,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(admin.Mail,mailEsperado);
             Assert.AreEqual(admin.Password, passwordEsperada);
         }
-        [TestMethod]
+       [TestMethod]
        [ExpectedException(typeof(ArgumentException))]
         public void testFormatoEmailIncorrecto() {
             // Direcciones de correo electrónico con formato incorrecto
@@ -56,9 +56,31 @@ namespace BusinessLogicTest
             admin.Mail = mail8;
             admin.Mail = mail9;
             admin.Mail = mail10;
-
-
-
         }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void testFormatoPasswordIncorrecto()
+        {
+            var pasw1 = "P@ss";            // Contraseña con menos de 8 caracteres
+            var pasw2 = "Passw0rd";         // Contraseña sin símbolos
+            var pasw3 = "PASSWORD1@";       // Contraseña sin letras minúsculas
+            var pasw4 = "password1@";       // Contraseña sin letras mayúsculas
+            var pasw5 = "Password@";        // Contraseña sin dígitos
+            var pasw6 = "password";         // Contraseña sin símbolos, letras minúsculas y dígitos
+            var pasw7 = "PASSWORD";         // Contraseña sin símbolos, letras mayúsculas y dígitos
+            var pasw8 = "12345678";         // Contraseña sin símbolos, letras minúsculas y letras mayúsculas
+            var pasw9 = "abc";              // Contraseña que no cumple con ninguna regla
+           
+            admin.Password = pasw1;
+            admin.Password = pasw2;
+            admin.Password = pasw3;
+            admin.Password = pasw4;
+            admin.Password = pasw5;
+            admin.Password = pasw6;
+            admin.Password = pasw7;
+            admin.Password = pasw8;
+            admin.Password = pasw9;
+        }
+      
     }
 }
