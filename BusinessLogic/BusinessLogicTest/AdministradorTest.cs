@@ -13,7 +13,7 @@ namespace BusinessLogicTest
             var nombreTest = "Pedro";
             var apellidoTest = "Azambuja";
             var mailTest = "pedroazambuja@gmail.com";
-            var passwordTest = "password";
+            var passwordTest = "Password1!";
 
             admin = new Administrador(idTest, nombreTest, apellidoTest, mailTest, passwordTest);
         }
@@ -23,7 +23,7 @@ namespace BusinessLogicTest
             var nombreEsperado = "Pedro";
             var apellidoEsperado = "Azambuja";
             var mailEsperado = "pedroazambuja@gmail.com";
-            var passwordEsperada = "password";
+            var passwordEsperada = "Password1!";
 
             Assert.AreEqual(admin.Id, idEsperado);
             Assert.AreEqual(admin.Nombre, nombreEsperado);
