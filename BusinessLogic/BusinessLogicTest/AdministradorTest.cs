@@ -1,4 +1,5 @@
 using BusinessLogic;
+using Newtonsoft.Json.Bson;
 namespace BusinessLogicTest
 {
     [TestClass]
@@ -6,21 +7,30 @@ namespace BusinessLogicTest
     {
         private Administrador admin;
 
-
-        [TestMethod]
-        public void crearAdministrador()
-        {
-            Administrador admin = new Administrador();
-        }
-        [TestMethod]
-        public void crearAdministradorConParametros() {
+        [TestInitialize]
+        public void crearAdministradorConParametrosYGet() {
             var idTest = 0;
             var nombreTest = "Pedro";
             var apellidoTest = "Azambuja";
             var mailTest = "pedroazambuja@gmail.com";
             var passwordTest = "password";
 
-            Administrador admin = new Administrador(idTest, nombreTest, apellidoTest, mailTest, passwordTest);
+            admin = new Administrador(idTest, nombreTest, apellidoTest, mailTest, passwordTest);
+        }
+        [TestMethod]
+        public void getParametros() {
+            var idEsperado = 0;
+            var nombreEsperado = "Pedro";
+            var apellidoEsperado = "Azambuja";
+            var mailEsperado = "pedroazambuja@gmail.com";
+            var passwordEsperada = "password";
+
+            Assert.AreEqual(admin.Id, idEsperado);
+            Assert.AreEqual(admin.Nombre, nombreEsperado);
+            Assert.AreEqual(admin.Apellido, apellidoEsperado);
+            Assert.AreEqual(admin.Mail,mailEsperado);
+            Assert.AreEqual(admin.Password, passwordEsperada);
+
         }
     }
 }

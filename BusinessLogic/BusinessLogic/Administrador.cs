@@ -2,8 +2,9 @@ namespace BusinessLogic
 {
     public class Administrador : Persona
     {
-        //public List <Reservas> listaReservas;
-        public Administrador() { }
-   
+        public Administrador(int id, string nombre, string apellido, string mail, string password) : base(id, nombre, apellido, mail, password)
+        {
+
+        }
     }
 }
