@@ -5,7 +5,7 @@ namespace BusinessLogicTest
     public class TestDeposito
     {
         [TestMethod]
-        public void CrearPersona ()
+        public void crearDeposito ()
         {
             Deposito d1 = new Deposito();
 
