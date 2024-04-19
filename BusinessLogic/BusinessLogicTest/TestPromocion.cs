@@ -10,7 +10,7 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void initialize()
         {
-            promocion = new Promocion("promocion abril", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            promocion = new Promocion(1, "promocion abril", 20, DateTime.Now, DateTime.Now.AddDays(10));
         }
     }
 }
