@@ -8,7 +8,7 @@ namespace BusinessLogicTest
         private Administrador admin;
 
         [TestInitialize]
-        public void crearAdministradorConParametrosYGet() {
+        public void crearAdministradorConParametros() {
             var idTest = 0;
             var nombreTest = "Pedro";
             var apellidoTest = "Azambuja";
