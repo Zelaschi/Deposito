@@ -1,9 +1,5 @@
 ﻿using BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BusinessLogicTest
 {
@@ -12,7 +8,7 @@ namespace BusinessLogicTest
     {
         private Cliente cliente;
         [TestInitialize]
-        public void crearUsuarioConParametrosTest() {
+        public void crearClienteConParametrosTest() {
             var idTest = 0;
             var nombreTest = "Pedro";
             var apellidoTest = "Azambuja";
