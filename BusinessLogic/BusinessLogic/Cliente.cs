@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
-    internal class Usuario
+    public class Cliente : Persona
     {
+        public Cliente(int id, string nombre, string apellido, string mail, string password) : base(id, nombre, apellido, mail, password) { }
     }
 }
