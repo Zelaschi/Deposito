@@ -14,6 +14,10 @@ namespace BusinessLogic
 
         public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio)
         {
+            if(fechaDesde > fechaHasta)
+            {
+                throw new ArgumentException("Ingrese un periodo de fechas valido");
+            }
             Id = ++UltimoID;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
