@@ -10,24 +10,21 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void crearAdministradorConParametros() {
             var idTest = 0;
-            var nombreTest = "Pedro";
-            var apellidoTest = "Azambuja";
+            var nombreYApellidoTest = "Pedro Azambuja";
             var mailTest = "pedroazambuja@gmail.com";
             var passwordTest = "Password1!";
 
-            admin = new Administrador(idTest, nombreTest, apellidoTest, mailTest, passwordTest);
+            admin = new Administrador(idTest, nombreYApellidoTest, mailTest, passwordTest);
         }
         [TestMethod]
         public void getParametros() {
             var idEsperado = 0;
-            var nombreEsperado = "Pedro";
-            var apellidoEsperado = "Azambuja";
+            var nombreYApellidoEsperado = "Pedro Azambuja";
             var mailEsperado = "pedroazambuja@gmail.com";
             var passwordEsperada = "Password1!";
 
-            Assert.AreEqual(admin.Id, idEsperado);
-            Assert.AreEqual(admin.Nombre, nombreEsperado);
-            Assert.AreEqual(admin.Apellido, apellidoEsperado);
+            Assert.AreEqual(admin.IdPersona, idEsperado);
+            Assert.AreEqual(admin.NombreYApellido, nombreYApellidoEsperado);
             Assert.AreEqual(admin.Mail,mailEsperado);
             Assert.AreEqual(admin.Password, passwordEsperada);
         }

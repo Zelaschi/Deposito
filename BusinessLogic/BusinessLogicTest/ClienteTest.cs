@@ -12,35 +12,31 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void inicializarClienteConParametrosTest() {
             var idTest = 1;
-            var nombreTest = "Tomas";
-            var apellidoTest = "Zelaschi";
+            var nombreYApellidoTest = "Tomas Zelaschi"
             var mailTest = "tomaszelaschi@gmail.com";
             var passwordTest = "Password1!";
 
-            cliente = new Cliente(idTest, nombreTest, apellidoTest, mailTest, passwordTest);
+            cliente = new Cliente(idTest, nombreYApellidoTest, mailTest, passwordTest);
         }
         [TestMethod]
         public void crearClienteConParametrosTest() {
             var idTest = 1;
-            var nombreTest = "Tomas";
-            var apellidoTest = "Zelaschi";
+            var nombreYApellidoTest = "Tomas Zelaschi";
             var mailTest = "tomaszelaschi@gmail.com";
             var passwordTest = "Password1!";
 
-            cliente = new Cliente(idTest, nombreTest, apellidoTest, mailTest, passwordTest);
+            cliente = new Cliente(idTest, nombreYApellidoTest, mailTest, passwordTest);
         }
         [TestMethod]
         public void getParametros()
         {
             var idEsperado = 1;
-            var nombreEsperado = "Tomas";
-            var apellidoEsperado = "Zelaschi";
+            var nombreYApellidoEsperado = "Tomas Zelaschi";
             var mailEsperado = "tomaszelaschi@gmail.com";
             var passwordEsperada = "Password1!";
 
-            Assert.AreEqual(cliente.Id, idEsperado);
-            Assert.AreEqual(cliente.Nombre, nombreEsperado);
-            Assert.AreEqual(cliente.Apellido, apellidoEsperado);
+            Assert.AreEqual(cliente.IdPersona, idEsperado);
+            Assert.AreEqual(cliente.NombreYApellido, idEsperado);
             Assert.AreEqual(cliente.Mail, mailEsperado);
             Assert.AreEqual(cliente.Password, passwordEsperada);
         }
@@ -95,5 +91,6 @@ namespace BusinessLogicTest
             cliente.Password = pasw8;
             cliente.Password = pasw9;
         }
+
     }
 }

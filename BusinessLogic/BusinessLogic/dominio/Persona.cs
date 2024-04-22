@@ -5,9 +5,9 @@ namespace BusinessLogic
 {
     public abstract class Persona
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
+        private static int contadorID = 0;
+        public int IdPersona { get; set; }
+        public string NombreYApellido { get; set; }
 
         private string _mail;
         public string Mail { 
@@ -22,6 +22,7 @@ namespace BusinessLogic
                 }
             }
         }
+
         private string _password;
         public string Password { 
             get { return _password; } 
