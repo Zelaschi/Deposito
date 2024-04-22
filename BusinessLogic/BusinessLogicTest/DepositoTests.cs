@@ -41,5 +41,12 @@ namespace BusinessLogicTest
             Assert.AreEqual(2, deposito2.Id);
             Assert.AreEqual(3, deposito3.Id);
         }
+
+        [TestMethod]
+        public void AgregarPromocionADeposito()
+        {
+            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now , DateTime.Now.AddDays(10));
+            deposito.agregarPromocion(promoTest);
+        }
     }
 }
