@@ -38,11 +38,10 @@ namespace BusinessLogic
             }
         }
 
-        public Persona(int id, string nombre, string apellido, string mail, string password)
+        public Persona(int id, string nombreyApellido, string mail, string password)
         {
-            Id = id;
-            Nombre = nombre;
-            Apellido = apellido;
+            IdPersona = id;
+            NombreYApellido = nombreyApellido;
             Mail = mail;
             Password = password;
         }

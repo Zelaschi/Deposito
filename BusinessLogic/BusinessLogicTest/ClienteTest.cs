@@ -12,7 +12,7 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void inicializarClienteConParametrosTest() {
             var idTest = 1;
-            var nombreYApellidoTest = "Tomas Zelaschi"
+            var nombreYApellidoTest = "Tomas Zelaschi";
             var mailTest = "tomaszelaschi@gmail.com";
             var passwordTest = "Password1!";
 
@@ -90,6 +90,14 @@ namespace BusinessLogicTest
             cliente.Password = pasw7;
             cliente.Password = pasw8;
             cliente.Password = pasw9;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void testNombreYApellido101Caracteres()
+        {
+            string nombreCon101Caracteres= "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
+            cliente.NombreYApellido = nombreCon101Caracteres;
         }
 
     }

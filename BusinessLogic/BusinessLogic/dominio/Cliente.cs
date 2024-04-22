@@ -8,6 +8,6 @@ namespace BusinessLogic
 {
     public class Cliente : Persona
     {
-        public Cliente(int id, string nombreYApellido, string mail, string password) : base(id, nombre, apellido, mail, password) { }
+        public Cliente(int id, string nombreYApellido, string mail, string password) : base(id, nombreYApellido, mail, password) { }
     }
 }
