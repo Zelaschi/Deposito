@@ -42,7 +42,7 @@ namespace BusinessLogicTest
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void testFormatoEmailIncorrecto()
+        public void TestFormatoEmailIncorrecto()
         {
             // Direcciones de correo electrónico con formato incorrecto
             var mail1 = "invalido@example"; // Falta el dominio .com, .org, etc.

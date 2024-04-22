@@ -14,7 +14,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void Reserva_Debe_Inicializarse_Con_Valores_Correctos()
+        public void TestReservaDebeInicializarseConValoresCorrectos()
         {
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, 100);
 
