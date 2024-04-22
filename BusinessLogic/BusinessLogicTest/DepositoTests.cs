@@ -51,7 +51,7 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void AgregarPromocionRepetida()
+        public void AgregarPromocionRepetidaTest()
         {
             Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
             Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
@@ -59,11 +59,11 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void EliminarPromocion()
+        public void EliminarPromocionTest()
         {
             Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
             Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
-            bool elimino = deposito.EliminarPromocionDeDeposito(promoTest);
+            deposito.EliminarPromocionDeDeposito(promoTest);
         }
     }
 }

@@ -37,11 +37,21 @@
 
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
         {
-          
+            if (listaPromocionesQueAplicanADeposito.Contains(promoParametro))
+            {
+                throw new InvalidOperationException("El elemento ya existe en la lista.");
+            }
 
             listaPromocionesQueAplicanADeposito.Add(promoParametro);
             return promoParametro;
         }
+
+        public void EliminarPromocionDeDeposito(Promocion promoParametro)
+        {
+            
+            listaPromocionesQueAplicanADeposito.Remove(promoParametro);
+        }
+
     }
 }
 
