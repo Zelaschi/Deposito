@@ -48,7 +48,10 @@
 
         public void EliminarPromocionDeDeposito(Promocion promoParametro)
         {
-            
+            if (!listaPromocionesQueAplicanADeposito.Contains(promoParametro))
+            {
+                throw new InvalidOperationException("El elemento no existe en la lista");
+            }
             listaPromocionesQueAplicanADeposito.Remove(promoParametro);
         }
 
