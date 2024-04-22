@@ -48,5 +48,14 @@ namespace BusinessLogicTest
             Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now , DateTime.Now.AddDays(10));
             Promocion promoReturn = deposito.AgregarPromocionADeposito(promoTest);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void AgregarPromocionRepetida()
+        {
+            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
+            Promocion promoReturn2 = deposito.AgregarPromocionADeposito(promoTest);
+        }
     }
 }
