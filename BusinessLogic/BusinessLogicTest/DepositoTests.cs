@@ -57,5 +57,13 @@ namespace BusinessLogicTest
             Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
             Promocion promoReturn2 = deposito.AgregarPromocionADeposito(promoTest);
         }
+
+        [TestMethod]
+        public void EliminarPromocion()
+        {
+            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
+            bool elimino = deposito.EliminarPromocionDeDeposito(promoTest);
+        }
     }
 }
