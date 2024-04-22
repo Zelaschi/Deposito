@@ -36,7 +36,7 @@ namespace BusinessLogicTest
             var passwordEsperada = "Password1!";
 
             Assert.AreEqual(cliente.IdPersona, idEsperado);
-            Assert.AreEqual(cliente.NombreYApellido, idEsperado);
+            Assert.AreEqual(cliente.NombreYApellido, nombreYApellidoEsperado);
             Assert.AreEqual(cliente.Mail, mailEsperado);
             Assert.AreEqual(cliente.Password, passwordEsperada);
         }
@@ -96,7 +96,7 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(ArgumentException))]
         public void testNombreYApellido101Caracteres()
         {
-            string nombreCon101Caracteres= "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
+            string nombreCon101Caracteres= "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto. Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
             cliente.NombreYApellido = nombreCon101Caracteres;
         }
 

@@ -7,7 +7,23 @@ namespace BusinessLogic
     {
         private static int contadorID = 0;
         public int IdPersona { get; set; }
-        public string NombreYApellido { get; set; }
+        private string _nombreYApellido;
+        public string NombreYApellido
+        {
+            get
+            {
+                return _nombreYApellido;
+            }
+            set
+            {
+                if (value.Length>101)
+                {
+                    throw new ArgumentException("El formato del correo electrónico no es válido.");
+                }
+
+                _nombreYApellido = value;
+            }
+        }
 
         private string _mail;
         public string Mail { 
