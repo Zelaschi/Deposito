@@ -7,6 +7,7 @@
         public String Area { get; set; }
         public String Tamanio { get; set; }
         public bool Climatizacion { get; set; }
+        public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
         public Deposito(string area, string tamanio, bool climatizacion)
         {
@@ -34,6 +35,11 @@
             UltimoID = 0;
         }
 
+        public Promocion AgregarPromocionADeposito(Promocion promoParametro)
+        {
+            listaPromocionesQueAplicanADeposito.Add(promoParametro);
+            return promoParametro;
+        }
     }
 }
 

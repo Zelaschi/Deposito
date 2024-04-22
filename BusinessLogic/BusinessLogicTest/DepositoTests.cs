@@ -43,10 +43,10 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void AgregarPromocionADeposito()
+        public void AgregarPromocionADepositoTest()
         {
             Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now , DateTime.Now.AddDays(10));
-            deposito.agregarPromocion(promoTest);
+            Promocion promoReturn = deposito.AgregarPromocionADeposito(promoTest);
         }
     }
 }
