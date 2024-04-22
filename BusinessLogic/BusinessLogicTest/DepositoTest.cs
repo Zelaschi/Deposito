@@ -2,7 +2,7 @@ using BusinessLogic;
 namespace BusinessLogicTest
 {
     [TestClass]
-    public class TestDeposito
+    public class DepositoTest
     {
         [TestMethod]
         public void crearDeposito ()
