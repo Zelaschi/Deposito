@@ -235,12 +235,20 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void BuscarClientePorIdYMailQueNoExisteTest() {
+        public void BuscarClientePorIdYMailQueNoExisteYDevuelvaNullTest() {
             var clienteNoEncontradoPorId = _clienteLogic.buscarClientePorId(4);
             var clienteNoEncontradoPorMail = _clienteLogic.buscarClientePorMail("tz@gmail.com");
 
             Assert.IsNull(clienteNoEncontradoPorId);
             Assert.IsNull(clienteNoEncontradoPorMail);
+        }
+        [TestMethod]
+        public void EliminarCliente() {
+            _clienteLogic.AddCliente(cliente2);
+            _clienteLogic.EliminarCliente(cliente2);
+            var clientEliminado = _clienteLogic.buscarClientePorId(cliente2.IdPersona);
+
+            Assert.IsNull(clientEliminado);
         }
         
 
