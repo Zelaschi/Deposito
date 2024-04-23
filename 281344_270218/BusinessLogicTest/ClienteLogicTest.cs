@@ -79,11 +79,17 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(ArgumentNullException))]
         public void AgregarClienteNombreYApellidoNullTest()
         {
-            Cliente cliente = new Cliente("z", null , "Passworod1!");
+            Cliente cliente = new Cliente(null, "totozelaschi@gmail.com", "Passworod1!");
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void AgregarClienteMailNullTest()
+        {
+            Cliente cliente = new Cliente("z", null, "Password1!S");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AgregarClientePasswordNullTest()
         {
             Cliente cliente = new Cliente("z", "totozelaschi@gmail.com", null);
         }
@@ -211,6 +217,12 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(cliente1.NombreYApellido, resultClientes.FirstOrDefault(x => x.IdPersona == 1).NombreYApellido);
             Assert.AreEqual(cliente2.NombreYApellido, resultClientes.FirstOrDefault(x => x.IdPersona == 2).NombreYApellido);
+        }
+        [TestMethod]
+        public void EncontrarPorIdTest() {
+            Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorId(cliente1.IdPersona);
+        
+            Assert.AreEqual(cliente1.IdPersona, cliente1PeroPorFind.IdPersona);
         }
 
 
