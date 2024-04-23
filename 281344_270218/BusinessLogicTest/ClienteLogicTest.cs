@@ -13,7 +13,7 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void setUp() {
             _clienteRepository = new ClienteMemoryRepository();
-            _clienteLogic = new ClienteLogic(_movieRepository);
+            _clienteLogic = new ClienteLogic(_clienteRepository);
         }
 
     }

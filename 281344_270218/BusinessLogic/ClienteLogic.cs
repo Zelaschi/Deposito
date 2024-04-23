@@ -8,6 +8,9 @@ namespace BusinessLogic
     {
         private readonly IRepository<Cliente> _repository;
 
-
+        public ClienteLogic(IRepository<Cliente> clienteRepository)
+        {
+            _repository = clienteRepository;
+        }
     }
 }
