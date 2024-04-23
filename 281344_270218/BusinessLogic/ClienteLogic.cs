@@ -12,6 +12,9 @@ namespace BusinessLogic
         {
             _repository = clienteRepository;
         }
-        
+        public Cliente AddMovie(Cliente cliente)
+        {
+            return _repository.Add(cliente);
+        }
     }
 }

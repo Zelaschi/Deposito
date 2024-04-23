@@ -29,7 +29,7 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(1, clienteRetorno.IdPersona);
             Assert.AreEqual(cliente.NombreYApellido, clienteRetorno.NombreYApellido);
-            Assert.AreEqual(cliente.Mail, clienteRetorno);
+            Assert.AreEqual(cliente.Mail, clienteRetorno.Mail);
             Assert.AreEqual(cliente.Password, clienteRetorno.Password);
         }
 

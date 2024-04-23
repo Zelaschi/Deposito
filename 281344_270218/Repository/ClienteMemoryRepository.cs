@@ -5,9 +5,10 @@ namespace Repository
     public class ClienteMemoryRepository : IRepository<Cliente>
     {
         private List<Cliente> _clientes = new List<Cliente>();
-        public Cliente Add(Cliente oneElement)
+        public Cliente Add(Cliente cliente)
         {
-            throw new NotImplementedException();
+            _clientes.Add(cliente);
+            return cliente;
         }
 
         public void Delete(int id)
