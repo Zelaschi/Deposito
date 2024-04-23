@@ -234,7 +234,15 @@ namespace BusinessLogicTest
             Assert.AreEqual(cliente1.Mail, cliente1PeroPorFind.Mail);
         }
 
+        [TestMethod]
+        public void BuscarClientePorIdYMailQueNoExisteTest() {
+            var clienteNoEncontradoPorId = _clienteLogic.buscarClientePorId(4);
+            var clienteNoEncontradoPorMail = _clienteLogic.buscarClientePorMail("tz@gmail.com");
 
+            Assert.IsNull(clienteNoEncontradoPorId);
+            Assert.IsNull(clienteNoEncontradoPorMail);
+        }
+        
 
 
     }
