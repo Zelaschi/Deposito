@@ -229,14 +229,6 @@ namespace BusinessLogicTest
         public void EncontrarPorMailTest()
         {
             _clienteLogic.AddCliente(cliente1);
-            Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorMail(cliente1.IdPersona);
-
-            Assert.AreEqual(cliente1.IdPersona, cliente1PeroPorFind.IdPersona);
-        }
-        [TestMethod]
-        public void EncontrarPorMailTest()
-        {
-            _clienteLogic.AddCliente(cliente1);
             Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorMail(cliente1.Mail);
 
             Assert.AreEqual(cliente1.Mail, cliente1PeroPorFind.Mail);

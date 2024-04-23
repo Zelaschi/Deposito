@@ -30,8 +30,12 @@ namespace BusinessLogic
             return _repository.FindAll();
         }
 
-        public Cliente buscarClientePorId(int IdParametro) {
+        public Cliente? buscarClientePorId(int IdParametro) {
             return _repository.Find(x => x.IdPersona == IdParametro);
+        }
+        public Cliente? buscarClientePorMail(string MailParametro)
+        {
+            return _repository.Find(x => x.Mail.Equals(MailParametro));
         }
         
     }
