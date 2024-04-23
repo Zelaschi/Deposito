@@ -25,7 +25,7 @@ namespace BusinessLogicTest
             var passwordTest1 = "Password1!";
 
             var nombreYApellidoTest2 = "Pedro Azambuja";
-            var mailTest2 = "tomaszelaschi@gmail.com";
+            var mailTest2 = "pedroazambuja@gmail.com";
             var passwordTest2 = "Password1!";
 
             cliente1 = new Cliente(idCliente1, nombreYApellidoTest1, mailTest1, passwordTest1);
@@ -38,8 +38,8 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(1, clienteRetorno.IdPersona);
             Assert.AreEqual(cliente1.NombreYApellido, clienteRetorno.NombreYApellido);
-            Assert.AreEqual(cliente2.Mail, clienteRetorno.Mail);
-            Assert.AreEqual(cliente2.Password, clienteRetorno.Password);
+            Assert.AreEqual(cliente1.Mail, clienteRetorno.Mail);
+            Assert.AreEqual(cliente1.Password, clienteRetorno.Password);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace BusinessLogicTest
         public void AgregarDosClientesMismoMailTest() { 
 
             _clienteLogic.AddCliente(cliente1);
-            _clienteLogic.AddCliente(cliente2);
+            _clienteLogic.AddCliente(cliente1);
         }
 
         [TestMethod]

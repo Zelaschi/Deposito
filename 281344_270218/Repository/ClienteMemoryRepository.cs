@@ -23,7 +23,7 @@ namespace Repository
 
         public IList<Cliente> FindAll()
         {
-            throw new NotImplementedException();
+            return _clientes;
         }
 
         public Cliente? Update(Cliente updatedEntity)

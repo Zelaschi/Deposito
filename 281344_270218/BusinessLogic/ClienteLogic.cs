@@ -24,5 +24,10 @@ namespace BusinessLogic
             validarClienteMailNoRepetido(cliente);
             return _repository.Add(cliente);
         }
+
+        public IList<Cliente> GetAll()
+        {
+            return _repository.FindAll();
+        }
     }
 }
