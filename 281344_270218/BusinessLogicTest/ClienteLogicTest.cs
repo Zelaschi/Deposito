@@ -61,7 +61,20 @@ namespace BusinessLogicTest
             Assert.AreEqual(idCliente2 , clienteRetorno2.IdPersona);
         }
 
-       
+        [TestMethod]
+        public void ListarTodosLosCLientesTest()
+        {
+
+            Cliente clienteRetorno1 = _clienteLogic.AddCliente(cliente1);
+            Cliente clienteRetorno2 = _clienteLogic.AddCliente(cliente2);
+
+            IList<Cliente> resultClientes = _clienteLogic.GetAll();
+
+            Assert.AreEqual(cliente1.NombreYApellido, resultClientes.FirstOrDefault(x => x.IdPersona == 1).NombreYApellido);
+            Assert.AreEqual(cliente2.NombreYApellido, resultClientes.FirstOrDefault(x => x.IdPersona == 2).NombreYApellido);
+
+        }
+
 
     }
 }
