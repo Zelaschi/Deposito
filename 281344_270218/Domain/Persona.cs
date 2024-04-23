@@ -7,8 +7,8 @@ namespace Domain
     {
         private static int contadorID = 1;
         public int IdPersona { get; set; }
-        private string _nombreYApellido;
-        public string NombreYApellido
+        private string? _nombreYApellido;
+        public string? NombreYApellido
         {
             get
             {
@@ -16,6 +16,7 @@ namespace Domain
             }
             set
             {
+                
                 if (value.Length > 101)
                 {
                     throw new ArgumentException("El formato del correo electrónico no es válido.");
@@ -25,8 +26,8 @@ namespace Domain
             }
         }
 
-        private string _mail;
-        public string Mail
+        private string? _mail;
+        public string? Mail
         {
             get { return _mail; }
             set
@@ -43,8 +44,8 @@ namespace Domain
             }
         }
 
-        private string _password;
-        public string Password
+        private string? _password;
+        public string? Password
         {
             get { return _password; }
             set
