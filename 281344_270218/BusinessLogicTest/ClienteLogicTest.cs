@@ -52,5 +52,30 @@ namespace BusinessLogicTest
             _clienteLogic.AddCliente(cliente2);
         }
 
+        [TestMethod]
+        public void AgregarDosClientesTest()
+        {
+            var idTest1 = 1;
+            var nombreYApellidoTest1 = "Tomas Zelaschi";
+            var mailTest1 = "tomaszelaschi@gmail.com";
+            var passwordTest1 = "Password1!";
+
+            var idTest2 = 2;
+            var nombreYApellidoTest2 = "Pedro Azambuja";
+            var mailTest2 = "pedroazambuja@gmail.com";
+            var passwordTest2 = "Password1!";
+
+            Cliente cliente1 = new Cliente(idTest1, nombreYApellidoTest1, mailTest1, passwordTest1);
+            Cliente cliente2 = new Cliente(idTest2, nombreYApellidoTest2, mailTest2, passwordTest2);
+
+            Cliente clienteRetorno1 = _clienteLogic.AddCliente(cliente1);
+            Cliente clienteRetorno2 = _clienteLogic.AddCliente(cliente2);
+
+            Assert.AreEqual(idTest1, clienteRetorno1.IdPersona);
+            Assert.AreEqual(idTest2 , clienteRetorno2.IdPersona);
+        }
+
+
+
     }
 }

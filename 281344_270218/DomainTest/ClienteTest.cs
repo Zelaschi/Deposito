@@ -37,7 +37,7 @@ namespace BusinessLogicTest
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestFormatoEmailIncorrecto()
+        public void FormatoEmailIncorrectoTest()
         {
             // Direcciones de correo electrónico con formato incorrecto
             var mail1 = "invalido@example"; // Falta el dominio .com, .org, etc.
@@ -64,7 +64,7 @@ namespace BusinessLogicTest
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void testFormatoPasswordIncorrecto()
+        public void FormatoPasswordIncorrectoTest()
         {
             var pasw1 = "P@ss";            // Contraseña con menos de 8 caracteres
             var pasw2 = "Passw0rd";         // Contraseña sin símbolos
@@ -89,10 +89,27 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void testNombreYApellido101Caracteres()
+        public void NombreYApellido101CaracteresTest()
         {
             string nombreCon101Caracteres= "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto. Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
             cliente.NombreYApellido = nombreCon101Caracteres;
+        }
+
+        [TestMethod]
+        public void DosClientesIdDistintoTest() {
+            var nombreYApellidoTest1 = "Tomas Zelaschi";
+            var mailTest1 = "tomaszelaschi@gmail.com";
+            var passwordTest1 = "Password1!";
+
+            Cliente cliente1 = new Cliente(nombreYApellidoTest1, mailTest1, passwordTest1);
+            
+            var nombreYApellidoTest2 = "Tomas Zelaschi";
+            var mailTest2 = "tomaszelaschi@gmail.com";
+            var passwordTest2 = "Password1!";
+
+            Cliente cliente2 = new Cliente(nombreYApellidoTest2 , mailTest2, passwordTest2);
+
+            Assert.AreNotEqual(cliente1.IdPersona, cliente2.IdPersona);
         }
 
     }
