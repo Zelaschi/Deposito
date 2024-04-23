@@ -12,7 +12,7 @@ namespace Domain
             return value is null || value.Length == 0;
         }
 
-        private string? _nombreYApellido;
+        private string _nombreYApellido;
         public string? NombreYApellido
         {
             get
@@ -57,7 +57,7 @@ namespace Domain
             }
         }
 
-        private string? _password;
+        private string _password;
         public string? Password
         {
             get { return _password; }

@@ -29,5 +29,10 @@ namespace BusinessLogic
         {
             return _repository.FindAll();
         }
+
+        public Cliente buscarClientePorId(int IdParametro) {
+            return _repository.Find(x => x.IdPersona == IdParametro);
+        }
+        
     }
 }

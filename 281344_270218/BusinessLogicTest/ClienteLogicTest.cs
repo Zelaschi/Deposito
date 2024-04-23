@@ -220,10 +220,12 @@ namespace BusinessLogicTest
         }
         [TestMethod]
         public void EncontrarPorIdTest() {
+            _clienteLogic.AddCliente(cliente1);
             Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorId(cliente1.IdPersona);
         
             Assert.AreEqual(cliente1.IdPersona, cliente1PeroPorFind.IdPersona);
         }
+
 
 
 
