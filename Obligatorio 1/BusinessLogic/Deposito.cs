@@ -1,17 +1,17 @@
-﻿namespace BusinessLogic
-{   
+﻿namespace Domain
+{
     public class Deposito
     {
         public static int UltimoID { get; set; } = 0;
         public int Id { get; set; }
-        public String Area { get; set; }
-        public String Tamanio { get; set; }
+        public string Area { get; set; }
+        public string Tamanio { get; set; }
         public bool Climatizacion { get; set; }
         public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
         public Deposito(string area, string tamanio, bool climatizacion)
         {
-            if(!ValidarArea(area) || !ValidarTamanio(tamanio))
+            if (!ValidarArea(area) || !ValidarTamanio(tamanio))
             {
                 throw new ArgumentException("Deposito invalido");
             }
@@ -20,14 +20,14 @@
             Climatizacion = climatizacion;
             Id = ++UltimoID;
         }
-        private bool ValidarArea(String area)
+        private bool ValidarArea(string area)
         {
-            return new string[] {"A", "B", "C", "D", "E"}.Contains(area);
+            return new string[] { "A", "B", "C", "D", "E" }.Contains(area);
         }
 
-        private bool ValidarTamanio(String tamanio)
+        private bool ValidarTamanio(string tamanio)
         {
-            return new string[] {"Pequenio", "Mediano", "Grande"}.Contains(tamanio);
+            return new string[] { "Pequenio", "Mediano", "Grande" }.Contains(tamanio);
         }
 
         public static void ResetId()

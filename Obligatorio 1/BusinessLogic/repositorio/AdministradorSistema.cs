@@ -1,4 +1,6 @@
 
+using Domain;
+
 namespace BusinessLogic
 {
     public class AdministradorSistema

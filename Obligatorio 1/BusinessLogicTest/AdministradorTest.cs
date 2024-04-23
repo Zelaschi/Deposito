@@ -1,4 +1,4 @@
-using BusinessLogic;
+using Domain;
 using Newtonsoft.Json.Bson;
 namespace BusinessLogicTest
 {

@@ -1,6 +1,4 @@
-﻿
-
-namespace BusinessLogic
+﻿namespace Domain
 {
     public class Reserva
     {
@@ -8,13 +6,13 @@ namespace BusinessLogic
         public int Id { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
-        public Deposito Deposito { get; set; }  
+        public Deposito Deposito { get; set; }
         public int Precio { get; set; }
-        public String Estado { get; set; } = "Pendiente";
+        public string Estado { get; set; } = "Pendiente";
 
         public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio)
         {
-            if(fechaDesde > fechaHasta)
+            if (fechaDesde > fechaHasta)
             {
                 throw new ArgumentException("Ingrese un periodo de fechas valido");
             }
@@ -23,6 +21,6 @@ namespace BusinessLogic
             FechaHasta = fechaHasta;
             Deposito = deposito;
             Precio = precio;
-        } 
+        }
     }
 }
