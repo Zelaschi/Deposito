@@ -18,7 +18,7 @@ namespace Repository
 
         public Cliente? Find(Func<Cliente, bool> filter)
         {
-            throw new NotImplementedException();
+            return _clientes.Where(filter).FirstOrDefault();
         }
 
         public IList<Cliente> FindAll()

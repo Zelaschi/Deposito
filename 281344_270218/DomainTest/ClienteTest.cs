@@ -11,31 +11,26 @@ namespace BusinessLogicTest
         public Cliente cliente;
         [TestInitialize]
         public void inicializarClienteConParametrosTest() {
-            var idTest = 1;
             var nombreYApellidoTest = "Tomas Zelaschi";
             var mailTest = "tomaszelaschi@gmail.com";
             var passwordTest = "Password1!";
 
-            cliente = new Cliente(idTest, nombreYApellidoTest, mailTest, passwordTest);
+            cliente = new Cliente( nombreYApellidoTest, mailTest, passwordTest);
         }
         [TestMethod]
         public void crearClienteConParametrosTest() {
-            var idTest = 1;
             var nombreYApellidoTest = "Tomas Zelaschi";
             var mailTest = "tomaszelaschi@gmail.com";
             var passwordTest = "Password1!";
 
-            cliente = new Cliente(idTest, nombreYApellidoTest, mailTest, passwordTest);
+            cliente = new Cliente( nombreYApellidoTest, mailTest, passwordTest);
         }
         [TestMethod]
-        public void getParametros()
-        {
-            var idEsperado = 1;
+        public void getParametros() { 
             var nombreYApellidoEsperado = "Tomas Zelaschi";
             var mailEsperado = "tomaszelaschi@gmail.com";
             var passwordEsperada = "Password1!";
 
-            Assert.AreEqual(cliente.IdPersona, idEsperado);
             Assert.AreEqual(cliente.NombreYApellido, nombreYApellidoEsperado);
             Assert.AreEqual(cliente.Mail, mailEsperado);
             Assert.AreEqual(cliente.Password, passwordEsperada);

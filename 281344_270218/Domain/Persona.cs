@@ -5,7 +5,7 @@ namespace Domain
 {
     public abstract class Persona
     {
-        private static int contadorID = 0;
+        private static int contadorID = 1;
         public int IdPersona { get; set; }
         private string _nombreYApellido;
         public string NombreYApellido
@@ -65,6 +65,14 @@ namespace Domain
         public Persona(int id, string nombreyApellido, string mail, string password)
         {
             IdPersona = id;
+            NombreYApellido = nombreyApellido;
+            Mail = mail;
+            Password = password;
+        }
+        public Persona(string nombreyApellido, string mail, string password)
+        {
+            IdPersona = contadorID;
+            contadorID++;
             NombreYApellido = nombreyApellido;
             Mail = mail;
             Password = password;

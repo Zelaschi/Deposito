@@ -12,8 +12,16 @@ namespace BusinessLogic
         {
             _repository = clienteRepository;
         }
-        public Cliente AddMovie(Cliente cliente)
+
+        public void validarClienteMailNoRepetido(Cliente clienteParametro) {
+            if (_repository.Find(clienteBuscado => clienteBuscado.Mail == clienteParametro.Mail ) != null)
+            {
+                throw new InvalidOperationException("Mail Repetido!");
+            }
+        }
+        public Cliente AddCliente(Cliente cliente)
         {
+            validarClienteMailNoRepetido(cliente);
             return _repository.Add(cliente);
         }
     }
