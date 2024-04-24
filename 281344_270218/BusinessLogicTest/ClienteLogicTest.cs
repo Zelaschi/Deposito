@@ -243,14 +243,31 @@ namespace BusinessLogicTest
             Assert.IsNull(clienteNoEncontradoPorMail);
         }
         [TestMethod]
-        public void EliminarCliente() {
+        public void EliminarClienteTest() {
             _clienteLogic.AddCliente(cliente2);
-            _clienteLogic.EliminarCliente(cliente2);
+            _clienteLogic.EliminarCliente(cliente2.IdPersona);
             var clientEliminado = _clienteLogic.buscarClientePorId(cliente2.IdPersona);
 
             Assert.IsNull(clientEliminado);
         }
-        
+        [TestMethod]
+        public void ActualizarClienteTest()
+        {
+
+            _clienteLogic.AddCliente(cliente2);
+            string nombreActualizado = "NombreActualizado";
+            string mailActualizado = "mailactualizado@gmail.com";
+            string passwordActualizada = "NewPasswd1!";
+            Cliente clienteActualizado = new Cliente(2, nombreActualizado, mailActualizado, passwordActualizada);
+
+            _clienteLogic.ActualizarInfoCliente(ClienteActualizado);
+
+            Cliente clienteActualizadoEncontrado = _clienteLogic.buscarClientePorId(clienteActualizado.IdPersona);
+
+            Assert.AreEqual(nombreActualizado, clienteActualizadoEncontrado.NombreYApellido);
+            Assert.AreEqual(mailActualizado, clienteActualizadoEncontrado.Mail);
+            Assert.AreEqual(passwordActualizada, clienteActualizadoEncontrado.Password);
+
 
 
     }

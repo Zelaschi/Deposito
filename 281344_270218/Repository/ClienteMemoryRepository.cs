@@ -13,7 +13,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _clientes.RemoveAll(x => x.IdPersona == id);
         }
 
         public Cliente? Find(Func<Cliente, bool> filter)
