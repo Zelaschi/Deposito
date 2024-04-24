@@ -260,15 +260,16 @@ namespace BusinessLogicTest
             string passwordActualizada = "NewPasswd1!";
             Cliente clienteActualizado = new Cliente(2, nombreActualizado, mailActualizado, passwordActualizada);
 
-            _clienteLogic.ActualizarInfoCliente(ClienteActualizado);
+            _clienteLogic.ActualizarInfoCliente(clienteActualizado);
 
-            Cliente clienteActualizadoEncontrado = _clienteLogic.buscarClientePorId(clienteActualizado.IdPersona);
+            Cliente clienteActualizadoEncontrado = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
+
 
             Assert.AreEqual(nombreActualizado, clienteActualizadoEncontrado.NombreYApellido);
             Assert.AreEqual(mailActualizado, clienteActualizadoEncontrado.Mail);
             Assert.AreEqual(passwordActualizada, clienteActualizadoEncontrado.Password);
 
-
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.ComponentModel;
 
 namespace Repository
 {
@@ -26,9 +27,18 @@ namespace Repository
             return _clientes;
         }
 
-        public Cliente? Update(Cliente updatedEntity)
+        public Cliente? Update(Cliente clienteActualizado)
         {
-            throw new NotImplementedException();
+            Cliente clienteEncontrado = Find(x => x.IdPersona == clienteActualizado.IdPersona);
+
+            if (clienteEncontrado != null)
+            {
+                clienteEncontrado.NombreYApellido = clienteActualizado.NombreYApellido;
+                clienteEncontrado.Mail = clienteActualizado.Mail;
+                clienteEncontrado.Password = clienteActualizado.Password;
+
+            }
+            return clienteEncontrado;
         }
     }
 }

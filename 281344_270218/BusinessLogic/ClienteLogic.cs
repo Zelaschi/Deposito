@@ -42,8 +42,12 @@ namespace BusinessLogic
         public void EliminarCliente(int id) {
             _repository.Delete(id);
         }
+        public Cliente ActualizarInfoCliente(Cliente clienteActualizado)
+        {
+            return _repository.Update(clienteActualizado);
+        }
 
-        
-        
+
+
     }
 }
