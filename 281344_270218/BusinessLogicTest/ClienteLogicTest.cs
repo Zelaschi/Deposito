@@ -7,7 +7,7 @@ namespace BusinessLogicTest
     [TestClass]
     public class ClienteLogicTest
     {
-        private  ClienteLogic? _clienteLogic;
+        private ClienteLogic? _clienteLogic;
         private IRepository<Cliente>? _clienteRepository;
         private Cliente? cliente1;
         private int idCliente1 = 1;
@@ -15,11 +15,12 @@ namespace BusinessLogicTest
         private int idCliente2 = 2;
 
         [TestInitialize]
-        public void setUp() {
+        public void setUp()
+        {
             _clienteRepository = new ClienteMemoryRepository();
             _clienteLogic = new ClienteLogic(_clienteRepository);
 
-            
+
             var nombreYApellidoTest1 = "Tomas Zelaschi";
             var mailTest1 = "tomaszelaschi@gmail.com";
             var passwordTest1 = "Password1!";
@@ -189,7 +190,8 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void AgregarDosClientesMismoMailTest() { 
+        public void AgregarDosClientesMismoMailTest()
+        {
 
             _clienteLogic.AddCliente(cliente1);
             _clienteLogic.AddCliente(cliente1);
@@ -203,7 +205,7 @@ namespace BusinessLogicTest
             Cliente clienteRetorno2 = _clienteLogic.AddCliente(cliente2);
 
             Assert.AreEqual(idCliente1, clienteRetorno1.IdPersona);
-            Assert.AreEqual(idCliente2 , clienteRetorno2.IdPersona);
+            Assert.AreEqual(idCliente2, clienteRetorno2.IdPersona);
         }
 
         [TestMethod]
@@ -219,10 +221,11 @@ namespace BusinessLogicTest
             Assert.AreEqual(cliente2.NombreYApellido, resultClientes.FirstOrDefault(x => x.IdPersona == 2).NombreYApellido);
         }
         [TestMethod]
-        public void EncontrarPorIdTest() {
+        public void EncontrarPorIdTest()
+        {
             _clienteLogic.AddCliente(cliente1);
             Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorId(cliente1.IdPersona);
-        
+
             Assert.AreEqual(cliente1.IdPersona, cliente1PeroPorFind.IdPersona);
         }
         [TestMethod]
@@ -235,21 +238,25 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void BuscarClientePorIdYMailQueNoExisteYDevuelvaNullTest() {
+        public void BuscarClientePorIdYMailQueNoExisteYDevuelvaNullTest()
+        {
             var clienteNoEncontradoPorId = _clienteLogic.buscarClientePorId(4);
             var clienteNoEncontradoPorMail = _clienteLogic.buscarClientePorMail("tz@gmail.com");
 
             Assert.IsNull(clienteNoEncontradoPorId);
             Assert.IsNull(clienteNoEncontradoPorMail);
         }
+
         [TestMethod]
-        public void EliminarClienteTest() {
+        public void EliminarClienteTest()
+        {
             _clienteLogic.AddCliente(cliente2);
             _clienteLogic.EliminarCliente(cliente2.IdPersona);
             var clientEliminado = _clienteLogic.buscarClientePorId(cliente2.IdPersona);
 
             Assert.IsNull(clientEliminado);
         }
+
         [TestMethod]
         public void ActualizarClienteTest()
         {
@@ -260,8 +267,6 @@ namespace BusinessLogicTest
             string passwordActualizada = "NewPasswd1!";
             Cliente clienteActualizado = new Cliente(2, nombreActualizado, mailActualizado, passwordActualizada);
 
-            _clienteLogic.ActualizarInfoCliente(clienteActualizado);
-
             Cliente clienteActualizadoEncontrado = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
 
 
@@ -271,5 +276,14 @@ namespace BusinessLogicTest
 
         }
 
+        [TestMethod]
+        public void ActualizarClienteQueNoExisteTest()
+        {
+            Cliente clienteQueNoExiste = new Cliente("juan", "juanMail@gmail.com", "JuanJuan1!");
+
+            Cliente clienteNull = _clienteLogic.ActualizarInfoCliente(clienteQueNoExiste);
+
+            Assert.IsNull(clienteNull);
+        }
     }
 }
