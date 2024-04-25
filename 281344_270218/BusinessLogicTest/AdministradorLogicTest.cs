@@ -45,5 +45,6 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(admin.NombreYApellido, listaConAdmin.FirstOrDefault(x => x.IdPersona == 0).NombreYApellido);
         }
+        //Actualizar
     }
 }

@@ -5,10 +5,10 @@ namespace Repository
 {
     public class AdministradorMemoryRepository : IRepository<Administrador>
     {
-        private Administrador _administrador;
+        private List<Administrador> _administrador = new List<Administrador>();
         public Administrador Add(Administrador admin)
         {
-            _administrador = admin;
+            _administrador.Add(admin);
             return admin;
         }
 
@@ -24,7 +24,7 @@ namespace Repository
 
         public IList<Administrador> FindAll()
         {
-            return (IList<Administrador>)_administrador;
+            return _administrador;
         }
 
         public Administrador? Update(Administrador updatedEntity)
