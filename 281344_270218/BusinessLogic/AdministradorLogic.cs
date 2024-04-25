@@ -5,5 +5,6 @@ namespace BusinessLogic
 {
     public class AdministradorLogic
     {
+        
     }
 }
