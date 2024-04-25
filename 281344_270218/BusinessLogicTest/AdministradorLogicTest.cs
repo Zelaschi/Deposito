@@ -23,5 +23,15 @@ namespace BusinessLogicTest
             _administradorRepository = new AdministradorMemoryRepository();
             _administradorLogic = new AdministradorLogic(_administradorRepository);
         }
+        [TestMethod]
+        public void AgregarAdministradorTest()
+        {
+            Administrador administradorRetorno = _administradorRepository.AsignarAdministrador(admin);
+
+            Assert.AreEqual(0, administradorRetorno.IdPersona);
+            Assert.AreEqual(admin.NombreYApellido, administradorRetorno.NombreYApellido);
+            Assert.AreEqual(admin.Mail, administradorRetorno.Mail);
+            Assert.AreEqual(admin.Password, administradorRetorno.Password);
+        }
     }
 }
