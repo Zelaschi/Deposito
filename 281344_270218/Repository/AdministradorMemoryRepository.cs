@@ -24,7 +24,7 @@ namespace Repository
 
         public IList<Administrador> FindAll()
         {
-            throw new NotImplementedException();
+            return (IList<Administrador>)_administrador;
         }
 
         public Administrador? Update(Administrador updatedEntity)

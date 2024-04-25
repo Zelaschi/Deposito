@@ -23,6 +23,7 @@ namespace BusinessLogicTest
             _administradorRepository = new AdministradorMemoryRepository();
             _administradorLogic = new AdministradorLogic(_administradorRepository);
         }
+
         [TestMethod]
         public void AsignarAdministradorTest()
         {
@@ -32,6 +33,17 @@ namespace BusinessLogicTest
             Assert.AreEqual(admin.NombreYApellido, administradorRetorno.NombreYApellido);
             Assert.AreEqual(admin.Mail, administradorRetorno.Mail);
             Assert.AreEqual(admin.Password, administradorRetorno.Password);
+        }
+        [TestMethod]
+        public void getAdministradorTest()
+        {
+
+            Administrador administradorRetorno = _administradorLogic.AsignarAdministrador(admin);
+
+            IList<Administrador> listaConAdmin = _administradorLogic.getAdministrador();
+
+
+            Assert.AreEqual(admin.NombreYApellido, listaConAdmin.FirstOrDefault(x => x.IdPersona == 0).NombreYApellido);
         }
     }
 }
