@@ -1,5 +1,5 @@
 ﻿using Domain;
-namespace BusinessLogicTest
+namespace DomainTest
 {
     [TestClass]
     public class PromocionTest

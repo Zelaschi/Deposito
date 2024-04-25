@@ -1,6 +1,6 @@
 using Domain;
 using Newtonsoft.Json.Bson;
-namespace BusinessLogicTest
+namespace DomainTest
 {
     [TestClass]
     public class AdministradorTest
