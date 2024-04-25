@@ -24,9 +24,9 @@ namespace BusinessLogicTest
             _administradorLogic = new AdministradorLogic(_administradorRepository);
         }
         [TestMethod]
-        public void AgregarAdministradorTest()
+        public void AsignarAdministradorTest()
         {
-            Administrador administradorRetorno = _administradorRepository.AsignarAdministrador(admin);
+            Administrador administradorRetorno = _administradorLogic.AsignarAdministrador(admin);
 
             Assert.AreEqual(0, administradorRetorno.IdPersona);
             Assert.AreEqual(admin.NombreYApellido, administradorRetorno.NombreYApellido);

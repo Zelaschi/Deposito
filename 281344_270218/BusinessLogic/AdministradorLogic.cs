@@ -9,5 +9,9 @@ namespace BusinessLogic
         public AdministradorLogic(IRepository<Administrador> administradorRepository) {
             _repository = administradorRepository;
         }
+        public Administrador AsignarAdministrador(Administrador admin)
+        {
+            return _repository.Add(admin);
+        }
     }
 }

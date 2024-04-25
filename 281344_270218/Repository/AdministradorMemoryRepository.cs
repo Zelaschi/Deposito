@@ -1,18 +1,15 @@
 ﻿using Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain;
 
 namespace Repository
 {
     public class AdministradorMemoryRepository : IRepository<Administrador>
     {
         private Administrador _administrador;
-        public Administrador Add(Administrador oneElement)
+        public Administrador Add(Administrador admin)
         {
-            throw new NotImplementedException();
+            _administrador = admin;
+            return admin;
         }
 
         public void Delete(int id)
