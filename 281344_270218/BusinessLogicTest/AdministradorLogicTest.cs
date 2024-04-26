@@ -49,6 +49,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void actualizarInfoAdministradorTest()
         {
+            _administradorLogic.AsignarAdministrador(admin);
             var nuevoNombre = "nombreActualizado";
             var nuevoMail = "nuevomail@gmail.com";
             var nuevaPswd = "NewPassword1!";

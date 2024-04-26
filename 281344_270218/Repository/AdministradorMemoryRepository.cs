@@ -19,7 +19,7 @@ namespace Repository
 
         public Administrador? Find(Func<Administrador, bool> filter)
         {
-            throw new NotImplementedException();
+            return _administrador.Where(filter).FirstOrDefault();
         }
 
         public IList<Administrador> FindAll()
@@ -27,9 +27,18 @@ namespace Repository
             return _administrador;
         }
 
-        public Administrador? Update(Administrador updatedEntity)
+        public Administrador? Update(Administrador administradorActualizado)
         {
-            throw new NotImplementedException();
+            Administrador administradorEncontrado = Find(x => x.IdPersona == administradorActualizado.IdPersona);
+
+            if (administradorEncontrado != null)
+            {
+                administradorEncontrado.NombreYApellido = administradorActualizado.NombreYApellido;
+                administradorEncontrado.Mail = administradorActualizado.Mail;
+                administradorEncontrado.Password = administradorActualizado.Password;
+
+            }
+            return administradorEncontrado;
         }
     }
 }
