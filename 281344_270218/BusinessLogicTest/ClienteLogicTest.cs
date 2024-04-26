@@ -123,12 +123,12 @@ namespace BusinessLogicTest
             string passwordActualizada = "NewPasswd1!";
             Cliente clienteActualizado = new Cliente(2, nombreActualizado, mailActualizado, passwordActualizada);
 
-            Cliente clienteActualizadoEncontrado = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
+            Cliente clienteActualizadoRetrono = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
 
 
-            Assert.AreEqual(nombreActualizado, clienteActualizadoEncontrado.NombreYApellido);
-            Assert.AreEqual(mailActualizado, clienteActualizadoEncontrado.Mail);
-            Assert.AreEqual(passwordActualizada, clienteActualizadoEncontrado.Password);
+            Assert.AreEqual(nombreActualizado, clienteActualizadoRetrono.NombreYApellido);
+            Assert.AreEqual(mailActualizado, clienteActualizadoRetrono.Mail);
+            Assert.AreEqual(passwordActualizada, clienteActualizadoRetrono.Password);
 
         }
 

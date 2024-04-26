@@ -45,6 +45,22 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(admin.NombreYApellido, listaConAdmin.FirstOrDefault(x => x.IdPersona == 0).NombreYApellido);
         }
-        //Actualizar
+
+        [TestMethod]
+        public void actualizarInfoAdministradorTest()
+        {
+            var nuevoNombre = "nombreActualizado";
+            var nuevoMail = "nuevomail@gmail.com";
+            var nuevaPswd = "NewPassword1!";
+
+            Administrador administradorActualizado = new Administrador(0, nuevoNombre, nuevoMail, nuevaPswd);
+
+            Administrador administradorActualizadoRetorno = _administradorLogic.ActualizarInfoAdministrador(administradorActualizado);
+            
+            Assert.AreEqual(nuevoNombre, administradorActualizadoRetorno.NombreYApellido);
+            Assert.AreEqual(nuevoMail, administradorActualizadoRetorno.Mail);
+            Assert.AreEqual(nuevaPswd, administradorActualizadoRetorno.Password);
+
+        }
     }
 }
