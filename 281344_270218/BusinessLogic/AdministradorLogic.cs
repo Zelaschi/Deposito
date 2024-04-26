@@ -11,7 +11,9 @@ namespace BusinessLogic
         }
         public Administrador AsignarAdministrador(Administrador admin)
         {
-
+            if (_repository.FindAll().Count > 0) {
+                throw new InvalidOperationException("Ya existe un administrador, utilice ActualizarInFoAdministrador");
+            }
             return _repository.Add(admin);
         }
 
