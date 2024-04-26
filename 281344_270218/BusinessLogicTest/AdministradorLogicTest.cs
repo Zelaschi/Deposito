@@ -35,7 +35,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(admin.Password, administradorRetorno.Password);
         }
         [TestMethod]
-        public void getAdministradorTest()
+        public void GetAdministradorTest()
         {
 
             Administrador administradorRetorno = _administradorLogic.AsignarAdministrador(admin);
@@ -47,7 +47,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void actualizarInfoAdministradorTest()
+        public void ActualizarInfoAdministradorTest()
         {
             _administradorLogic.AsignarAdministrador(admin);
             var nuevoNombre = "nombreActualizado";
@@ -61,6 +61,15 @@ namespace BusinessLogicTest
             Assert.AreEqual(nuevoNombre, administradorActualizadoRetorno.NombreYApellido);
             Assert.AreEqual(nuevoMail, administradorActualizadoRetorno.Mail);
             Assert.AreEqual(nuevaPswd, administradorActualizadoRetorno.Password);
+
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void IntentarAgregarSegundoAdministradorTest()
+        {
+            Administrador admin2 = new Administrador(0, "nombre", "mail@gmail.com", "Password1!");
+            _administradorLogic.AsignarAdministrador(admin);
+            _administradorLogic.AsignarAdministrador(admin2);
 
         }
     }

@@ -11,6 +11,7 @@ namespace BusinessLogic
         }
         public Administrador AsignarAdministrador(Administrador admin)
         {
+
             return _repository.Add(admin);
         }
 
