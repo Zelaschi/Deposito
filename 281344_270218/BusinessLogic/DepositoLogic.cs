@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Repository;
+using Domain;
+
 
 namespace BusinessLogic
 {
-    internal class DepositoLogic
+    public class DepositoLogic
     {
+        public readonly IRepository<Deposito> _repository;
+
+        public DepositoLogic(IRepository<Deposito> DepositoRepository)
+        {
+            _repository = DepositoRepository;
+        }
     }
 }

@@ -20,6 +20,8 @@
             Climatizacion = climatizacion;
             Id = ++UltimoID;
         }
+
+        public Deposito(int id, string area, string tamanio, bool climatizacion) { }
         private bool ValidarArea(string area)
         {
             return new string[] { "A", "B", "C", "D", "E" }.Contains(area);
