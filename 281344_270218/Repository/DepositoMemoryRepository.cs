@@ -29,7 +29,7 @@ namespace Repository
 
         public Deposito? Update(Deposito updatedEntity)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
     }
 }

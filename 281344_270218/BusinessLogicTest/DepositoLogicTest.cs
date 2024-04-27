@@ -81,6 +81,15 @@ namespace BusinessLogicTest
 
         [TestMethod]
 
+        public void BuscarDepositoPorIdQueNoExisteYDevuelvaNullTest()
+        {
+            var depositoNoEncontradoPorId = _depositoLogic.buscarDepositoPorId(4);
+
+            Assert.IsNull(depositoNoEncontradoPorId);
+        }
+
+        [TestMethod]
+
         public void EliminarDepositoTest()
         {
             _depositoLogic.AddDeposito(deposito1);
