@@ -24,7 +24,7 @@ namespace Repository
 
         public IList<Deposito> FindAll()
         {
-            throw new NotImplementedException();
+            return _depositos;
         }
 
         public Deposito? Update(Deposito updatedEntity)

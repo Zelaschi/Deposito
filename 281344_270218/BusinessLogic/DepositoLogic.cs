@@ -18,5 +18,10 @@ namespace BusinessLogic
         {
             return _repository.Add(deposito);
         }
+
+        public IList<Deposito> GetAll() 
+        { 
+            return _repository.FindAll();
+        }
     }
 }
