@@ -21,7 +21,16 @@
             IdDeposito = ++UltimoID;
         }
 
-        public Deposito(int idDeposito, string area, string tamanio, bool climatizacion) { }
+        public Deposito(int idDeposito, string area, string tamanio, bool climatizacion) {
+            if (!ValidarArea(area) || !ValidarTamanio(tamanio))
+            {
+                throw new ArgumentException("Deposito invalido");
+            }
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            IdDeposito = idDeposito;
+        }
         private bool ValidarArea(string area)
         {
             return new string[] { "A", "B", "C", "D", "E" }.Contains(area);

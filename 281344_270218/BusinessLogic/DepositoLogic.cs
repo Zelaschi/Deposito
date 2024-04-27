@@ -13,5 +13,10 @@ namespace BusinessLogic
         {
             _repository = DepositoRepository;
         }
+
+        public Deposito AddDeposito(Deposito deposito) 
+        {
+            return _repository.Add(deposito);
+        }
     }
 }
