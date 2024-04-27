@@ -19,7 +19,7 @@ namespace Repository
 
         public Deposito? Find(Func<Deposito, bool> filter)
         {
-            throw new NotImplementedException();
+            return _depositos.Where(filter).FirstOrDefault();
         }
 
         public IList<Deposito> FindAll()

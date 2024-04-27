@@ -23,5 +23,10 @@ namespace BusinessLogic
         { 
             return _repository.FindAll();
         }
+
+        public Deposito? buscarDepositoPorId(int idParametro)
+        {
+            return _repository.Find(x => x.IdDeposito ==  idParametro);
+        }
     }
 }
