@@ -78,5 +78,16 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(deposito1.IdDeposito, depositoPeroPorFindId.IdDeposito);
         }
+
+        [TestMethod]
+
+        public void EliminarDepositoTest()
+        {
+            _depositoLogic.AddDeposito(deposito1);
+            _depositoLogic.EliminarDeposito(deposito1.IdDeposito);
+            var depositoEliminado = _depositoLogic.buscarDepositoPorId(deposito1.IdDeposito);
+
+            Assert.IsNull(depositoEliminado);
+        }
     }
 }
