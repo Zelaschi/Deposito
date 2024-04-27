@@ -3,7 +3,7 @@
     public class Deposito
     {
         public static int UltimoID { get; set; } = 0;
-        public int Id { get; set; }
+        public int IdDeposito { get; set; }
         public string Area { get; set; }
         public string Tamanio { get; set; }
         public bool Climatizacion { get; set; }
@@ -18,10 +18,10 @@
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
-            Id = ++UltimoID;
+            IdDeposito = ++UltimoID;
         }
 
-        public Deposito(int id, string area, string tamanio, bool climatizacion) { }
+        public Deposito(int idDeposito, string area, string tamanio, bool climatizacion) { }
         private bool ValidarArea(string area)
         {
             return new string[] { "A", "B", "C", "D", "E" }.Contains(area);

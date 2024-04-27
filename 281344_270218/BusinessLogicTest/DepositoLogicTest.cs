@@ -33,5 +33,16 @@ namespace BusinessLogicTest
             deposito1 = new Deposito(idDeposito1, area1, tamanio1, climatizacion1);
             deposito2 = new Deposito(idDeposito2, area2, tamanio2, climatizacion2);
         }
+
+        [TestMethod]
+
+        public void AgregarDepositoTest()
+        {
+            Deposito depositoRetorno = _depositoLogic.AddDeposito(deposito1);
+            Assert.AreEqual(1, depositoRetorno.IdDeposito);
+            Assert.AreEqual(deposito1.Tamanio, depositoRetorno.Tamanio);
+            Assert.AreEqual(deposito1.Area, depositoRetorno.Area);
+            Assert.AreEqual(deposito1.Climatizacion, depositoRetorno.Climatizacion);
+        }
     }
 }
