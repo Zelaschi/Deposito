@@ -15,7 +15,6 @@
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;
             FechaFin = fechaFin;
-
         }
     }
 }
