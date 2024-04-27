@@ -28,5 +28,10 @@ namespace BusinessLogic
         {
             return _repository.Find(x => x.IdDeposito ==  idParametro);
         }
+
+        public void EliminarDeposito(int id)
+        {
+            _repository.Delete(id);
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _depositos.RemoveAll(x => x.IdDeposito == id);
         }
 
         public Deposito? Find(Func<Deposito, bool> filter)
