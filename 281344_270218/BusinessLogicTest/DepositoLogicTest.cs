@@ -44,5 +44,17 @@ namespace BusinessLogicTest
             Assert.AreEqual(deposito1.Area, depositoRetorno.Area);
             Assert.AreEqual(deposito1.Climatizacion, depositoRetorno.Climatizacion);
         }
+
+        [TestMethod]
+
+        public void AgregarDosDepositosTest()
+        {
+            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
+            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
+
+            Assert.AreEqual(idDeposito1, depositoRetorno1.IdDeposito);
+            Assert.AreEqual(idDeposito2, depositoRetorno2.IdDeposito);
+
+        }
     }
 }
