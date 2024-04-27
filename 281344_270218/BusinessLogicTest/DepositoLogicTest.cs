@@ -54,7 +54,19 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(idDeposito1, depositoRetorno1.IdDeposito);
             Assert.AreEqual(idDeposito2, depositoRetorno2.IdDeposito);
+        }
 
+        [TestMethod]
+
+        public void ListarTodosLosDepositosTest()
+        {
+            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
+            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
+
+            IList<Deposito> resultDeposito = _depositoLogic.GetAll();
+
+            Assert.AreEqual(deposito1.IdDeposito, resultDeposito.FirstOrDefault(x => x.IdDeposito == 1).IdDeposito);
+            Assert.AreEqual(deposito2.IdDeposito, resultDeposito.FirstOrDefault(x => x.IdDeposito == 2).IdDeposito);
         }
     }
 }
