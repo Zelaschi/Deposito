@@ -3,7 +3,7 @@ using Domain;
 
 namespace BusinessLogic
 {
-    internal class PromocionLogic
+    public class PromocionLogic
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    internal class PromocionMemoryRepository : IRepository<Promocion>
+    public class PromocionMemoryRepository : IRepository<Promocion>
     {
         private List<Promocion> _promociones= new List<Promocion>();
         public Promocion Add(Promocion oneElement)

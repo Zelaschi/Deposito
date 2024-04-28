@@ -4,8 +4,6 @@ namespace DomainTest
     [TestClass]
     public class PromocionTest
     {
-        
-
         [TestMethod]
         public void TestInitialize()
         {
