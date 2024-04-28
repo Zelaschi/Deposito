@@ -25,7 +25,7 @@ namespace Domain
                 {
                     throw new ArgumentNullException("NombreYApellido no puede ser vacio ni null");
                 }
-                else if (value.Length > 101)
+                else if (value.Length > 100)
                 {
                     throw new ArgumentException("El formato del correo electrónico no es válido.");
                 }
