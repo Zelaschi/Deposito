@@ -10,6 +10,7 @@
 
         public Promocion(int id, string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
         {
+
             Id = id;
             Etiqueta = etiqueta;
             PorcentajeDescuento = porcentajeDescuento;
