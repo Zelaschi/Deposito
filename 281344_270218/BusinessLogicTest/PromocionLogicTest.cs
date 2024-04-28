@@ -21,7 +21,9 @@ namespace BusinessLogicTest
         }
         [TestMethod]
         public void AgregarPromocionTest() {
-            _promocionLogic.AgregarPromocion(promo);
+            Promocion retorno = _promocionLogic.AgregarPromocion(promo);
+
+            Assert.AreEqual(promo.Id, retorno.Id);
         }
     }
 }

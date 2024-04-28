@@ -5,9 +5,10 @@ namespace Repository
     public class PromocionMemoryRepository : IRepository<Promocion>
     {
         private List<Promocion> _promociones= new List<Promocion>();
-        public Promocion Add(Promocion oneElement)
+        public Promocion Add(Promocion promocion)
         {
-            throw new NotImplementedException();
+            _promociones.Add(promocion);
+            return promocion;
         }
 
         public void Delete(int id)

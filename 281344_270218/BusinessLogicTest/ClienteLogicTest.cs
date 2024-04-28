@@ -36,7 +36,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void AgregarClienteTest()
         {
-            Cliente clienteRetorno = _clienteLogic.AddCliente(cliente1);
+            Cliente clienteRetorno = _clienteLogic.AgregarCliente(cliente1);
 
             Assert.AreEqual(1, clienteRetorno.IdPersona);
             Assert.AreEqual(cliente1.NombreYApellido, clienteRetorno.NombreYApellido);
@@ -49,16 +49,16 @@ namespace BusinessLogicTest
         public void AgregarDosClientesMismoMailTest()
         {
 
-            _clienteLogic.AddCliente(cliente1);
-            _clienteLogic.AddCliente(cliente1);
+            _clienteLogic.AgregarCliente(cliente1);
+            _clienteLogic.AgregarCliente(cliente1);
         }
 
         [TestMethod]
         public void AgregarDosClientesTest()
         {
 
-            Cliente clienteRetorno1 = _clienteLogic.AddCliente(cliente1);
-            Cliente clienteRetorno2 = _clienteLogic.AddCliente(cliente2);
+            Cliente clienteRetorno1 = _clienteLogic.AgregarCliente(cliente1);
+            Cliente clienteRetorno2 = _clienteLogic.AgregarCliente(cliente2);
 
             Assert.AreEqual(idCliente1, clienteRetorno1.IdPersona);
             Assert.AreEqual(idCliente2, clienteRetorno2.IdPersona);
@@ -68,8 +68,8 @@ namespace BusinessLogicTest
         public void ListarTodosLosCLientesTest()
         {
 
-            Cliente clienteRetorno1 = _clienteLogic.AddCliente(cliente1);
-            Cliente clienteRetorno2 = _clienteLogic.AddCliente(cliente2);
+            Cliente clienteRetorno1 = _clienteLogic.AgregarCliente(cliente1);
+            Cliente clienteRetorno2 = _clienteLogic.AgregarCliente(cliente2);
 
             IList<Cliente> resultClientes = _clienteLogic.GetAll();
 
@@ -79,7 +79,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void EncontrarPorIdTest()
         {
-            _clienteLogic.AddCliente(cliente1);
+            _clienteLogic.AgregarCliente(cliente1);
             Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorId(cliente1.IdPersona);
 
             Assert.AreEqual(cliente1.IdPersona, cliente1PeroPorFind.IdPersona);
@@ -87,7 +87,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void EncontrarPorMailTest()
         {
-            _clienteLogic.AddCliente(cliente1);
+            _clienteLogic.AgregarCliente(cliente1);
             Cliente cliente1PeroPorFind = _clienteLogic.buscarClientePorMail(cliente1.Mail);
 
             Assert.AreEqual(cliente1.Mail, cliente1PeroPorFind.Mail);
@@ -106,7 +106,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void EliminarClienteTest()
         {
-            _clienteLogic.AddCliente(cliente2);
+            _clienteLogic.AgregarCliente(cliente2);
             _clienteLogic.EliminarCliente(cliente2.IdPersona);
             var clientEliminado = _clienteLogic.buscarClientePorId(cliente2.IdPersona);
 
@@ -117,7 +117,7 @@ namespace BusinessLogicTest
         public void ActualizarClienteTest()
         {
 
-            _clienteLogic.AddCliente(cliente2);
+            _clienteLogic.AgregarCliente(cliente2);
             string nombreActualizado = "NombreActualizado";
             string mailActualizado = "mailactualizado@gmail.com";
             string passwordActualizada = "NewPasswd1!";

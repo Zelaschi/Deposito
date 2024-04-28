@@ -11,5 +11,9 @@ namespace BusinessLogic
         {
             _repository = promocionRepository;
         }
+        public Promocion AgregarPromocion(Promocion promo)
+        {
+            return _repository.Add(promo);
+        }
     }
 }

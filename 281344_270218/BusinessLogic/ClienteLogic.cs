@@ -18,7 +18,7 @@ namespace BusinessLogic
                 throw new InvalidOperationException("Mail Repetido!");
             }
         }
-        public Cliente AddCliente(Cliente cliente)
+        public Cliente AgregarCliente(Cliente cliente)
         {
             validarClienteMailNoRepetido(cliente);
             return _repository.Add(cliente);
