@@ -19,5 +19,9 @@ namespace BusinessLogicTest
 
             promo = new Promocion(0,"Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
         }
+        [TestMethod]
+        public void AgregarPromocionTest() {
+            _promocionLogic.AgregarPromocion(promo);
+        }
     }
 }
