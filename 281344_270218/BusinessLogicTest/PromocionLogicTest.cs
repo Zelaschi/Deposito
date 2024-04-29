@@ -38,8 +38,16 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(promo1.Id, listaPromociones.FirstOrDefault(x => x.Id == promo1.Id).Id);
             Assert.AreEqual(promo2.Id, listaPromociones.FirstOrDefault(x => x.Id == promo2.Id).Id);
+        }
 
+        [TestMethod]
+        public void EncontrarPorIdTest()
+        {
+            _promocionLogic.AgregarPromocion(promo);
 
+            Promocion promoPorFind = _promocionLogic.buscarPromocionPorId(promo.Id);
+
+            Assert.AreEqual(promo.Id, promoPorFind.Id);
         }
     }
 }
