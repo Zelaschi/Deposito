@@ -41,7 +41,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void EncontrarPorIdTest()
+        public void EncontrarPromocionPorIdTest()
         {
             _promocionLogic.AgregarPromocion(promo);
 
