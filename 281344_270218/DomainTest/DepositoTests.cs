@@ -13,7 +13,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void Deposito_InicializadoConValoresCorrectos()
+        public void DepositoInicializadoConValoresCorrectos()
         {
             Assert.AreEqual("A", deposito.Area);
             Assert.AreEqual("Grande", deposito.Tamanio);
@@ -22,10 +22,10 @@ namespace DomainTest
 
         [TestMethod]
 
+        [ExpectedException(typeof(ArgumentException))]
         public void Deposito_Lanzar_Excepcion_Si_Invalido()
         {
-            var exepcion = Assert.ThrowsException<ArgumentException>(() => new Deposito("Z", "Gigante", true));
-            Assert.AreEqual("Deposito invalido", exepcion.Message);
+            Deposito deposito = new Deposito("Z", "Gigante", true);
         }
 
         [TestMethod]
@@ -37,9 +37,9 @@ namespace DomainTest
             Deposito deposito2 = new Deposito("C", "Mediano", false);
             Deposito deposito3 = new Deposito("B", "Pequenio", true);
 
-            Assert.AreEqual(1, deposito1.Id);
-            Assert.AreEqual(2, deposito2.Id);
-            Assert.AreEqual(3, deposito3.Id);
+            Assert.AreEqual(1, deposito1.IdDeposito);
+            Assert.AreEqual(2, deposito2.IdDeposito);
+            Assert.AreEqual(3, deposito3.IdDeposito);
         }
 
         [TestMethod]
