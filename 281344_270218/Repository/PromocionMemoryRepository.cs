@@ -18,7 +18,7 @@ namespace Repository
 
         public Promocion? Find(Func<Promocion, bool> filter)
         {
-            throw new NotImplementedException();
+            return _promociones.Where(filter).FirstOrDefault();
         }
 
         public IList<Promocion> FindAll()

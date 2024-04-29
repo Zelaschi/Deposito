@@ -49,5 +49,14 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(promo.Id, promoPorFind.Id);
         }
+
+        [TestMethod]
+        public void BuscarPromocionPorIdQueNoExisteYDevuelvaNullTest()
+        {
+            var promocionNoEncontrada = _promocionLogic.buscarPromocionPorId(1);
+
+            Assert.IsNull(promocionNoEncontrada);
+            
+        }
     }
 }
