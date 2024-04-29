@@ -56,7 +56,18 @@ namespace BusinessLogicTest
             var promocionNoEncontrada = _promocionLogic.buscarPromocionPorId(1);
 
             Assert.IsNull(promocionNoEncontrada);
-            
+        }
+
+        [TestMethod]
+        public void EliminarPromocionTest()
+        {
+            _promocionLogic.AgregarPromocion(promo);
+
+            _promocionLogic.EliminarPromocion(promo.Id);
+
+            var promocionEliminada = _promocionLogic.buscarPromocionPorId(promo.Id);
+
+            Assert.IsNull(promocionEliminada);
         }
     }
 }
