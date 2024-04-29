@@ -69,5 +69,29 @@ namespace BusinessLogicTest
 
             Assert.IsNull(promocionEliminada);
         }
+
+        [TestMethod]
+        public void ActualizarPromocionTest()
+        {
+
+            _promocionLogic.AgregarPromocion(promo);
+
+            string etiquetaActualizada = "new Etiqueta";
+            int porcentajeActualizado = 32;
+            DateTime fechaInicioActualizada = DateTime.Now.AddDays(1);
+            DateTime fechaFinActualizada = DateTime.Now.AddDays(16);
+
+            Promocion promoActualizada = new Promocion(etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada)
+
+            Promocion promoActualizdaRetorno = _promocionLogic.ActualizarInfoPromocion(promoActualizada);
+
+
+            Assert.AreEqual(etiquetaActualizada, promoActualizdaRetorno.Etiqueta);
+            Assert.AreEqual(porcentajeActualizado, promoActualizdaRetorno.PorcentajeDescuento);
+            Assert.AreEqual(fechaInicioActualizada, promoActualizdaRetorno.FechaInicio);
+            Assert.AreEqual(fechaFinActualizada, promoActualizdaRetorno.FechaFin);
+
+
+        }
     }
 }

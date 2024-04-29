@@ -13,7 +13,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _promociones.RemoveAll(x => x.Id == id);
         }
 
         public Promocion? Find(Func<Promocion, bool> filter)
