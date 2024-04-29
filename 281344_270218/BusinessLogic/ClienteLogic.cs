@@ -24,7 +24,7 @@ namespace BusinessLogic
             return _repository.Add(cliente);
         }
 
-        public IList<Cliente> GetAll()
+        public IList<Cliente> listarTodosLosClientes()
         {
             return _repository.FindAll();
         }

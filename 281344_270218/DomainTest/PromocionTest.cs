@@ -8,17 +8,17 @@ namespace DomainTest
 
         [TestInitialize]
         public void setUp() { 
-            promo = new Promocion(1, "promocion abril", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            promo = new Promocion( "promocion abril", 20, DateTime.Now, DateTime.Now.AddDays(10));
         }
         [TestMethod]
         public void TestInitialize()
         {
-            Promocion promocion = new Promocion(1, "promocion abril", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promocion = new Promocion( "promocion abril", 20, DateTime.Now, DateTime.Now.AddDays(10));
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void FechaFinOcurreAntesQueFechaInicioTest() {
-            Promocion promocion = new Promocion(1, "promocion abril", 20, DateTime.Now.AddDays(10), DateTime.Now);
+            Promocion promocion = new Promocion( "promocion abril", 20, DateTime.Now.AddDays(10), DateTime.Now);
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]

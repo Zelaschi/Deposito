@@ -2,6 +2,7 @@
 {
     public class Promocion
     {
+        private static int contadorPromo = 0;
         public int Id { get; set; }
         private string _etiqueta;
         public string Etiqueta { 
@@ -46,13 +47,14 @@
             }
         }
 
-        public Promocion(int id, string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
+        public Promocion( string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
         {
             if (fechaInicio.CompareTo(fechaFin) >= 0)
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de Fin.");
             }
-            Id = id;
+            Id = contadorPromo;
+            contadorPromo++;
             Etiqueta = etiqueta;
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;

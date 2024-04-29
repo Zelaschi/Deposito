@@ -45,7 +45,7 @@ namespace DomainTest
         [TestMethod]
         public void AgregarPromocionADepositoTest()
         {
-            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now , DateTime.Now.AddDays(10));
+            Promocion promoTest = new Promocion("promo", 20, DateTime.Now , DateTime.Now.AddDays(10));
             Promocion promoReturn = deposito.AgregarPromocionADeposito(promoTest);
         }
 
@@ -53,7 +53,7 @@ namespace DomainTest
         [ExpectedException(typeof(InvalidOperationException))]
         public void AgregarPromocionRepetidaTest()
         {
-            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promoTest = new Promocion("promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
             Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
             Promocion promoReturn2 = deposito.AgregarPromocionADeposito(promoTest);
         }
@@ -61,7 +61,7 @@ namespace DomainTest
         [TestMethod]
         public void EliminarPromocionTest()
         {
-            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promoTest = new Promocion("promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
             Promocion promoReturn1 = deposito.AgregarPromocionADeposito(promoTest);
             deposito.EliminarPromocionDeDeposito(promoTest);
         }
@@ -70,7 +70,7 @@ namespace DomainTest
         [ExpectedException(typeof(InvalidOperationException))]
         public void EliminarPromocionQueNoExisteTest()
         {
-            Promocion promoTest = new Promocion(0, "promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promoTest = new Promocion("promo", 20, DateTime.Now, DateTime.Now.AddDays(10));
             deposito.EliminarPromocionDeDeposito(promoTest);
         }
     }

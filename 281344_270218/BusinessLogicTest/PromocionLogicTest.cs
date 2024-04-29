@@ -17,13 +17,29 @@ namespace BusinessLogicTest
             _promocionRepository = new PromocionMemoryRepository();
             _promocionLogic = new PromocionLogic(_promocionRepository);
 
-            promo = new Promocion(0,"Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
+            promo = new Promocion("Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
         }
         [TestMethod]
         public void AgregarPromocionTest() {
             Promocion retorno = _promocionLogic.AgregarPromocion(promo);
 
             Assert.AreEqual(promo.Id, retorno.Id);
+        }
+        [TestMethod]
+        public void ListarTodasLasPromocionesTest ()
+        {
+            Promocion promo1 = new Promocion("Promo1", 5, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promo2 = new Promocion("Promo2", 5, DateTime.Now, DateTime.Now.AddDays(15));
+
+             _promocionLogic.AgregarPromocion(promo1);
+             _promocionLogic.AgregarPromocion(promo1);
+
+            IList<Promocion> listaPromociones = _promocionLogic.listarTodasLasPromociones();
+
+            Assert.AreEqual(promo1.Id, listaPromociones.FirstOrDefault(x => x.Id == promo1.Id).Id);
+            Assert.AreEqual(promo2.Id, listaPromociones.FirstOrDefault(x => x.Id == promo1.Id).Id);
+
+
         }
     }
 }
