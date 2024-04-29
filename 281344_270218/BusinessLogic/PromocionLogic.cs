@@ -15,5 +15,10 @@ namespace BusinessLogic
         {
             return _repository.Add(promo);
         }
+
+        public IList<Promocion> listarTodasLasPromociones()
+        {
+            return _repository.FindAll();
+        }
     }
 }

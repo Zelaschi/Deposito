@@ -23,7 +23,7 @@ namespace Repository
 
         public IList<Promocion> FindAll()
         {
-            throw new NotImplementedException();
+            return _promociones;
         }
 
         public Promocion? Update(Promocion updatedEntity)

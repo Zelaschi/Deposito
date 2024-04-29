@@ -32,12 +32,12 @@ namespace BusinessLogicTest
             Promocion promo2 = new Promocion("Promo2", 5, DateTime.Now, DateTime.Now.AddDays(15));
 
              _promocionLogic.AgregarPromocion(promo1);
-             _promocionLogic.AgregarPromocion(promo1);
+             _promocionLogic.AgregarPromocion(promo2);
 
             IList<Promocion> listaPromociones = _promocionLogic.listarTodasLasPromociones();
 
             Assert.AreEqual(promo1.Id, listaPromociones.FirstOrDefault(x => x.Id == promo1.Id).Id);
-            Assert.AreEqual(promo2.Id, listaPromociones.FirstOrDefault(x => x.Id == promo1.Id).Id);
+            Assert.AreEqual(promo2.Id, listaPromociones.FirstOrDefault(x => x.Id == promo2.Id).Id);
 
 
         }
