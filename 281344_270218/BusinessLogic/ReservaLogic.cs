@@ -12,6 +12,9 @@ namespace BusinessLogic
             _repository = reservaRepository;
         }
 
-
+        public Reserva AgregarReserva(Reserva reserva)
+        {
+            return _repository.Add(reserva);
+        }
     }
 }

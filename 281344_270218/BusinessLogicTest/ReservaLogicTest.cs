@@ -43,5 +43,15 @@ namespace BusinessLogicTest
             Assert.AreEqual(reserva.Cliente, reservaRetorno.Cliente);
             Assert.AreEqual(reserva.Estado, reservaRetorno.Estado);
         }
+
+        [TestMethod]
+
+        public void ListarTodasLasReservasTest()
+        {
+            Reserva reservaRetorno = _reservaLogic.AgregarReserva(reserva);
+
+            IList<Reserva> resultReservas = _reservaLogic.ListarTodasLasReservas();
+            Assert.AreEqual(reserva.IdReserva, resultReservas.FirstOrDefault(x => x.IdReserva == reserva.IdReserva).IdReserva);
+        }
     }
 }

@@ -23,7 +23,7 @@
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            Id = ++UltimoID;
+            IdReserva = ++UltimoID;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
             Deposito = deposito;

@@ -5,9 +5,10 @@ namespace Repository
     public class ReservaMemoryRepository : IRepository<Reserva>
     {
         private List<Reserva> _reservas = new List<Reserva>();
-        public Reserva Add(Reserva oneElement)
+        public Reserva Add(Reserva reserva)
         {
-            throw new NotImplementedException();
+            _reservas.Add(reserva);
+            return reserva;
         }
 
         public void Delete(int id)
