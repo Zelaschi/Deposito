@@ -61,8 +61,12 @@
             TimeSpan diferencia = FechaHasta - FechaDesde;
             int cantidadDeDias = diferencia.Days;
             double descuento = 0;
-            if (cantidadDeDias >= 7) {
+            if (cantidadDeDias >= 7 && cantidadDeDias <= 14)
+            {
                 descuento = 0.05;
+            }
+            else if (cantidadDeDias > 14) {
+                descuento = 0.10;
             }
             int precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
             if (Deposito.Climatizacion) 
