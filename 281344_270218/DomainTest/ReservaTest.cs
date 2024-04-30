@@ -35,13 +35,13 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void calculoDePrecioDeReservaMedianoUnDiaConRefrigeracion() {
+        public void calculoDePrecioDeReservaMedianoUnDiaConRefrigeracionTest() {
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, cliente);
 
             Assert.AreEqual(reserva.Precio, 95);
         }
         [TestMethod]
-        public void calculoDePrecioDeReservaChicoUnDiaConRefrigeracion()
+        public void calculoDePrecioDeReservaChicoUnDiaConRefrigeracionTest()
         {
             Deposito depositoTest = new Deposito("A", "Pequenio", true);
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), depositoTest, cliente);
@@ -49,14 +49,14 @@ namespace DomainTest
             Assert.AreEqual(reserva.Precio, 70);
         }
         [TestMethod]
-        public void calculoDePrecioDeReservaMedianoConRefrigeracionDe7Dias()
+        public void calculoDePrecioDeReservaMedianoConRefrigeracionDe7DiasTest()
         {
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(7), deposito, cliente);
 
             Assert.AreEqual(reserva.Precio, 631);
         }
         [TestMethod]
-        public void calculoDePrecioDeReservaMedianoConRefrigeracionDe15Dias() 
+        public void calculoDePrecioDeReservaMedianoConRefrigeracionDe15DiasTest() 
         {
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(15), deposito, cliente);
 
