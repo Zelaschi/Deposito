@@ -46,6 +46,10 @@
         }
         private int CalculoPrecioDeReserva() {
             int precioPorDiaDependiendoDelTamaño = 0;
+            TimeSpan diferencia = FechaHasta - FechaDesde;
+            int cantidadDeDias = diferencia.Days;
+            double descuento = 0;
+
             switch (Deposito.Tamanio)
             {
                 case "Pequenio":
@@ -58,9 +62,7 @@
                     precioPorDiaDependiendoDelTamaño = 100;
                     break;
             }
-            TimeSpan diferencia = FechaHasta - FechaDesde;
-            int cantidadDeDias = diferencia.Days;
-            double descuento = 0;
+            
             if (cantidadDeDias >= 7 && cantidadDeDias <= 14)
             {
                 descuento = 0.05;
@@ -68,11 +70,14 @@
             else if (cantidadDeDias > 14) {
                 descuento = 0.10;
             }
+
             int precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
+
             if (Deposito.Climatizacion) 
             {
                 precioReserva += 20 * cantidadDeDias;
             }
+
             double precioConDescuento = precioReserva * (1 - descuento);
             precioReserva = (int)precioConDescuento;
 
