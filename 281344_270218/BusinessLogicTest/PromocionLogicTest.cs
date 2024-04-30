@@ -89,8 +89,16 @@ namespace BusinessLogicTest
             Assert.AreEqual(porcentajeActualizado, promoActualizdaRetorno.PorcentajeDescuento);
             Assert.AreEqual(fechaInicioActualizada, promoActualizdaRetorno.FechaInicio);
             Assert.AreEqual(fechaFinActualizada, promoActualizdaRetorno.FechaFin);
+        }
 
+        [TestMethod]
+        public void ActualizarPromocionQueNoExisteTest()
+        {
+            Promocion promocionQueNoExsiteEnBD = new Promocion("Promo1", 5, DateTime.Now, DateTime.Now.AddDays(10));
 
+            Promocion promoNull = _promocionLogic.ActualizarInfoPromocion(promocionQueNoExsiteEnBD);
+
+            Assert.IsNull(promoNull);
         }
     }
 }
