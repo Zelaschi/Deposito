@@ -52,6 +52,22 @@
             UltimoID = 0;
         }
 
+        public Deposito(string area, string tamanio, bool climatizacion)
+        {
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            IdDeposito = ++UltimoID;
+        }
+
+        public Deposito(int idDeposito, string area, string tamanio, bool climatizacion)
+        {
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            IdDeposito = idDeposito;
+        }
+        
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
         {
             if (listaPromocionesQueAplicanADeposito.Contains(promoParametro))
@@ -71,22 +87,18 @@
             }
             listaPromocionesQueAplicanADeposito.Remove(promoParametro);
         }
-
-        public Deposito(string area, string tamanio, bool climatizacion)
-        {
-            Area = area;
-            Tamanio = tamanio;
-            Climatizacion = climatizacion;
-            IdDeposito = ++UltimoID;
+        public Promocion hayPromocionHoy() {
+            foreach (var promocion in listaPromocionesQueAplicanADeposito)
+            {
+                if (promocion.FechaInicio.CompareTo(DateTime.Now) <= 0 && promocion.FechaFin.CompareTo(DateTime.Now) > 0) 
+                {
+                    return promocion;
+                }
+            }
+            return null;
         }
+        
 
-        public Deposito(int idDeposito, string area, string tamanio, bool climatizacion)
-        {
-            Area = area;
-            Tamanio = tamanio;
-            Climatizacion = climatizacion;
-            IdDeposito = idDeposito;
-        }
 
     }
 }
