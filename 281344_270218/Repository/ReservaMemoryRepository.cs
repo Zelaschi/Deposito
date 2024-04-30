@@ -18,7 +18,7 @@ namespace Repository
 
         public Reserva? Find(Func<Reserva, bool> filter)
         {
-            throw new NotImplementedException();
+            return _reservas.Where(filter).FirstOrDefault();
         }
 
         public IList<Reserva> FindAll()

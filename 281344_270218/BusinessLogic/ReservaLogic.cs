@@ -21,5 +21,10 @@ namespace BusinessLogic
         {
             return _repository.FindAll();
         }
+
+        public Reserva? BuscarReservaPorId(int id) 
+        {
+            return _repository.Find(x => x.IdReserva == id);
+        }
     }
 }
