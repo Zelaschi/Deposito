@@ -55,6 +55,13 @@ namespace DomainTest
 
             Assert.AreEqual(reserva.Precio, 631);
         }
+        [TestMethod]
+        public void calculoDePrecioDeReservaMedianoConRefrigeracionDe15Dias() 
+        {
+            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(15), deposito, cliente);
+
+            Assert.AreEqual(reserva.Precio, 1282);
+        }
 
 
     }
