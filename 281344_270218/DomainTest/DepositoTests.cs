@@ -99,5 +99,12 @@ namespace DomainTest
             Promocion promocionEncontrada = deposito.mejorPromocionHoy();
             Assert.AreEqual(promo3.Id, promocionEncontrada.Id);
         }
+        [TestMethod]
+        public void siNoTienePromocionHoyQueDevuelvaNull() 
+        {
+            Promocion promoNull = deposito.mejorPromocionHoy();
+
+            Assert.IsNull(promoNull);
+        }
     }
 }
