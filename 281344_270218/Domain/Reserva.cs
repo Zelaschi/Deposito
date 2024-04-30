@@ -10,11 +10,16 @@
         public int Precio { get; set; }
         public string Estado { get; set; } = "Pendiente";
 
+        private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            return fechaDesde.CompareTo(fechaHasta) <= 0;
+        }
+
         public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio)
         {
-            if (fechaDesde > fechaHasta)
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
             {
-                throw new ArgumentException("Ingrese un periodo de fechas valido");
+                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
             Id = ++UltimoID;
             FechaDesde = fechaDesde;

@@ -26,7 +26,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void Reserva_No_Debe_Permitir_Fechas_Inconsistentes()
+        public void ReservaNoDebePermitirFechasInconsistentes()
         {
             Assert.ThrowsException<ArgumentException>(() => new Reserva(DateTime.Today.AddDays(1), DateTime.Today, deposito, 100), "Ingrese un periodo de fechas valido");
         }
