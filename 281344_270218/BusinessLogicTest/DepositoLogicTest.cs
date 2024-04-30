@@ -98,5 +98,19 @@ namespace BusinessLogicTest
 
             Assert.IsNull(depositoEliminado);
         }
+        [TestMethod]
+        public void AgregarPromocionADepositoTest() 
+        {
+            
+            Promocion promo = new Promocion("Promo Test", 20, DateTime.Now, DateTime.Now.AddDays(10));
+
+            deposito1.AgrearPromocionADeposito(promo);
+            
+            Promocion promocionEncontrada = deposito1.HayPromocionHoy();
+
+            Assert.AreEqual(promo.Id, promocionEncontrada.Id);
+
+
+        }
     }
 }
