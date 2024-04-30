@@ -53,5 +53,16 @@ namespace BusinessLogicTest
             IList<Reserva> resultReservas = _reservaLogic.ListarTodasLasReservas();
             Assert.AreEqual(reserva.IdReserva, resultReservas.FirstOrDefault(x => x.IdReserva == reserva.IdReserva).IdReserva);
         }
+
+        [TestMethod]
+
+        public void EncontrarReservaPorIdTest()
+        {
+            _reservaLogic.AgregarReserva(reserva);
+
+            Reserva reservaPorId = _reservaLogic.BuscarReservaPorId(reserva.IdReserva);
+
+            Assert.AreEqual(reserva.IdReserva, reservaPorId.IdReserva);
+        }
     }
 }
