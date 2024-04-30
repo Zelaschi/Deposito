@@ -26,5 +26,10 @@ namespace BusinessLogic
         {
             return _repository.Find(x => x.IdReserva == id);
         }
+
+        public void EliminarReserva(int id) 
+        {
+            _repository.Delete(id);
+        }
     }
 }

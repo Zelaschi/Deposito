@@ -13,7 +13,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _reservas.RemoveAll(x => x.IdReserva == id);
         }
 
         public Reserva? Find(Func<Reserva, bool> filter)
