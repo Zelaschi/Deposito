@@ -5,9 +5,9 @@
         private static int contadorPromo = 0;
         public int Id { get; set; }
         private string _etiqueta;
-        public string Etiqueta { 
-            get 
-            { 
+        public string Etiqueta {
+            get
+            {
                 return _etiqueta;
             }
             set
@@ -20,41 +20,33 @@
             }
         }
         public int PorcentajeDescuento { get; set; }
-        private DateTime _fechaInicio;
-        public DateTime FechaInicio {
-            get { return _fechaInicio; }
-            set
-            {
-                if (value.CompareTo(FechaFin) <= 0)
-                {
-                    throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
-                }
-                _fechaInicio = value;
-            }
+        public DateTime FechaInicio { get; set; }
 
-        }
-        private DateTime _fechaFin;
-        public DateTime FechaFin
+        public DateTime FechaFin { get; set; }
+
+        private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaInicio, DateTime fechaFin)
         {
-            get { return _fechaFin; }
-            set
-            {
-                if (_fechaInicio.CompareTo(value) >= 0)
-                {
-                    throw new ArgumentException("La fecha de fin debe ser posterior que la fecha de inicio.");
-                }
-                _fechaFin = value;
-            }
+            return fechaInicio.CompareTo(fechaFin) <= 0;
         }
 
-        public Promocion( string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
+        public Promocion(string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
         {
-            if (fechaInicio.CompareTo(fechaFin) >= 0)
-            {
-                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de Fin.");
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
+                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
             Id = contadorPromo;
             contadorPromo++;
+            Etiqueta = etiqueta;
+            PorcentajeDescuento = porcentajeDescuento;
+            FechaInicio = fechaInicio;
+            FechaFin = fechaFin;
+        }
+        public Promocion(int id, string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
+        {
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
+                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
+            }
+            Id = id;
             Etiqueta = etiqueta;
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;

@@ -30,5 +30,10 @@ namespace BusinessLogic
         {
             _repository.Delete(id);
         }
+
+        public Promocion ActualizarInfoPromocion(Promocion promocionActualizada)
+        {
+            return _repository.Update(promocionActualizada);
+        }
     }
 }

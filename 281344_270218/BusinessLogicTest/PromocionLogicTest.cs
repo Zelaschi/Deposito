@@ -17,7 +17,7 @@ namespace BusinessLogicTest
             _promocionRepository = new PromocionMemoryRepository();
             _promocionLogic = new PromocionLogic(_promocionRepository);
 
-            promo = new Promocion("Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
+            promo = new Promocion(0, "Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
         }
         [TestMethod]
         public void AgregarPromocionTest() {
@@ -78,13 +78,12 @@ namespace BusinessLogicTest
 
             string etiquetaActualizada = "new Etiqueta";
             int porcentajeActualizado = 32;
-            DateTime fechaInicioActualizada = DateTime.Now.AddDays(1);
+            DateTime fechaInicioActualizada = DateTime.Now;
             DateTime fechaFinActualizada = DateTime.Now.AddDays(16);
 
-            Promocion promoActualizada = new Promocion(etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada)
+            Promocion promoActualizada = new Promocion(promo.Id, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
 
             Promocion promoActualizdaRetorno = _promocionLogic.ActualizarInfoPromocion(promoActualizada);
-
 
             Assert.AreEqual(etiquetaActualizada, promoActualizdaRetorno.Etiqueta);
             Assert.AreEqual(porcentajeActualizado, promoActualizdaRetorno.PorcentajeDescuento);

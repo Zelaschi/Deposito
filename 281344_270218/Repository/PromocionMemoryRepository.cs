@@ -26,9 +26,19 @@ namespace Repository
             return _promociones;
         }
 
-        public Promocion? Update(Promocion updatedEntity)
+        public Promocion? Update(Promocion promoActualizada)
         {
-            throw new NotImplementedException();
+            Promocion promocionEncontrada = Find(x => x.Id == promoActualizada.Id);
+
+            if (promocionEncontrada != null)
+            {
+                promocionEncontrada.Etiqueta = promoActualizada.Etiqueta;
+                promocionEncontrada.PorcentajeDescuento = promoActualizada.PorcentajeDescuento;
+                promocionEncontrada.FechaInicio = promoActualizada.FechaInicio;
+                promocionEncontrada.FechaFin = promoActualizada.FechaFin;
+
+            }
+            return promocionEncontrada;
         }
     }
 }
