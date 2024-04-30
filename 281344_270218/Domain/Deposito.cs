@@ -3,32 +3,49 @@
     public class Deposito
     {
         public static int UltimoID { get; set; } = 0;
-        public int Id { get; set; }
-        public string Area { get; set; }
-        public string Tamanio { get; set; }
+        public int IdDeposito { get; set; }
+        private string _area;
+        public string? Area
+        {
+            get
+            {
+                return _area;
+            }
+            set
+            {
+                string[] areasPosibles = { "A", "B", "C", "D", "E" };
+                if (areasPosibles.Contains(value))
+                {
+                    _area = value;
+                }
+                else
+                {
+                    throw new ArgumentException("El area tiene que estar dentro de los valores validos");
+                }
+            }
+        }
+        private string _tamanio;
+        public string? Tamanio
+        {
+            get
+            {
+                return _tamanio;
+            }
+            set
+            {
+                string[] tamaniosPosibles = { "Pequenio", "Mediano", "Grande" };
+                if (tamaniosPosibles.Contains(value))
+                {
+                    _tamanio = value;
+                }
+                else
+                {
+                    throw new ArgumentException("El tamanio tiene que estar dentro de los valores validos");
+                }
+            }
+        }
         public bool Climatizacion { get; set; }
         public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
-
-        public Deposito(string area, string tamanio, bool climatizacion)
-        {
-            if (!ValidarArea(area) || !ValidarTamanio(tamanio))
-            {
-                throw new ArgumentException("Deposito invalido");
-            }
-            Area = area;
-            Tamanio = tamanio;
-            Climatizacion = climatizacion;
-            Id = ++UltimoID;
-        }
-        private bool ValidarArea(string area)
-        {
-            return new string[] { "A", "B", "C", "D", "E" }.Contains(area);
-        }
-
-        private bool ValidarTamanio(string tamanio)
-        {
-            return new string[] { "Pequenio", "Mediano", "Grande" }.Contains(tamanio);
-        }
 
         public static void ResetId()
         {
@@ -53,6 +70,22 @@
                 throw new InvalidOperationException("El elemento no existe en la lista");
             }
             listaPromocionesQueAplicanADeposito.Remove(promoParametro);
+        }
+
+        public Deposito(string area, string tamanio, bool climatizacion)
+        {
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            IdDeposito = ++UltimoID;
+        }
+
+        public Deposito(int idDeposito, string area, string tamanio, bool climatizacion)
+        {
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            IdDeposito = idDeposito;
         }
 
     }
