@@ -16,5 +16,10 @@ namespace BusinessLogic
         {
             return _repository.Add(reserva);
         }
+
+        public IList<Reserva> ListarTodasLasReservas()
+        {
+            return _repository.FindAll();
+        }
     }
 }

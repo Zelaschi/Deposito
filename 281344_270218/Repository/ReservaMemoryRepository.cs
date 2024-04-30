@@ -23,7 +23,7 @@ namespace Repository
 
         public IList<Reserva> FindAll()
         {
-            throw new NotImplementedException();
+            return _reservas;
         }
 
         public Reserva? Update(Reserva updatedEntity)
