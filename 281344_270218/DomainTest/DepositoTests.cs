@@ -85,7 +85,19 @@ namespace DomainTest
 
             Assert.AreEqual(promo.Id, promocionEncontrada.Id);
         }
+        [TestMethod]
+        public void BuscarPromocionDelDiaYQueDevuelvaLaMejorPromocionQueLeAplicaTest() 
+        {
+            Promocion promo1 = new Promocion("Promo1 Test", 20, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promo2 = new Promocion("Promo2 Test", 25, DateTime.Now, DateTime.Now.AddDays(10));
+            Promocion promo3 = new Promocion("Promo3 Test", 45, DateTime.Now, DateTime.Now.AddDays(10));
 
-        
+            deposito.AgregarPromocionADeposito(promo1);
+            deposito.AgregarPromocionADeposito(promo2);
+            deposito.AgregarPromocionADeposito(promo3);
+
+            Promocion promocionEncontrada = deposito.mejorPromocionHoy();
+            Assert.AreEqual(promo3.Id, promocionEncontrada.Id);
+        }
     }
 }

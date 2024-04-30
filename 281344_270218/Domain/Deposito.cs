@@ -97,7 +97,32 @@
             }
             return null;
         }
-        
+        private IList<Promocion> promocionesHoy() 
+        {
+            List<Promocion> promosHoy = new List<Promocion>();
+            foreach (var promocion in listaPromocionesQueAplicanADeposito)
+            {
+                if (promocion.FechaInicio.CompareTo(DateTime.Now) <= 0 && promocion.FechaFin.CompareTo(DateTime.Now) > 0)
+                {
+                    promosHoy.Add(promocion);
+                }
+            }
+            return promosHoy;
+        }
+        public Promocion? mejorPromocionHoy() {
+            IList<Promocion> promocionesHoy = this.promocionesHoy();
+            int mejorDescuento = 0;
+            Promocion mejorPromocion = null;
+
+            foreach (var promocion in listaPromocionesQueAplicanADeposito) 
+            {
+                if (promocion.PorcentajeDescuento > mejorDescuento) {
+                    mejorDescuento = promocion.PorcentajeDescuento;
+                    mejorPromocion = promocion;
+                }
+            }
+            return mejorPromocion;
+        }
 
 
     }
