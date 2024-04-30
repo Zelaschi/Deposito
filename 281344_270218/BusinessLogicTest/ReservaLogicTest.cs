@@ -64,5 +64,27 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(reserva.IdReserva, reservaPorId.IdReserva);
         }
+
+        [TestMethod]
+
+        public void BuscarReservaPorIdQueNoExisteYDevuelvaNullTest()
+        {
+            var promocionNoEncontrada = _reservaLogic.BuscarReservaPorId(1);
+
+            Assert.IsNull(promocionNoEncontrada);
+        }
+
+        [TestMethod]
+
+        public void EliminarReservaTest()
+        {
+            _reservaLogic.AgregarReserva(reserva);
+
+            _reservaLogic.EliminarReserva(reserva.IdReserva);
+
+            var reservaEliminada = _reservaLogic.BuscarReservaPorId(reserva.IdReserva);
+
+            Assert.IsNull(reservaEliminada);
+        }
     }
 }
