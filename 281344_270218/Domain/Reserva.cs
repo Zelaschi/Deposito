@@ -10,12 +10,14 @@
         public int Precio { get; set; }
         public string Estado { get; set; } = "Pendiente";
 
+        public Cliente Cliente { get; set; }
+
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
             return fechaDesde.CompareTo(fechaHasta) <= 0;
         }
 
-        public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio)
+        public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio, Cliente cliente)
         {
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
             {
@@ -26,6 +28,7 @@
             FechaHasta = fechaHasta;
             Deposito = deposito;
             Precio = precio;
+            Cliente = cliente;
         }
     }
 }
