@@ -34,6 +34,13 @@ namespace DomainTest
             Assert.ThrowsException<ArgumentException>(() => new Reserva(DateTime.Today.AddDays(1), DateTime.Today, deposito, 100, cliente), "Ingrese un periodo de fechas valido");
         }
 
+        [TestMethod]
+        public void calculoDePrecioDeDeposito() { 
+            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, cliente);
+            
+            Assert.AreEqual(reserva.Precio, 95);
+        }
+
 
     }
 }

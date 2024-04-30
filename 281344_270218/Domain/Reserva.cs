@@ -2,7 +2,7 @@
 {
     public class Reserva
     {
-        public static int UltimoID { get; set; } = 0;
+        private static int UltimoID { get; set; } = 0;
         public int IdReserva { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
@@ -44,5 +44,6 @@
             Precio = precio;
             Cliente = cliente;
         }
+        
     }
 }
