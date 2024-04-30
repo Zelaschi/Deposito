@@ -35,11 +35,12 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void calculoDePrecioDeDeposito() { 
+        public void calculoDePrecioDeDepositoMedianoUnDiaConRefrigeracion() { 
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, cliente);
             
             Assert.AreEqual(reserva.Precio, 95);
         }
+        
 
 
     }

@@ -44,6 +44,32 @@
             Precio = precio;
             Cliente = cliente;
         }
+        private int CalculoPrecioDeReserva() {
+            int precioPorDiaDependiendoDelTamaño = 75;
+            TimeSpan diferencia = FechaHasta - FechaDesde;
+            int cantidadDeDias = diferencia.Days;
+            int precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
+            if (Deposito.Climatizacion) 
+            {
+                precioReserva += 20 * cantidadDeDias;
+            }
+
+            return precioReserva;
+
+        }
+        public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, Cliente cliente) 
+        {
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
+            {
+                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
+            }
+            IdReserva = ++UltimoID;
+            FechaDesde = fechaDesde;
+            FechaHasta = fechaHasta;
+            Deposito = deposito;
+            Cliente = cliente;
+            Precio = CalculoPrecioDeReserva();
+        }
         
     }
 }
