@@ -45,7 +45,19 @@
             Cliente = cliente;
         }
         private int CalculoPrecioDeReserva() {
-            int precioPorDiaDependiendoDelTamaño = 75;
+            int precioPorDiaDependiendoDelTamaño = 0;
+            switch (Deposito.Tamanio)
+            {
+                case "Pequenio":
+                    precioPorDiaDependiendoDelTamaño = 50;
+                    break;
+                case "Mediano":
+                    precioPorDiaDependiendoDelTamaño = 75;
+                    break;
+                case "Grande":
+                    precioPorDiaDependiendoDelTamaño = 100;
+                    break;
+            }
             TimeSpan diferencia = FechaHasta - FechaDesde;
             int cantidadDeDias = diferencia.Days;
             int precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
