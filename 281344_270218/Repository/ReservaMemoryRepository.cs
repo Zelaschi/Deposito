@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    internal class ReservaMemoryRepository : IRepository<Reserva>
+    public class ReservaMemoryRepository : IRepository<Reserva>
     {
         private List<Reserva> _reservas = new List<Reserva>();
         public Reserva Add(Reserva oneElement)

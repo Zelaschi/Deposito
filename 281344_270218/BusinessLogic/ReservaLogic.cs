@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Repository;
+using Domain;
 
 namespace BusinessLogic
 {
-    internal class ReservaLogic
+    public class ReservaLogic
     {
+        private readonly IRepository<Reserva> _repository;
+
+        public ReservaLogic(IRepository<Reserva> reservaRepository)
+        {
+            _repository = reservaRepository;
+        }
+
+
     }
 }
