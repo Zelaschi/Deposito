@@ -62,7 +62,7 @@
                     precioPorDiaDependiendoDelTamaño = 100;
                     break;
             }
-            
+
             if (cantidadDeDias >= 7 && cantidadDeDias <= 14)
             {
                 descuento = 0.05;
@@ -73,13 +73,21 @@
 
             int precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
 
-            if (Deposito.Climatizacion) 
+            if (Deposito.Climatizacion)
             {
                 precioReserva += 20 * cantidadDeDias;
             }
 
             double precioConDescuento = precioReserva * (1 - descuento);
             precioReserva = (int)precioConDescuento;
+
+            var porcentajeDescuentoPromocion = Deposito.mejorPromocionHoy();
+            if (porcentajeDescuentoPromocion != null) 
+            {
+                double descuentoPromocion = ((100 - porcentajeDescuentoPromocion.PorcentajeDescuento) * 0.01);
+                double precioConDescuentoPromocion = precioReserva * descuentoPromocion;
+                precioReserva = (int)precioConDescuentoPromocion;
+            }
 
             return precioReserva;
 

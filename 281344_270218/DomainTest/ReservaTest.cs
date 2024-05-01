@@ -68,7 +68,7 @@ namespace DomainTest
             Promocion promoTest = new Promocion("etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(10));
             depositoTest.AgregarPromocionADeposito(promoTest);
 
-            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(15), depositoTest, cliente);
+            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(10), depositoTest, cliente);
 
             Assert.AreEqual(reserva.Precio, 760);
         }
