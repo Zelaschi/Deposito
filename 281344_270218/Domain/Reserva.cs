@@ -49,6 +49,8 @@
             TimeSpan diferencia = FechaHasta - FechaDesde;
             int cantidadDeDias = diferencia.Days;
             double descuento = 0;
+            var porcentajeDescuentoPromocion = Deposito.mejorPromocionHoy();
+            int precioReserva;
 
             switch (Deposito.Tamanio)
             {
@@ -71,7 +73,7 @@
                 descuento = 0.10;
             }
 
-            int precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
+            precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
 
             if (Deposito.Climatizacion)
             {
@@ -81,7 +83,6 @@
             double precioConDescuento = precioReserva * (1 - descuento);
             precioReserva = (int)precioConDescuento;
 
-            var porcentajeDescuentoPromocion = Deposito.mejorPromocionHoy();
             if (porcentajeDescuentoPromocion != null) 
             {
                 double descuentoPromocion = ((100 - porcentajeDescuentoPromocion.PorcentajeDescuento) * 0.01);
