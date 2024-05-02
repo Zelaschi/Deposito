@@ -23,13 +23,13 @@ namespace DomainTest
         [TestMethod]
 
         [ExpectedException(typeof(ArgumentException))]
-        public void Deposito_Lanzar_Excepcion_Si_Invalido()
+        public void DepositoLanzarExcepcionSiInvalido()
         {
             Deposito deposito = new Deposito("Z", "Gigante", true);
         }
 
         [TestMethod]
-        public void Incrementar_Id_Cuando_Se_Crea_Deposito()
+        public void IncrementarIdCuandoSeCreaDepositoTest()
         {
             Deposito.ResetId();
 
