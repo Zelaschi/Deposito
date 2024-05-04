@@ -1,5 +1,41 @@
-﻿<h3>Component1</h3>
+﻿@page "/cliente"
+
+@using BusinessLogic
+@using Domain 
+
+@inject ClienteLogic ClienteLogic
+@inject NavigationManager NavigationManager
+
+<h1>Lista Clientes</h1>
+<h1>
+    <a href="/cliente/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Cliente</a>
+</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre y Apellido</th>
+            <th>Mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in _listaClientes)
+        {
+            <tr>
+                <td>@cliente.IdPersona</td>
+                <td>@cliente.NombreYApellido</td>
+                <td>@cliente.Mail</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @code {
-
+    private List<Cliente>? _listaClientes = new List<Cliente>();
+    
+    protected override void OnInitialized()
+    {
+        _listaClientes = ClienteLogic.listarTodosLosClientes().ToList();
+    }
 }

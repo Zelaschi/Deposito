@@ -1,5 +1,42 @@
-﻿<h3>Component</h3>
+﻿@page "/cliente/crear"
+
+<PageTitle>Crear Cliente</PageTitle>
+
+@using BusinessLogic
+@using Domain
+
+@inject ClienteLogic ClienteLogic
+@inject NavigationManager NavigationManager
+
+<h1>Crear Cliente</h1>
+<form>
+    <div class="form-group">
+        <label for="nombreyapellido">Nombre y Apellido</label>
+        <input type="text" class="form-control" id="NombreYApellido" @bind="_clienteActual.NombreYApellido" />
+    </div>
+    <div class="form-group">
+        <label for="mail">Mail</label>
+        <input type="text" class="form-control" id="Mail" @bind="_clienteActual.Mail" />
+    </div>
+    <div class="form-group">
+        <label for="title">Contrasenia</label>
+        <input type="text" class="form-control" id="Contrasenia" @bind="_clienteActual.Password" />
+    </div>
+
+    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar cambios</button>
+</form>
 
 @code {
+    private Cliente? _clienteActual;
 
+    protected override void OnInitialized()
+    {
+        _clienteActual = new Cliente("Juan Perez", "juanperez@gmail.com", "Contrasenia1!");
+    }
+
+    private void GuardarCambios()
+    {
+        ClienteLogic.AgregarCliente(_clienteActual);
+        NavigationManager.NavigateTo("/cliente");
+    }
 }

@@ -1,0 +1,50 @@
+﻿@page "/login"
+
+@using BusinessLogic
+@using Domain 
+@using InterfazDeUsuario.Data
+
+@inject SessionLogic SessionLogic
+@inject NavigationManager NavigationManager
+@inject ClienteLogic ClienteLogic
+
+<h1>Login</h1>
+
+<form @onsubmit="HandleLogin">
+
+    <div class="form-group">
+        <label for="mail">Mail</label>
+        <input type="text" class="form-control" id="username" @bind="cliente.Mail" required />
+    </div>
+    <div class="form-group">
+        <label for="contrasenia">Contrasenia</label>
+        <input type="password" class="form-control" id="password" @bind="cliente.Password" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+
+</form>
+
+
+@code {
+    private Cliente cliente = new Cliente("juan Perez", "juanperez@gmail.com", "JuanPerez1!");
+    private string mensajeError;
+    private void HandleLogin()
+    {
+        if (SessionLogic.ValidarCredenciales(cliente))
+        {
+            SessionLogic.Login(cliente);
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            mensajeError = "Nombre o contrasenia invalidos";
+        }
+    }
+}
+
+@if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger">
+        @mensajeError
+    </div>
+}

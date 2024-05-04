@@ -24,6 +24,7 @@ builder.Services.AddSingleton<DepositoLogic>();
 builder.Services.AddSingleton<PromocionLogic>();
 builder.Services.AddSingleton<AdministradorLogic>();
 builder.Services.AddSingleton<ReservaLogic>();
+builder.Services.AddSingleton<SessionLogic>();
 
 
 var app = builder.Build();
