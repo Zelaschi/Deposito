@@ -1,0 +1,61 @@
+﻿@page "/reserva/crear"
+
+<PageTitle>Crear Reserva</PageTitle>
+
+@using BusinessLogic
+@using Domain
+
+@inject ReservaLogic ReservaLogic
+@inject NavigationManager NavigationManager
+@inject ClienteLogic ClienteLogic
+@inject DepositoLogic DepositoLogic
+
+<h1>Crear Reserva</h1>
+<form>
+    <div class="form-group">
+        <label for="fechaDesde">Fecha Desde</label>
+        <input type="datetime" class="form-control" id="fechaDesde" @bind="_reservaActual.FechaDesde" />
+    </div>
+    <div class="form-group">
+        <label for="fechaHasta">Fecha Hasta</label>
+        <input type="datetime" class="form-control" id="fechaHasta" @bind="_reservaActual.FechaHasta" />
+    </div>
+    <div class="form-group">
+        <label for="Deposito">Deposito</label>
+        <select class="form-control" value="@_idDepositoSeleccionado" @onchange="OnChangeDeposito">
+            <option diable selected value="">Seleccionar Deposito</option>
+            @foreach(var deposito in _depositos)
+            {
+                <option value="@deposito.IdDeposito" selected="@(deposito.IdDeposito==_idDepositoSeleccionado)">
+                    @deposito.IdDeposito
+                </option>
+            }
+        </select>
+    </div>
+
+    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar cambios</button>
+</form>
+
+@code {
+    private Reserva? _reservaActual;
+    private List<Deposito>? _depositos;
+    private int _idDepositoSeleccionado;
+
+    protected override void OnInitialized()
+    {
+        _reservaActual = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), null, 0, null);
+        _depositos = DepositoLogic.GetAll().ToList();
+    }
+
+    private void GuardarCambios()
+    {
+        ReservaLogic.AgregarReserva(_reservaActual);
+        NavigationManager.NavigateTo("/reserva");
+    }
+
+    private void OnChangeDeposito(ChangeEventArgs d)
+    {
+        int depositoId = int.Parse(d.Value.ToString());
+        _reservaActual.Deposito = DepositoLogic.buscarDepositoPorId(depositoId);
+    }
+}

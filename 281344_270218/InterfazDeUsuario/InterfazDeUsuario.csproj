@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\clientes\" />
-    <Folder Include="Pages\reserva\" />
   </ItemGroup>
 
 </Project>
