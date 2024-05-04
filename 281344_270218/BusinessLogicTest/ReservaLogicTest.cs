@@ -86,5 +86,25 @@ namespace BusinessLogicTest
 
             Assert.IsNull(reservaEliminada);
         }
+
+        [TestMethod]
+
+        public void AceptarReservaTest()
+        {
+            _reservaLogic.AgregarReserva(reserva);
+            string etiquetaAceptada = "Aceptada";
+            Reserva reservaActualizada = new Reserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, reserva.Deposito, reserva.Precio, reserva.Cliente);
+            reservaActualizada.Estado = etiquetaAceptada;
+
+            Reserva reservaActualizadaRetorno = _reservaLogic.ActualizarReserva(reservaActualizada);
+
+            Assert.AreEqual(reservaActualizada.IdReserva, reserva.IdReserva);
+            Assert.AreEqual(reservaActualizada.FechaDesde, reserva.FechaDesde);
+            Assert.AreEqual(reservaActualizada.FechaHasta, reserva.FechaHasta);
+            Assert.AreEqual(reservaActualizada.Deposito, reserva.Deposito);
+            Assert.AreEqual(reservaActualizada.Precio, reserva.Precio);
+            Assert.AreEqual(reservaActualizada.Cliente, reserva.Cliente);
+            Assert.AreEqual(reservaActualizada.Estado, "Aceptada");
+        }
     }
 }
