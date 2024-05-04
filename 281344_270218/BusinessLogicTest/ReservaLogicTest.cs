@@ -126,5 +126,8 @@ namespace BusinessLogicTest
             Assert.AreEqual(reservaActualizada.Cliente, reserva.Cliente);
             Assert.AreEqual(reservaActualizada.Estado, "Rechazada");
         }
+
+        [TestMethod]
+
     }
 }

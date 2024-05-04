@@ -10,6 +10,22 @@
         public int Precio { get; set; }
         public string Estado { get; set; } = "Pendiente";
 
+        private string _justificacionRechazo = "en caso de ser rechazada aca esta la justificacion";
+        public string? JustificacionRechazo
+        {
+            get
+            {
+                return _justificacionRechazo;
+            }
+            set
+            {
+                if (value.Length > 300)
+                {
+                    throw new ArgumentException("El largo de la justificacion debe ser menor a 300 caracteres.");
+                }
+                _justificacionRechazo = value;
+            }
+        }
         public Cliente Cliente { get; set; }
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
