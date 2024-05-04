@@ -20,6 +20,10 @@ namespace ControllerLayer
             _reservaLogic = reservaLogic; 
         }
 
-        
+        public void RegistrarCliente(DTOCliente aDTOCliente)
+        {
+            Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
+            _clienteLogic.AgregarCliente(aCliente);
+        }
     }
 }

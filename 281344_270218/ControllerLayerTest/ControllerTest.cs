@@ -23,7 +23,7 @@ namespace ControllerLayerTest
         private ReservaLogic _reservaLogic;
         private IRepository<Reserva> _reservaRespository;
 
-        private const string emailTest = "mailvalido@gmail.com";
+        private const string emailTest = "totozelaschi@gmail.com";
         private const string pwdTest = "Password1!";
         private const string nombreYApellidoTest = "NombreApellido";
 
