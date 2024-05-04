@@ -23,7 +23,7 @@ namespace ControllerLayerTest
         private ReservaLogic _reservaLogic;
         private IRepository<Reserva> _reservaRespository;
 
-        private const string emailTest = "mailValido@gmail.com";
+        private const string emailTest = "mailvalido@gmail.com";
         private const string pwdTest = "Password1!";
         private const string nombreYApellidoTest = "NombreApellido";
 
@@ -56,9 +56,15 @@ namespace ControllerLayerTest
 
         }
 
-        //[TestMethod]
-        //public void TestMethod1()
-        //{
-        //}
+        [TestMethod]
+        public void RegistrarClienteTest()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+
+            Assert.AreEqual(aDTOCliente.Mail, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).Mail);
+            Assert.AreEqual(aDTOCliente.NombreYApellido, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).NombreYApellido);
+            Assert.AreEqual(aDTOCliente.Password, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).Password);
+
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BusinessLogic;
+using Domain;
 
 namespace ControllerLayer
 {
@@ -18,5 +19,7 @@ namespace ControllerLayer
             _promocionLogic = promocionLogic;
             _reservaLogic = reservaLogic; 
         }
+
+        
     }
 }
