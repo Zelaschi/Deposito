@@ -23,6 +23,16 @@ namespace ControllerLayerTest
         private ReservaLogic _reservaLogic;
         private IRepository<Reserva> _reservaRespository;
 
+        private const string emailTest = "mailValido@gmail.com";
+        private const string pwdTest = "Password1!";
+        private const string nombreYApellidoTest = "NombreApellido";
+
+        private DTOCliente aDTOCliente;
+        private DTOAdministrador aDTOadministrador;
+        private DTODeposito aDTOdeposito;
+        private DTOPromocion aDTOpromocion;
+        private DTOReserva aDTOreserva;
+
         [TestInitialize]
         public void setUp() { 
             _clienteRepository = new ClienteMemoryRepository();
@@ -37,6 +47,13 @@ namespace ControllerLayerTest
             _reservaLogic = new ReservaLogic(_reservaRespository);
 
             _controller = new Controller(_administradorLogic, _clienteLogic, _depositoLogic, _promocionLogic, _reservaLogic);
+
+            aDTOCliente = new DTOCliente(nombreYApellidoTest,emailTest, pwdTest);
+            aDTOadministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
+            aDTOdeposito = new DTODeposito("A", "Grande", true);
+            aDTOpromocion = new DTOPromocion("promo", 20, DateTime.Today, DateTime.Today.AddDays(10));
+            aDTOreserva = new DTOReserva(DateTime.Today, DateTime.Today.AddDays(15), aDTOdeposito, aDTOCliente);
+
         }
 
         //[TestMethod]
