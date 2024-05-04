@@ -18,6 +18,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterfazDeUsuario", "InterfazDeUsuario\InterfazDeUsuario.csproj", "{17727607-CABA-4FD4-A20C-2E9B8490766E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerLayer", "ControllerLayer\ControllerLayer.csproj", "{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerLayerTest", "ControllerLayerTest\ControllerLayerTest.csproj", "{2E65F697-8F42-4EA2-9AE2-17FA006240AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,14 @@ Global
 		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

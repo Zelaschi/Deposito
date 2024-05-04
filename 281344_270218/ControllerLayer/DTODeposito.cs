@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Controller
+namespace ControllerLayer
 {
-    internal class DTOReserva
+    internal class DTODeposito
     {
     }
 }
