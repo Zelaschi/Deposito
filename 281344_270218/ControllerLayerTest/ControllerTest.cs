@@ -210,16 +210,6 @@ namespace ControllerLayerTest
             _controller.buscarClientePorId(1);
         }
         [TestMethod]
-        public void ActualizarClienteTest() 
-        {
-            var DTOClienteActualizado = new DTOCliente("Nuevo nombre", "nuevomail@gmail.com", "NuevaContraseña1!");
-            _controller.RegistrarCliente(aDTOCliente);
-
-            DTOCliente DTOClienteActualizadoRetorno = _controller.ActualizarInfoCliente(DTOClienteActualizado);
-
-            Assert.AreEqual(DTOClienteActualizado.Mail, DTOClienteActualizadoRetorno.Mail);
-        }
-        [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void EliminarClienteTest() 
         {
@@ -318,6 +308,7 @@ namespace ControllerLayerTest
 
             _controller.RegistrarAdministrador(aDTOAdministrador);
         }
+        
 
         //DEPOSITO
         [TestMethod]

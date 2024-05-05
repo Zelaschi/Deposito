@@ -19,7 +19,7 @@ namespace ControllerLayer
             _clienteLogic = clienteLogic;
             _depositoLogic = depositoLogic;
             _promocionLogic = promocionLogic;
-            _reservaLogic = reservaLogic; 
+            _reservaLogic = reservaLogic;
         }
 
         public void RegistrarCliente(DTOCliente aDTOCliente)
@@ -41,13 +41,13 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
-            
+
         }
-        public IList<DTOCliente> listarTodosLosClientes() 
+        public IList<DTOCliente> listarTodosLosClientes()
         {
             IList<Cliente> listaClientes = _clienteLogic.listarTodosLosClientes();
             List<DTOCliente> listaDTOClientesRetorno = new List<DTOCliente>();
-            foreach(var cliente in listaClientes) 
+            foreach (var cliente in listaClientes)
             {
                 var DTOcliente = new DTOCliente(cliente.NombreYApellido, cliente.Mail, cliente.Password);
                 listaDTOClientesRetorno.Add(DTOcliente);
@@ -55,7 +55,7 @@ namespace ControllerLayer
             return listaDTOClientesRetorno;
         }
 
-        public DTOCliente buscarClientePorMail(string mailParametro) 
+        public DTOCliente buscarClientePorMail(string mailParametro)
         {
             var clienteEncontrado = _clienteLogic.buscarClientePorMail(mailParametro);
             if (clienteEncontrado == null) {
@@ -68,7 +68,7 @@ namespace ControllerLayer
         public DTOCliente buscarClientePorId(int IdParametro)
         {
             var clienteEncontrado = _clienteLogic.buscarClientePorId(IdParametro);
-            
+
             if (clienteEncontrado == null)
             {
                 throw new Exception("Cliente no encontrado!");
@@ -87,6 +87,11 @@ namespace ControllerLayer
             DTOCliente DTOClienteRetorno = new DTOCliente(clienteRetornoActualizacion.NombreYApellido, clienteRetornoActualizacion.Mail, clienteRetornoActualizacion.Password);
 
             return DTOClienteRetorno;
+        }
+        public void EliminarCliente(DTOCliente DTOClienteParametro)
+        { 
+            Cliente clienteEncontradoPorMail = _clienteLogic.buscarClientePorMail(DTOClienteParametro.Mail);
+            _clienteLogic.EliminarCliente(clienteEncontradoPorMail.IdPersona);
         }
 
 
