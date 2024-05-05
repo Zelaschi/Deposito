@@ -145,7 +145,7 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
         }
         [TestMethod]
-        public void RegistrarDosClientesOkTest() 
+        public void RegistrarDosClientesOkTest()
         {
             var DTOCliente1 = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             var DTOCliente2 = new DTOCliente(nombreYApellidoTest, "email2valido@gmail.com", pwdTest);
@@ -172,7 +172,7 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(DTOCliente2);
         }
         [TestMethod]
-        public void ListarTodosLosClientesTest() 
+        public void ListarTodosLosClientesTest()
         {
             var DTOCliente1 = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             var DTOCliente2 = new DTOCliente(nombreYApellidoTest, "email2valido@gmail.com", pwdTest);
@@ -186,6 +186,17 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOCliente2.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente2.Mail).NombreYApellido);
 
         }
+        [TestMethod]
+        public void BuscarClientePorMailTest() 
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+
+            var DTOClienteRetorno = _controller.buscarClientePorMail(aDTOCliente.Mail);
+
+            Assert.AreEqual(aDTOCliente.Mail, DTOClienteRetorno.Mail);
+
+        }
+
 
         //ADMINISTRADOR
         [TestMethod]

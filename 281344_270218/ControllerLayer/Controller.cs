@@ -54,6 +54,7 @@ namespace ControllerLayer
             return listaDTOClientesRetorno;
         }
 
+
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
         {
             try
