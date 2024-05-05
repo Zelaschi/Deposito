@@ -53,6 +53,11 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
+        public void RegistrarDeposito(DTODeposito aDTODeposito) 
+        {
+            Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+            _depositoLogic.AddDeposito(aDeposito);
+        }
 
 
     }
