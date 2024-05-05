@@ -92,7 +92,52 @@ namespace ControllerLayerTest
 
             _controller.RegistrarCliente(aDTOCliente);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClienteMailNull()
+        {
+            aDTOCliente.Mail = null;
 
-        s
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClienteMailVacio()
+        {
+            aDTOCliente.Mail = "";
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+        public void RegistrarPasswordMailNull()
+        {
+            aDTOCliente.Password = null;
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClientePasswordVacio()
+        {
+            aDTOCliente.Password = "";
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+        public void RegistrarClienteNombreYApellidoNull()
+        {
+            aDTOCliente.NombreYApellido = null;
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClienteNombreYApellidolVacio()
+        {
+            aDTOCliente.NombreYApellido = "";
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
     }
 }
