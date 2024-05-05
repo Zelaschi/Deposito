@@ -32,10 +32,28 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
-            catch (CampoNoPuedeSerVacioNiNull e) { 
+            catch (CampoNoPuedeSerVacioNiNull e)
+            {
                 throw new Exception(e.Message);
             }
-            
         }
+        public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
+        {
+            try
+            {
+                Administrador aAdministrador = new Administrador(0, aDTOAdministrador.NombreYApellido, aDTOAdministrador.Mail, aDTOAdministrador.Password);
+                _administradorLogic.AsignarAdministrador(aAdministrador);
+            }
+            catch (ArgumentException e)
+            {
+                throw new Exception(e.Message);
+            }
+            catch (CampoNoPuedeSerVacioNiNull e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+
     }
 }

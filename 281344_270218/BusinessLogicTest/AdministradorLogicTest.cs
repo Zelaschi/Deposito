@@ -72,5 +72,12 @@ namespace BusinessLogicTest
             _administradorLogic.AsignarAdministrador(admin2);
 
         }
+        [TestMethod]
+        public void ObtenerAdministradorTest() {
+            _administradorLogic.AsignarAdministrador(admin);
+            Administrador AdminRetorno = _administradorLogic.ObtenerAdministrador();
+
+            Assert.AreEqual(admin.IdPersona, AdminRetorno.IdPersona);
+        }
     }
 }

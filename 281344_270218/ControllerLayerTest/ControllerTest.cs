@@ -28,7 +28,7 @@ namespace ControllerLayerTest
         private const string nombreYApellidoTest = "NombreApellido";
 
         private DTOCliente aDTOCliente;
-        private DTOAdministrador aDTOadministrador;
+        private DTOAdministrador aDTOAdministrador;
         private DTODeposito aDTOdeposito;
         private DTOPromocion aDTOpromocion;
         private DTOReserva aDTOreserva;
@@ -49,7 +49,7 @@ namespace ControllerLayerTest
             _controller = new Controller(_administradorLogic, _clienteLogic, _depositoLogic, _promocionLogic, _reservaLogic);
 
             aDTOCliente = new DTOCliente(nombreYApellidoTest,emailTest, pwdTest);
-            aDTOadministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
+            aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOdeposito = new DTODeposito("A", "Grande", true);
             aDTOpromocion = new DTOPromocion("promo", 20, DateTime.Today, DateTime.Today.AddDays(10));
             aDTOreserva = new DTOReserva(DateTime.Today, DateTime.Today.AddDays(15), aDTOdeposito, aDTOCliente);
@@ -148,9 +148,9 @@ namespace ControllerLayerTest
         {
             _controller.RegistrarAdministrador(aDTOAdministrador);
 
-            Assert.AreEqual(aDTOAdministrador.Mail, _AdministradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).Mail);
-            Assert.AreEqual(aDTOAdministrador.NombreYApellido, _AdministradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).NombreYApellido);
-            Assert.AreEqual(aDTOAdministrador.Password, _AdministradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).Password);
+            Assert.AreEqual(aDTOAdministrador.Mail, _administradorLogic.(aDTOAdministrador.Mail).Mail);
+            Assert.AreEqual(aDTOAdministrador.NombreYApellido, _administradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).NombreYApellido);
+            Assert.AreEqual(aDTOAdministrador.Password, _administradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).Password);
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
