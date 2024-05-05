@@ -29,12 +29,12 @@ namespace ControllerLayerTest
 
         private DTOCliente aDTOCliente;
         private DTOAdministrador aDTOAdministrador;
-        private DTODeposito aDTOdeposito;
+        private DTODeposito aDTODeposito;
         private DTOPromocion aDTOpromocion;
         private DTOReserva aDTOreserva;
 
         [TestInitialize]
-        public void setUp() { 
+        public void setUp() {
             _clienteRepository = new ClienteMemoryRepository();
             _clienteLogic = new ClienteLogic(_clienteRepository);
             _administradorRespository = new AdministradorMemoryRepository();
@@ -48,9 +48,9 @@ namespace ControllerLayerTest
 
             _controller = new Controller(_administradorLogic, _clienteLogic, _depositoLogic, _promocionLogic, _reservaLogic);
 
-            aDTOCliente = new DTOCliente(nombreYApellidoTest,emailTest, pwdTest);
+            aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
-            aDTOdeposito = new DTODeposito("A", "Grande", true);
+            aDTODeposito = new DTODeposito(1, "A", "Grande", true);
             aDTOpromocion = new DTOPromocion("promo", 20, DateTime.Today, DateTime.Today.AddDays(10));
             aDTOreserva = new DTOReserva(DateTime.Today, DateTime.Today.AddDays(15), aDTOdeposito, aDTOCliente);
 
@@ -76,7 +76,7 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClientePasswordIncorrectaTest() { 
+        public void RegistrarClientePasswordIncorrectaTest() {
             aDTOCliente.Password = "password";
 
             _controller.RegistrarCliente(aDTOCliente);
@@ -231,6 +231,16 @@ namespace ControllerLayerTest
             aDTOAdministrador.NombreYApellido = "";
 
             _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+
+        [TestMethod]
+        public void RegistrarDepositoTest() {
+            _controller.RegistrarDeposito(aDTODeposito);
+
+            Assert.AreEqual(aDTODeposito.Id, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).IdDeposito);
+            Assert.AreEqual(aDTODeposito.Area, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Area);
+            Assert.AreEqual(aDTODeposito.Tamanio, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Tamanio);
+            Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
         }
 
     }
