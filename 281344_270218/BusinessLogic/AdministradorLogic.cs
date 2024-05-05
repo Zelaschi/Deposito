@@ -20,7 +20,15 @@ namespace BusinessLogic
         public IList<Administrador>? getAdministrador() {
             return _repository.FindAll();
         }
-        
+        public Administrador ObtenerAdministrador()
+        {
+            IList<Administrador> administradors = getAdministrador();
+            if (administradors == null)
+            {
+                throw new InvalidOperationException("AdministradorNoRegistrado");
+            }
+            return administradors.FirstOrDefault();
+        }
         public Administrador ActualizarInfoAdministrador(Administrador administradorActualizado) {
             return _repository.Update(administradorActualizado);
         }
