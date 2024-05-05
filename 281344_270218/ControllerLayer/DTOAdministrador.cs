@@ -10,7 +10,7 @@ namespace ControllerLayer
 
         public string Password { get; set; }
 
-        public DTOAdministrador(string aMail, string aNombreYApellido, string aPassword)
+        public DTOAdministrador(string aNombreYApellido, string aMail, string aPassword)
         {
             Mail = aMail;
             NombreYApellido = aNombreYApellido;

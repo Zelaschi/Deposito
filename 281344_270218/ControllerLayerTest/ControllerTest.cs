@@ -111,7 +111,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarPasswordNullTest()
+        public void RegistrarClientePasswordNullTest()
         {
             aDTOCliente.Password = null;
 
@@ -148,9 +148,9 @@ namespace ControllerLayerTest
         {
             _controller.RegistrarAdministrador(aDTOAdministrador);
 
-            Assert.AreEqual(aDTOAdministrador.Mail, _administradorLogic.(aDTOAdministrador.Mail).Mail);
-            Assert.AreEqual(aDTOAdministrador.NombreYApellido, _administradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).NombreYApellido);
-            Assert.AreEqual(aDTOAdministrador.Password, _administradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).Password);
+            Assert.AreEqual(aDTOAdministrador.Mail, _administradorLogic.ObtenerAdministrador().Mail);
+            Assert.AreEqual(aDTOAdministrador.NombreYApellido, _administradorLogic.ObtenerAdministrador().NombreYApellido);
+            Assert.AreEqual(aDTOAdministrador.Password, _administradorLogic.ObtenerAdministrador().Password);
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
@@ -200,7 +200,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarPasswordNullTest()
+        public void RegistrarAdministradorPasswordNullTest()
         {
             aDTOAdministrador.Password = null;
 
