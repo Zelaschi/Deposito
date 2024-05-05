@@ -63,7 +63,6 @@ namespace ControllerLayer
             }
             var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
 
-
             return DTOClienteRetorno;
         }
         public DTOCliente buscarClientePorId(int IdParametro)
@@ -79,6 +78,17 @@ namespace ControllerLayer
 
             return DTOClienteRetorno;
         }
+        public DTOCliente ActualizarInfoCliente(DTOCliente DTOClienteParametro) {
+
+            Cliente clienteEncontradoPorMail = _clienteLogic.buscarClientePorMail(DTOClienteParametro.Mail);
+            Cliente clienteActualizado = new Cliente(clienteEncontradoPorMail.IdPersona, DTOClienteParametro.NombreYApellido, DTOClienteParametro.Mail, DTOClienteParametro.Password);
+
+            Cliente clienteRetornoActualizacion = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
+            DTOCliente DTOClienteRetorno = new DTOCliente(clienteRetornoActualizacion.NombreYApellido, clienteRetornoActualizacion.Mail, clienteRetornoActualizacion.Password);
+
+            return DTOClienteRetorno;
+        }
+
 
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
         {

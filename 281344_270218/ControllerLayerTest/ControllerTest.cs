@@ -215,13 +215,18 @@ namespace ControllerLayerTest
             var DTOClienteActualizado = new DTOCliente("Nuevo nombre", "nuevomail@gmail.com", "NuevaContraseña1!");
             _controller.RegistrarCliente(aDTOCliente);
 
-            _controller.ActualizarInfoCliente(DTOClienteActualizado);
+            DTOCliente DTOClienteActualizadoRetorno = _controller.ActualizarInfoCliente(DTOClienteActualizado);
 
-            var DTOClienteActualizadoEncotnrado = _controller.buscarClientePorMail(DTOClienteActualizado.Mail);
-
-            Assert.AreEqual(DTOClienteActualizado.Mail, DTOClienteActualizadoEncotnrado.Mail);
+            Assert.AreEqual(DTOClienteActualizado.Mail, DTOClienteActualizadoRetorno.Mail);
         }
-
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarClienteTest() 
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.EliminarCliente(aDTOCliente);
+            _controller.buscarClientePorMail(aDTOCliente.Mail);
+        }
 
         //ADMINISTRADOR
         [TestMethod]
