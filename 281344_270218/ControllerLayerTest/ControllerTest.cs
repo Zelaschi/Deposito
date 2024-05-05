@@ -94,7 +94,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClienteMailNull()
+        public void RegistrarClienteMailNullTest()
         {
             aDTOCliente.Mail = null;
 
@@ -103,13 +103,15 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClienteMailVacio()
+        public void RegistrarClienteMailVacioTest()
         {
             aDTOCliente.Mail = "";
 
             _controller.RegistrarCliente(aDTOCliente);
         }
-        public void RegistrarPasswordMailNull()
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarPasswordNullTest()
         {
             aDTOCliente.Password = null;
 
@@ -118,13 +120,15 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClientePasswordVacio()
+        public void RegistrarClientePasswordVacioTest()
         {
             aDTOCliente.Password = "";
 
             _controller.RegistrarCliente(aDTOCliente);
         }
-        public void RegistrarClienteNombreYApellidoNull()
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClienteNombreYApellidoNullTest()
         {
             aDTOCliente.NombreYApellido = null;
 
@@ -133,7 +137,7 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClienteNombreYApellidolVacio()
+        public void RegistrarClienteNombreYApellidolVacioTest()
         {
             aDTOCliente.NombreYApellido = "";
 

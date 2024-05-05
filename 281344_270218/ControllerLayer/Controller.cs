@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using Domain;
+using Domain.Exceptions;
 
 namespace ControllerLayer
 {
@@ -27,7 +28,11 @@ namespace ControllerLayer
                 Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
                 _clienteLogic.AgregarCliente(aCliente);
             }
-            catch (ArgumentException e) {
+            catch (ArgumentException e)
+            {
+                throw new Exception(e.Message);
+            }
+            catch (CampoNoPuedeSerVacioNiNull e) { 
                 throw new Exception(e.Message);
             }
             

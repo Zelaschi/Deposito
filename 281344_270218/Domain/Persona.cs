@@ -1,3 +1,4 @@
+using Domain.Exceptions;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
@@ -23,7 +24,7 @@ namespace Domain
             {
                 if (noVacioONull(value))
                 {
-                    throw new ArgumentNullException("NombreYApellido no puede ser vacio ni null");
+                    throw new CampoNoPuedeSerVacioNiNull("NombreYApellido no puede ser vacio ni null");
                 }
                 else if (value.Length > 100)
                 {
@@ -43,7 +44,7 @@ namespace Domain
                 string pattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
                 if (noVacioONull(value))
                 {
-                    throw new ArgumentNullException("NombreYApellido no puede ser vacio ni null");
+                    throw new CampoNoPuedeSerVacioNiNull("NombreYApellido no puede ser vacio ni null");
 
                 }
                 else if (Regex.IsMatch(value, pattern))
@@ -67,7 +68,7 @@ namespace Domain
 
                 if (noVacioONull(value))
                 {
-                    throw new ArgumentNullException("Password no puede ser vacio ni null");
+                    throw new CampoNoPuedeSerVacioNiNull("Password no puede ser vacio ni null");
                 }
                 else if (Regex.IsMatch(value, pattern))
                 {
