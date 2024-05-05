@@ -308,7 +308,12 @@ namespace ControllerLayerTest
 
             _controller.RegistrarAdministrador(aDTOAdministrador);
         }
-        
+        [TestMethod]
+        public void ObtenerAdministrador()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            DTOAdministrador admin = _controller.ObtenerAdministrador();
+        }
 
         //DEPOSITO
         [TestMethod]
