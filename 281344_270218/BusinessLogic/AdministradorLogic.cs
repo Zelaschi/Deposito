@@ -23,7 +23,7 @@ namespace BusinessLogic
         public Administrador ObtenerAdministrador()
         {
             IList<Administrador> administradors = getAdministrador();
-            if (administradors == null)
+            if (administradors.Count == 0)
             {
                 throw new InvalidOperationException("AdministradorNoRegistrado");
             }
