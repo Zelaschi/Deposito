@@ -143,5 +143,95 @@ namespace ControllerLayerTest
 
             _controller.RegistrarCliente(aDTOCliente);
         }
+        [TestMethod]
+        public void RegistrarAdministradorTest()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+
+            Assert.AreEqual(aDTOAdministrador.Mail, _AdministradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).Mail);
+            Assert.AreEqual(aDTOAdministrador.NombreYApellido, _AdministradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).NombreYApellido);
+            Assert.AreEqual(aDTOAdministrador.Password, _AdministradorLogic.buscarAdministradorPorMail(aDTOAdministrador.Mail).Password);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorConMailInvalidoTest()
+        {
+            aDTOAdministrador.Mail = "mailinvalido";
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorPasswordIncorrectaTest()
+        {
+            aDTOAdministrador.Password = "password";
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorNombreMuyLargoTest()
+        {
+            string nombreCon101Caracteres = "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto. Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
+
+            aDTOAdministrador.NombreYApellido = nombreCon101Caracteres;
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorMailNullTest()
+        {
+            aDTOAdministrador.Mail = null;
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorMailVacioTest()
+        {
+            aDTOAdministrador.Mail = "";
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarPasswordNullTest()
+        {
+            aDTOAdministrador.Password = null;
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorPasswordVacioTest()
+        {
+            aDTOAdministrador.Password = "";
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorNombreYApellidoNullTest()
+        {
+            aDTOAdministrador.NombreYApellido = null;
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarAdministradorNombreYApellidolVacioTest()
+        {
+            aDTOAdministrador.NombreYApellido = "";
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+        }
+
     }
 }
