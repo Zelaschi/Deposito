@@ -42,6 +42,18 @@ namespace ControllerLayer
             }
             
         }
+        public IList<DTOCliente> listarTodosLosClientes() 
+        {
+            IList<Cliente> listaClientes = _clienteLogic.listarTodosLosClientes();
+            List<DTOCliente> listaDTOClientesRetorno = new List<DTOCliente>();
+            foreach(var cliente in listaClientes) 
+            {
+                var DTOcliente = new DTOCliente(cliente.NombreYApellido, cliente.Mail, cliente.Password);
+                listaDTOClientesRetorno.Add(DTOcliente);
+            }
+            return listaDTOClientesRetorno;
+        }
+
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
         {
             try
