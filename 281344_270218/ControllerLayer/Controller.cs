@@ -54,6 +54,13 @@ namespace ControllerLayer
             return listaDTOClientesRetorno;
         }
 
+        public DTOCliente buscarClientePorMail(string mailParametro) 
+        {
+            var clienteEncontrado = _clienteLogic.buscarClientePorMail(mailParametro);
+            var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
+                
+            return DTOClienteRetorno;
+        }
 
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
         {
