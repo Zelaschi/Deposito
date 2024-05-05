@@ -36,6 +36,10 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
+            catch (InvalidOperationException e)
+            {
+                throw new Exception(e.Message);
+            }
             
         }
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
