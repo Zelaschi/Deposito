@@ -184,7 +184,6 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOCliente1.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente1.Mail).NombreYApellido);
             Assert.AreEqual(DTOCliente2.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente2.Mail).NombreYApellido);
-_
         }
         [TestMethod]
         public void BuscarClientePorMailTest()
@@ -196,12 +195,31 @@ _
             Assert.AreEqual(aDTOCliente.Mail, DTOClienteRetorno.Mail);
         }
         [TestMethod]
-        public void BuscarClientePorIdTest() 
+        public void BuscarClientePorIdTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
             var DTOClienteRetorno = _controller.buscarClientePorId(1);
 
             Assert.AreEqual(aDTOCliente.Mail, DTOClienteRetorno.Mail);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void BuscarClientePorMailYQueTireExceptionSiNoLoEncuentraTest()
+        {
+            _controller.buscarClientePorMail(aDTOCliente.Mail);
+            _controller.buscarClientePorId(1);
+        }
+        [TestMethod]
+        public void ActualizarClienteTest() 
+        {
+            var DTOClienteActualizado = new DTOCliente("Nuevo nombre", "nuevomail@gmail.com", "NuevaContraseña1!");
+            _controller.RegistrarCliente(aDTOCliente);
+
+            _controller.ActualizarInfoCliente(DTOClienteActualizado);
+
+            var DTOClienteActualizadoEncotnrado = _controller.buscarClientePorMail(DTOClienteActualizado.Mail);
+
+            Assert.AreEqual(DTOClienteActualizado.Mail, DTOClienteActualizadoEncotnrado.Mail);
         }
 
 

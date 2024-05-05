@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using Domain;
 using Domain.Exceptions;
+using System.Linq.Expressions;
 
 namespace ControllerLayer
 {
@@ -57,8 +58,25 @@ namespace ControllerLayer
         public DTOCliente buscarClientePorMail(string mailParametro) 
         {
             var clienteEncontrado = _clienteLogic.buscarClientePorMail(mailParametro);
+            if (clienteEncontrado == null) {
+                throw new Exception("Cliente no encontrado!");
+            }
             var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
-                
+
+
+            return DTOClienteRetorno;
+        }
+        public DTOCliente buscarClientePorId(int IdParametro)
+        {
+            var clienteEncontrado = _clienteLogic.buscarClientePorId(IdParametro);
+            
+            if (clienteEncontrado == null)
+            {
+                throw new Exception("Cliente no encontrado!");
+            }
+
+            var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
+
             return DTOClienteRetorno;
         }
 
