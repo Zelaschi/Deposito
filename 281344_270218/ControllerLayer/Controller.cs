@@ -22,8 +22,15 @@ namespace ControllerLayer
 
         public void RegistrarCliente(DTOCliente aDTOCliente)
         {
-            Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
-            _clienteLogic.AgregarCliente(aCliente);
+            try
+            {
+                Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
+                _clienteLogic.AgregarCliente(aCliente);
+            }
+            catch (ArgumentException e) {
+                throw new Exception(e.Message);
+            }
+            
         }
     }
 }
