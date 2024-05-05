@@ -64,6 +64,13 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOCliente.Mail, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).Mail);
             Assert.AreEqual(aDTOCliente.NombreYApellido, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).NombreYApellido);
             Assert.AreEqual(aDTOCliente.Password, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).Password);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClienteConMailInvalidoTest() {
+            aDTOCliente.Mail = "mailinvalido";
+
+            _controller.RegistrarCliente(aDTOCliente);
 
         }
     }
