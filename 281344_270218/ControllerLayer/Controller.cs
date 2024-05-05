@@ -113,10 +113,18 @@ namespace ControllerLayer
         }
         public DTOAdministrador ObtenerAdministrador() 
         {
-            Administrador adminEncontrado = _administradorLogic.ObtenerAdministrador();
-            DTOAdministrador DTOretorno = new DTOAdministrador(adminEncontrado.NombreYApellido, adminEncontrado.Mail, adminEncontrado.Password);
+            try
+            {
+                Administrador adminEncontrado = _administradorLogic.ObtenerAdministrador();
+                DTOAdministrador DTOretorno = new DTOAdministrador(adminEncontrado.NombreYApellido, adminEncontrado.Mail, adminEncontrado.Password);
 
-            return DTOretorno;
+                return DTOretorno;
+            }
+            catch (InvalidOperationException e) 
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
         public void RegistrarDeposito(DTODeposito aDTODeposito) 
         {

@@ -25,7 +25,7 @@ namespace BusinessLogic
             IList<Administrador> administradors = getAdministrador();
             if (administradors.Count == 0)
             {
-                throw new InvalidOperationException("AdministradorNoRegistrado");
+                throw new InvalidOperationException("Administrador No Registrado");
             }
             return administradors.FirstOrDefault();
         }

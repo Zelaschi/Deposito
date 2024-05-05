@@ -322,6 +322,16 @@ namespace ControllerLayerTest
         {
             DTOAdministrador admin = _controller.ObtenerAdministrador();
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void IntentarAgregarSegundoAdministradorTest() 
+        {
+            var OtroAdmin = new DTOAdministrador("nombre", "mailvalido@gmail.com", "Password1!");
+
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            _controller.RegistrarAdministrador(OtroAdmin);
+        }
+
         //DEPOSITO
         [TestMethod]
         public void RegistrarDepositoTest() {
