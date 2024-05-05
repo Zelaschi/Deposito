@@ -56,6 +56,7 @@ namespace ControllerLayerTest
 
         }
 
+        //CLIENTE
         [TestMethod]
         public void RegistrarClienteTest()
         {
@@ -143,6 +144,35 @@ namespace ControllerLayerTest
 
             _controller.RegistrarCliente(aDTOCliente);
         }
+        [TestMethod]
+        public void RegistrarDosClientesOkTest() 
+        {
+            var DTOCliente1 = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
+            var DTOCliente2 = new DTOCliente(nombreYApellidoTest, "email2valido@gmail.com", pwdTest);
+
+            _controller.RegistrarCliente(DTOCliente1);
+            _controller.RegistrarCliente(DTOCliente2);
+
+            Assert.AreEqual(DTOCliente1.Mail, _clienteLogic.buscarClientePorMail(DTOCliente1.Mail).Mail);
+            Assert.AreEqual(DTOCliente1.NombreYApellido, _clienteLogic.buscarClientePorMail(DTOCliente1.Mail).NombreYApellido);
+            Assert.AreEqual(DTOCliente1.Password, _clienteLogic.buscarClientePorMail(DTOCliente1.Mail).Password);
+
+            Assert.AreEqual(DTOCliente2.Mail, _clienteLogic.buscarClientePorMail(DTOCliente2.Mail).Mail);
+            Assert.AreEqual(DTOCliente2.NombreYApellido, _clienteLogic.buscarClientePorMail(DTOCliente2.Mail).NombreYApellido);
+            Assert.AreEqual(DTOCliente2.Password, _clienteLogic.buscarClientePorMail(DTOCliente2.Mail).Password);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarDosClientesMismoMailTest()
+        {
+            var DTOCliente1 = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
+            var DTOCliente2 = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
+
+            _controller.RegistrarCliente(DTOCliente1);
+            _controller.RegistrarCliente(DTOCliente2);
+        }
+
+        //ADMINISTRADOR
         [TestMethod]
         public void RegistrarAdministradorTest()
         {
@@ -233,6 +263,7 @@ namespace ControllerLayerTest
             _controller.RegistrarAdministrador(aDTOAdministrador);
         }
 
+        //DEPOSITO
         [TestMethod]
         public void RegistrarDepositoTest() {
             _controller.RegistrarDeposito(aDTODeposito);
