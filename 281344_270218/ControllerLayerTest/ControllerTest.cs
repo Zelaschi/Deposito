@@ -184,17 +184,24 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOCliente1.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente1.Mail).NombreYApellido);
             Assert.AreEqual(DTOCliente2.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente2.Mail).NombreYApellido);
-
+_
         }
         [TestMethod]
-        public void BuscarClientePorMailTest() 
+        public void BuscarClientePorMailTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
 
             var DTOClienteRetorno = _controller.buscarClientePorMail(aDTOCliente.Mail);
 
             Assert.AreEqual(aDTOCliente.Mail, DTOClienteRetorno.Mail);
+        }
+        [TestMethod]
+        public void BuscarClientePorIdTest() 
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            var DTOClienteRetorno = _controller.buscarClientePorId(1);
 
+            Assert.AreEqual(aDTOCliente.Mail, DTOClienteRetorno.Mail);
         }
 
 
