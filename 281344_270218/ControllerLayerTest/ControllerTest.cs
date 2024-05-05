@@ -309,12 +309,19 @@ namespace ControllerLayerTest
             _controller.RegistrarAdministrador(aDTOAdministrador);
         }
         [TestMethod]
-        public void ObtenerAdministrador()
+        public void ObtenerAdministradorTest()
         {
             _controller.RegistrarAdministrador(aDTOAdministrador);
             DTOAdministrador admin = _controller.ObtenerAdministrador();
+            
+            Assert.AreEqual(aDTOAdministrador.Mail, admin.Mail);
         }
-
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void ObtenerAdministradorTiraExeptionCuandoElAdministradorNoEstaDefinido()
+        {
+            DTOAdministrador admin = _controller.ObtenerAdministrador();
+        }
         //DEPOSITO
         [TestMethod]
         public void RegistrarDepositoTest() {

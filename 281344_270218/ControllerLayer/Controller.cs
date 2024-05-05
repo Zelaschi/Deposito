@@ -111,6 +111,13 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
+        public DTOAdministrador ObtenerAdministrador() 
+        {
+            Administrador adminEncontrado = _administradorLogic.ObtenerAdministrador();
+            DTOAdministrador DTOretorno = new DTOAdministrador(adminEncontrado.NombreYApellido, adminEncontrado.Mail, adminEncontrado.Password);
+
+            return DTOretorno;
+        }
         public void RegistrarDeposito(DTODeposito aDTODeposito) 
         {
             Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
