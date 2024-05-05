@@ -73,5 +73,26 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
 
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClientePasswordIncorrectaTest() { 
+            aDTOCliente.Password = "password";
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarClienteNombreMuyLargoTest()
+        {
+            string nombreCon101Caracteres = "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto. Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
+
+            aDTOCliente.NombreYApellido = nombreCon101Caracteres;
+
+            _controller.RegistrarCliente(aDTOCliente);
+        }
+
+        s
     }
 }
