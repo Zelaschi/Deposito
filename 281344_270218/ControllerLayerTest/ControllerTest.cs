@@ -171,6 +171,21 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(DTOCliente1);
             _controller.RegistrarCliente(DTOCliente2);
         }
+        [TestMethod]
+        public void ListarTodosLosClientesTest() 
+        {
+            var DTOCliente1 = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
+            var DTOCliente2 = new DTOCliente(nombreYApellidoTest, "email2valido@gmail.com", pwdTest);
+
+            _controller.RegistrarCliente(DTOCliente1);
+            _controller.RegistrarCliente(DTOCliente2);
+
+            IList<DTOCliente> listaDTOCliente = _controller.listarTodosLosClientes();
+
+            Assert.AreEqual(DTOCliente1.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente1.Mail).NombreYApellido);
+            Assert.AreEqual(DTOCliente2.NombreYApellido, listaDTOCliente.FirstOrDefault(x => x.Mail == DTOCliente2.Mail).NombreYApellido);
+
+        }
 
         //ADMINISTRADOR
         [TestMethod]
