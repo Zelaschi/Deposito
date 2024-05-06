@@ -371,6 +371,25 @@ namespace ControllerLayerTest
             Assert.AreEqual(promo.Id, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.Id == promo.Id).Id);
         }
 
+        [TestMethod]
+
+        public void BuscarDepositoPorId()
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            DTODeposito deposito = _controller.BuscarDepositoPorId(aDTODeposito.Id);
+
+            Assert.AreEqual(aDTODeposito.Id, deposito.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarDepositoTest()
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.ElminarDeposito(aDTODeposito);
+            _controller.BuscarDepositoPorId(aDTODeposito.Id);
+        }
+
 
 
         //PROMOCION

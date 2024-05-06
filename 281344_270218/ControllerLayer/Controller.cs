@@ -154,6 +154,27 @@ namespace ControllerLayer
             }
         }
 
+        public DTODeposito BuscarDepositoPorId(int IdParametro)
+        {
+            var depositoEncontrado = _depositoLogic.buscarDepositoPorId(IdParametro);
+
+            if (depositoEncontrado == null)
+            {
+                throw new Exception("Deposito no encontrada!");
+            }
+
+            var DTODepositoRetorno = new DTODeposito(depositoEncontrado.IdDeposito, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
+
+            return DTODepositoRetorno;
+        }
+
+        public void ElminarDeposito(DTODeposito DTODepositoParametro)
+        {
+            Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
+            _depositoLogic.EliminarDeposito(depositoEncontradoPorId.IdDeposito);
+        }
+
+
         public void RegistrarPromocion(DTOPromocion aDTOPromocion)
         {
             try
