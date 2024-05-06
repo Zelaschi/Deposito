@@ -448,7 +448,7 @@ namespace ControllerLayerTest
             _controller.RegistrarDeposito(aDTODeposito);
             _controller.RegistrarReserva(aDTOReserva);
 
-            DTOReserva DTOReservaEncontrado = _controller.ObtenerReservaPorId(aDTOReserva.Id);
+            DTOReserva DTOReservaEncontrado = _controller.BuscarReservaPorId(aDTOReserva.Id);
 
             Assert.AreEqual(aDTOReserva.Id, DTOReservaEncontrado.Id);
             Assert.AreEqual(aDTOReserva.FechaDesde, DTOReservaEncontrado.FechaDesde);
@@ -465,5 +465,12 @@ namespace ControllerLayerTest
             
             _controller.RegistrarReserva(DTOReservaIncorrectaTest);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void BuscarReservaNoRegistradaPorIdTireExceptionTest() 
+        {
+            _controller.BuscarReservaPorId(1);
+        }
+        
     }
 }

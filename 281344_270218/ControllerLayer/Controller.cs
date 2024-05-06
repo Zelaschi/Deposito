@@ -215,15 +215,17 @@ namespace ControllerLayer
             }
             
         }
-        public DTOReserva ObtenerReservaPorId(int idParametro)
+        public DTOReserva BuscarReservaPorId(int idParametro)
         {
-                Reserva reservaEncontrada = _reservaLogic.BuscarReservaPorId(idParametro);
-                DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
-                DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.IdDeposito, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
+            Reserva reservaEncontrada = _reservaLogic.BuscarReservaPorId(idParametro);
+           
 
-                DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.IdReserva, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+            DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
+            DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.IdDeposito, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
 
-                return reservaRetorno; 
+            DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.IdReserva, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+
+            return reservaRetorno; 
         }
     }
 }
