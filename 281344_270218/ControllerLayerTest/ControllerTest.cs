@@ -634,7 +634,7 @@ namespace ControllerLayerTest
             _controller.AceptarReserva(aDTOReserva1);
             _controller.RechazarReserva(aDTOReserva2);
 
-            IList<DTOReserva> ReservasPendientes = _controller.ObtenerListaReservasPendientes();
+            IList<DTOReserva> ReservasPendientes = _controller.ObtenerListaReservasAceptadas();
 
             DTOReserva reservaQueNoDeberiaEstar = ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva2.Id);
             Assert.AreEqual(aDTOReserva3.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
