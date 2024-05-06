@@ -217,6 +217,12 @@ namespace ControllerLayerTest
             _controller.EliminarCliente(aDTOCliente);
             _controller.buscarClientePorMail(aDTOCliente.Mail);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarClienteQueNoExisteTireExceptionTest()
+        {
+            _controller.EliminarCliente(aDTOCliente);
+        }
 
         //ADMINISTRADOR
         [TestMethod]
