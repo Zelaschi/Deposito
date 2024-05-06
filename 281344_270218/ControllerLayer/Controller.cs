@@ -145,6 +145,18 @@ namespace ControllerLayer
             }
         }
 
+        public IList<DTOPromocion> listarTodasLasPromociones()
+        {
+            IList<Promocion> listaPromocines = _promocionLogic.listarTodasLasPromociones();
+            List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
+            foreach (var promocion in listaPromocines)
+            {
+                var DTOpromocion = new DTOPromocion(promocion.Id, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
+                listaDTOPromociones.Add(DTOpromocion);
+            }
+            return listaDTOPromociones;
+        }
+
 
     }
 }

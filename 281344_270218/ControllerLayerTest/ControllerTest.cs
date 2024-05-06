@@ -383,5 +383,21 @@ namespace ControllerLayerTest
             _controller.RegistrarPromocion(aDTOpromocion);
         }
 
+        [TestMethod]
+
+        public void ListarTodasLasPromocionesTest()
+        {
+            var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion2 = new DTOPromocion(2, "etiqueta2", 20, DateTime.Today, DateTime.Today.AddDays(1));
+
+            _controller.RegistrarPromocion(DTOPromocion1);
+            _controller.RegistrarPromocion(DTOPromocion2);
+
+            IList<DTOPromocion> listaDTOPromocion = _controller.listarTodasLasPromociones();
+
+            Assert.AreEqual(DTOPromocion1.IdPromocion, listaDTOPromocion.FirstOrDefault(x=>x.IdPromocion == DTOPromocion1.IdPromocion).IdPromocion);
+            Assert.AreEqual(DTOPromocion2.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion2.IdPromocion).IdPromocion);
+        }
+
     }
 }
