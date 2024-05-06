@@ -634,10 +634,10 @@ namespace ControllerLayerTest
             _controller.AceptarReserva(aDTOReserva1);
             _controller.RechazarReserva(aDTOReserva2);
 
-            IList<DTOReserva> ReservasPendientes = _controller.ObtenerListaReservasAceptadas();
+            IList<DTOReserva> ReservasAceptadas = _controller.ObtenerListaReservasAceptadas();
 
-            DTOReserva reservaQueNoDeberiaEstar = ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva2.Id);
-            Assert.AreEqual(aDTOReserva1.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
+            DTOReserva reservaQueNoDeberiaEstar = ReservasAceptadas.FirstOrDefault(x => x.Id == aDTOReserva2.Id);
+            Assert.AreEqual(aDTOReserva1.FechaHasta, ReservasAceptadas.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
             Assert.IsNull(reservaQueNoDeberiaEstar);
         }
         [TestMethod]
@@ -661,11 +661,11 @@ namespace ControllerLayerTest
             _controller.AceptarReserva(aDTOReserva3);
 
 
-            IList<DTOReserva> ReservasPendientes = _controller.ObtenerListaReservasAceptadas();
+            IList<DTOReserva> ReservasRechazadas = _controller.ObtenerListaReservasRechazadas();
 
-            DTOReserva reservaQueNoDeberiaEstar = ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva3.Id);
-            Assert.AreEqual(aDTOReserva1.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
-            Assert.AreEqual(aDTOReserva2.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva2.Id).FechaHasta);
+            DTOReserva reservaQueNoDeberiaEstar = ReservasRechazadas.FirstOrDefault(x => x.Id == aDTOReserva3.Id);
+            Assert.AreEqual(aDTOReserva1.FechaHasta, ReservasRechazadas.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
+            Assert.AreEqual(aDTOReserva2.FechaHasta, ReservasRechazadas.FirstOrDefault(x => x.Id == aDTOReserva2.Id).FechaHasta);
 
             Assert.IsNull(reservaQueNoDeberiaEstar);
         }
