@@ -245,6 +245,10 @@ namespace ControllerLayer
         public void EliminarReserva(DTOReserva reservaParametro)
         {
             Reserva reservaEncontradaPorId = _reservaLogic.BuscarReservaPorId(reservaParametro.Id);
+            if (reservaEncontradaPorId == null)
+            {
+                throw new Exception("La reserva a eliminar no fue encontrada!");
+            }
             _reservaLogic.EliminarReserva(reservaEncontradaPorId.IdReserva);
         }
     }

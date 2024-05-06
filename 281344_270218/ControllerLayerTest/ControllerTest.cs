@@ -499,7 +499,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void EliminarReservaQueNoExisteTest() 
+        public void EliminarReservaQueNoExisteTireExceptionTest() 
         {
             _controller.EliminarReserva(aDTOReserva);
         }
