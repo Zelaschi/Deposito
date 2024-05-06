@@ -509,5 +509,14 @@ namespace ControllerLayerTest
         {
             _controller.EliminarReserva(aDTOReserva);
         }
+        [TestMethod]
+        public void AceptarReservaTest()
+        {
+            _controller.RegistrarReserva(aDTOReserva);
+
+            _controller.AceptarReserva(aDTOReserva);
+
+            Assert.AreEqual(aDTOReserva.Estado, "Aceptada");
+        }
     }
 }
