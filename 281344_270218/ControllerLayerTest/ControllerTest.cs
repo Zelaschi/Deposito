@@ -52,7 +52,11 @@ namespace ControllerLayerTest
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOPromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
+<<<<<<< HEAD
             aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+=======
+            aDTOreserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+>>>>>>> 6cbd7b973a83617d45bb1f5eff8cd994e70dba0f
 
         }
 
@@ -349,6 +353,55 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+
+        public void RegistrarDepositoConParametrosInvalidos()
+        {
+            aDTODeposito.Tamanio = "Gigante";
+            aDTODeposito.Area = "areaInvalida";
+            _controller.RegistrarDeposito(aDTODeposito);
+        }
+
+        [TestMethod]
+
+        public void AgregarPromocionADepositoTest()
+        {
+            DTODeposito aDTODeposito = new DTODeposito(1, "A", "Grande", true);
+            DTOPromocion aDTOPromocion = new DTOPromocion(1, "etiquietaPromo", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            
+            _controller.RegistrarPromocion(aDTOPromocion);
+            _controller.RegistrarDeposito(aDTODeposito);
+            
+            Deposito depo = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
+            Promocion promo = _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion);
+
+            depo.AgregarPromocionADeposito(promo);
+            
+            Assert.AreEqual(promo.Id, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.Id == promo.Id).Id);
+        }
+
+        [TestMethod]
+
+        public void BuscarDepositoPorId()
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            DTODeposito deposito = _controller.BuscarDepositoPorId(aDTODeposito.Id);
+
+            Assert.AreEqual(aDTODeposito.Id, deposito.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarDepositoTest()
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.ElminarDeposito(aDTODeposito);
+            _controller.BuscarDepositoPorId(aDTODeposito.Id);
+        }
+
+
+
         //PROMOCION
 
         [TestMethod]
@@ -404,14 +457,17 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOPromocion1.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion1.IdPromocion).IdPromocion);
             Assert.AreEqual(DTOPromocion2.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion2.IdPromocion).IdPromocion);
         }
-
+        
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        
 
         public void EliminarPromocionTest()
         {
             var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
             _controller.RegistrarPromocion(DTOPromocion1);
             _controller.ElminarPromocion(DTOPromocion1);
+            _controller.BuscarPromocionPorId(DTOPromocion1.IdPromocion);
         }
 
         [TestMethod]
@@ -447,6 +503,7 @@ namespace ControllerLayerTest
             _controller.ActualizarPromocion(aDTOPromocion);
         }
 
+<<<<<<< HEAD
         //PROMOCION
         [TestMethod]
         public void RegistrarReservaDTOTest() {
@@ -522,5 +579,8 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
+=======
+        //RESERVA
+>>>>>>> 6cbd7b973a83617d45bb1f5eff8cd994e70dba0f
     }
 }

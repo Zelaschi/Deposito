@@ -135,9 +135,52 @@ namespace ControllerLayer
         }
         public void RegistrarDeposito(DTODeposito aDTODeposito) 
         {
-            Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
-            _depositoLogic.AddDeposito(aDeposito);
+            try
+            {
+                Deposito aDeposito = new Deposito(aDTODeposito.Id, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+                _depositoLogic.AddDeposito(aDeposito);
+            }
+            catch (ArgumentException e) 
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
+
+        public void AgregarPromocionADeposito(DTOPromocion aDTOPromocion, DTODeposito aDTODeposito)
+        {
+            try
+            {
+                Promocion aPromocion = _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion);
+                Deposito aDeposito = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
+                aDeposito.AgregarPromocionADeposito(aPromocion);
+            }
+            catch(InvalidOperationException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public DTODeposito BuscarDepositoPorId(int IdParametro)
+        {
+            var depositoEncontrado = _depositoLogic.buscarDepositoPorId(IdParametro);
+
+            if (depositoEncontrado == null)
+            {
+                throw new Exception("Deposito no encontrada!");
+            }
+
+            var DTODepositoRetorno = new DTODeposito(depositoEncontrado.IdDeposito, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
+
+            return DTODepositoRetorno;
+        }
+
+        public void ElminarDeposito(DTODeposito DTODepositoParametro)
+        {
+            Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
+            _depositoLogic.EliminarDeposito(depositoEncontradoPorId.IdDeposito);
+        }
+
 
         public void RegistrarPromocion(DTOPromocion aDTOPromocion)
         {
@@ -201,6 +244,7 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
+<<<<<<< HEAD
         public void RegistrarReserva(DTOReserva DTOReservaParametro) 
         {
             try
@@ -259,5 +303,9 @@ namespace ControllerLayer
             Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
             _reservaLogic.AceptarReserva(ReservaEncontrada);
         }
+=======
+
+
+>>>>>>> 6cbd7b973a83617d45bb1f5eff8cd994e70dba0f
     }
 }
