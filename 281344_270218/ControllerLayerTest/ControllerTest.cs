@@ -30,7 +30,7 @@ namespace ControllerLayerTest
         private DTOCliente aDTOCliente;
         private DTOAdministrador aDTOAdministrador;
         private DTODeposito aDTODeposito;
-        private DTOPromocion aDTOpromocion;
+        private DTOPromocion aDTOPromocion;
         private DTOReserva aDTOreserva;
 
         [TestInitialize]
@@ -50,7 +50,7 @@ namespace ControllerLayerTest
 
             aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
-            aDTOpromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            aDTOPromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
             aDTOreserva = new DTOReserva(DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
 
@@ -349,13 +349,13 @@ namespace ControllerLayerTest
 
         public void RegistrarPromocionTest() 
         {
-            _controller.RegistrarPromocion(aDTOpromocion);
+            _controller.RegistrarPromocion(aDTOPromocion);
 
-            Assert.AreEqual(aDTOpromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).Id);
-            Assert.AreEqual(aDTOpromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).Etiqueta);
-            Assert.AreEqual(aDTOpromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).PorcentajeDescuento);
-            Assert.AreEqual(aDTOpromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).FechaInicio);
-            Assert.AreEqual(aDTOpromocion.FechaFIn, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).FechaFin);
+            Assert.AreEqual(aDTOPromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).Id);
+            Assert.AreEqual(aDTOPromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).Etiqueta);
+            Assert.AreEqual(aDTOPromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).PorcentajeDescuento);
+            Assert.AreEqual(aDTOPromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).FechaInicio);
+            Assert.AreEqual(aDTOPromocion.FechaFIn, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).FechaFin);
         }
 
         [TestMethod]
@@ -364,9 +364,9 @@ namespace ControllerLayerTest
         {
             string etiquetaMayorA20Caracteres = "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto. Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
 
-            aDTOpromocion.Etiqueta = etiquetaMayorA20Caracteres;
+            aDTOPromocion.Etiqueta = etiquetaMayorA20Caracteres;
 
-            _controller.RegistrarPromocion(aDTOpromocion);
+            _controller.RegistrarPromocion(aDTOPromocion);
         }
 
         [TestMethod]
@@ -377,10 +377,10 @@ namespace ControllerLayerTest
             DateTime fechaInicioMayor = DateTime.Today.AddDays(1);
             DateTime fechaFinMenor = DateTime.Today;
 
-            aDTOpromocion.FechaInicio = fechaInicioMayor;
-            aDTOpromocion.FechaFIn = fechaFinMenor;
+            aDTOPromocion.FechaInicio = fechaInicioMayor;
+            aDTOPromocion.FechaFIn = fechaFinMenor;
 
-            _controller.RegistrarPromocion(aDTOpromocion);
+            _controller.RegistrarPromocion(aDTOPromocion);
         }
 
         [TestMethod]
@@ -406,6 +406,25 @@ namespace ControllerLayerTest
             var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
             _controller.RegistrarPromocion(DTOPromocion1);
             _controller.ElminarPromocion(DTOPromocion1);
+        }
+
+        [TestMethod]
+        public void BuscarPromocionPorIdTest()
+        {
+            _controller.RegistrarPromocion(aDTOPromocion);
+            DTOPromocion promo = _controller.BuscarPromocionPorId(aDTOPromocion.IdPromocion);
+
+            Assert.AreEqual(aDTOPromocion.IdPromocion, promo.IdPromocion);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void BuscarPromocionPorIdYQueTireExceptionSiNoLoEncuentraTest()
+        {
+            _controller.RegistrarPromocion(aDTOPromocion);
+            DTOPromocion promo = _controller.BuscarPromocionPorId(3);
+
+            Assert.AreEqual(aDTOPromocion.IdPromocion, promo.IdPromocion);
         }
     }
 }

@@ -163,5 +163,20 @@ namespace ControllerLayer
             _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
 
         }
+
+        public DTOPromocion BuscarPromocionPorId(int IdParametro)
+        {
+            var promoEncontrada = _promocionLogic.buscarPromocionPorId(IdParametro);
+            
+            if (promoEncontrada == null)
+            {
+                throw new Exception("Promocion no encontrada!");
+            }
+
+            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.Id, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
+
+            return DTOPromocionRetorno;
+            
+        }
     }
 }
