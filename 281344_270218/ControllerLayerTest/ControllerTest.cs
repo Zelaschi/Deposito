@@ -486,5 +486,16 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOReserva.FechaHasta, DTOReservas.FirstOrDefault(x => x.Id == aDTOReserva.Id).FechaHasta);
             Assert.AreEqual(aDTOReserva2.FechaHasta, DTOReservas.FirstOrDefault(x => x.Id == aDTOReserva2.Id).FechaHasta);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarReservaTest() {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarReserva(aDTOReserva);
+
+            _controller.EliminarReserva(aDTOReserva);
+
+            _controller.BuscarReservaPorId(aDTOReserva.Id);
+        }
     }
 }
