@@ -471,6 +471,20 @@ namespace ControllerLayerTest
         {
             _controller.BuscarReservaPorId(1);
         }
-        
+        [TestMethod]
+        public void listarTodasLasReservasTest() {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito);
+
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
+
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.RegistrarReserva(aDTOReserva2);
+
+            IList<DTOReserva> DTOReservas = _controller.ListarTodasLasReservas();
+
+            Assert.AreEqual(aDTOReserva.FechaHasta, DTOReservas.FirstOrDefault(x => x.Id == aDTOReserva.Id).FechaHasta);
+            Assert.AreEqual(aDTOReserva2.FechaHasta, DTOReservas.FirstOrDefault(x => x.Id == aDTOReserva2.Id).FechaHasta);
+        }
     }
 }
