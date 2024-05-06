@@ -357,5 +357,17 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOpromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).FechaInicio);
             Assert.AreEqual(aDTOpromocion.FechaFIn, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).FechaFin);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarPromocionEtiquetaMayorA20Test()
+        {
+            string etiquetaMayorA20Caracteres = "Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto. Este es un string sencillo de 101 caracteres que puedes usar para tu proyecto.";
+
+            aDTOpromocion.Etiqueta = etiquetaMayorA20Caracteres;
+
+            _controller.RegistrarPromocion(aDTOpromocion);
+        }
+
     }
 }

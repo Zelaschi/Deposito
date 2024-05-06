@@ -139,7 +139,7 @@ namespace ControllerLayer
                 Promocion aPromocion = new Promocion(aDTOPromocion.IdPromocion, aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
                 _promocionLogic.AgregarPromocion(aPromocion);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
                 throw new Exception(e.Message);
             }
