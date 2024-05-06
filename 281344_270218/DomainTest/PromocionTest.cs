@@ -31,7 +31,7 @@ namespace DomainTest
         [ExpectedException(typeof(ArgumentException))]
         public void PromocionConMasDe75YMenosDe5() 
         {
-            promo.PorcentajeDescuento = 1
+            promo.PorcentajeDescuento = 1;
             promo.PorcentajeDescuento = 76;
         }
     }
