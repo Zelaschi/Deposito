@@ -136,6 +136,68 @@ namespace ControllerLayer
             _depositoLogic.AddDeposito(aDeposito);
         }
 
+        public void RegistrarPromocion(DTOPromocion aDTOPromocion)
+        {
+            try
+            {
+                Promocion aPromocion = new Promocion(aDTOPromocion.IdPromocion, aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
+                _promocionLogic.AgregarPromocion(aPromocion);
+            }
+            catch (ArgumentException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
+        public IList<DTOPromocion> listarTodasLasPromociones()
+        {
+            IList<Promocion> listaPromocines = _promocionLogic.listarTodasLasPromociones();
+            List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
+            foreach (var promocion in listaPromocines)
+            {
+                var DTOpromocion = new DTOPromocion(promocion.Id, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
+                listaDTOPromociones.Add(DTOpromocion);
+            }
+            return listaDTOPromociones;
+        }
+
+        public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
+        {
+            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
+
+        }
+
+        public DTOPromocion BuscarPromocionPorId(int IdParametro)
+        {
+            var promoEncontrada = _promocionLogic.buscarPromocionPorId(IdParametro);
+            
+            if (promoEncontrada == null)
+            {
+                throw new Exception("Promocion no encontrada!");
+            }
+
+            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.Id, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
+
+            return DTOPromocionRetorno;
+            
+        }
+
+        public void ActualizarPromocion(DTOPromocion DTOPromocionParametro)
+        {
+            try
+            {
+                Promocion promocion = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+
+                promocion.Etiqueta = DTOPromocionParametro.Etiqueta;
+                promocion.FechaInicio = DTOPromocionParametro.FechaInicio;
+                promocion.FechaFin = DTOPromocionParametro.FechaFIn;
+                promocion.PorcentajeDescuento = DTOPromocionParametro.PorcentajeDescuento;
+            }
+            catch (ArgumentException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
