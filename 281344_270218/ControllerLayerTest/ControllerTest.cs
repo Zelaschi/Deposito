@@ -497,5 +497,11 @@ namespace ControllerLayerTest
 
             _controller.BuscarReservaPorId(aDTOReserva.Id);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarReservaQueNoExisteTest() 
+        {
+            _controller.EliminarReserva(aDTOReserva);
+        }
     }
 }
