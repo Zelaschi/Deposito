@@ -31,5 +31,10 @@ namespace BusinessLogic
         {
             _repository.Delete(id);
         }
+        public void AceptarReserva(Reserva reservaParametro) 
+        {
+            Reserva reservaEncontrada = BuscarReservaPorId(reservaParametro.IdReserva);
+            reservaEncontrada.Estado = "Aceptada";
+        }
     }
 }

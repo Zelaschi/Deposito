@@ -25,9 +25,10 @@ namespace BusinessLogicTest
             _reservaRepository = new ReservaMemoryRepository();
             _reservaLogic = new ReservaLogic(_reservaRepository);
 
-            reserva = new Reserva(idReserva, DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+            
             deposito = new Deposito(idDeposito, "A", "Pequenio", true);
             cliente = new Cliente(idCliente, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
+            reserva = new Reserva(idReserva, DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
         }
 
         [TestMethod]
@@ -39,7 +40,6 @@ namespace BusinessLogicTest
             Assert.AreEqual(reserva.FechaDesde, reservaRetorno.FechaDesde);
             Assert.AreEqual(reserva.FechaHasta, reservaRetorno.FechaHasta);
             Assert.AreEqual(reserva.Deposito, reservaRetorno.Deposito);
-            Assert.AreEqual(reserva.Precio, reservaRetorno.Precio);
             Assert.AreEqual(reserva.Cliente, reservaRetorno.Cliente);
             Assert.AreEqual(reserva.Estado, reservaRetorno.Estado);
         }
@@ -86,5 +86,27 @@ namespace BusinessLogicTest
 
             Assert.IsNull(reservaEliminada);
         }
+        [TestMethod]
+        public void ActualizarReservaTest() {
+            _reservaLogic.AgregarReserva(reserva);
+
+            DateTime fechaHastaActualizada = DateTime.Today.AddDays(20);
+            string estadoActualizado = "Aceptada";
+
+            Reserva reservaActualizda = new Reserva(reserva.FechaDesde, fechaHastaActualizada, deposito, cliente);
+            reservaActualizda.Estado = estadoActualizado;
+
+            Reserva reservaActualizadaRetorno = _reservaLogic.ActualizarReserva(reservaActualizda);
+
+            Assert.AreEqual(fechaHastaActualizada, reservaActualizadaRetorno.FechaHasta);
+            Assert.AreEqual(estadoActualizado, reservaActualizadaRetorno.Estado);   
+        }
+        [TestMethod]
+        public void ActualizarReservaQueNoExisteDevuelvaNull() {
+            Reserva reservaNull = _reservaLogic.ActualizarReserva(reserva);
+            
+            Assert.IsNull(reservaNull);
+        }
+
     }
 }

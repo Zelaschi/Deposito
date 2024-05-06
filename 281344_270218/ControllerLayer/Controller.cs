@@ -91,8 +91,8 @@ namespace ControllerLayer
         public void EliminarCliente(DTOCliente DTOClienteParametro)
         { 
             Cliente clienteEncontradoPorMail = _clienteLogic.buscarClientePorMail(DTOClienteParametro.Mail);
-            if (clienteEncontradoPorMail == null) { 
-                throw new Exception("No se encontro el cliente a eliminar!")
+            if (clienteEncontradoPorMail == null) {
+                throw new Exception("No se encontro el cliente a eliminar!");
             }
             _clienteLogic.EliminarCliente(clienteEncontradoPorMail.IdPersona);
         }
@@ -253,6 +253,11 @@ namespace ControllerLayer
                 throw new Exception("La reserva a eliminar no fue encontrada!");
             }
             _reservaLogic.EliminarReserva(reservaEncontradaPorId.IdReserva);
+        }
+        public void AceptarReserva(DTOReserva DTOReservaParametro)
+        {
+            Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+            _reservaLogic.AceptarReserva(ReservaEncontrada);
         }
     }
 }

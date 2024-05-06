@@ -512,11 +512,15 @@ namespace ControllerLayerTest
         [TestMethod]
         public void AceptarReservaTest()
         {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito);
             _controller.RegistrarReserva(aDTOReserva);
 
             _controller.AceptarReserva(aDTOReserva);
 
-            Assert.AreEqual(aDTOReserva.Estado, "Aceptada");
+            DTOReserva DTOReservaEncontrado= _controller.BuscarReservaPorId(aDTOReserva.Id);
+
+            Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
     }
 }

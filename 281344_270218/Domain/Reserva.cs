@@ -27,7 +27,7 @@
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
             Deposito = deposito;
-            Precio = precio;
+            Precio = CalculoPrecioDeReserva();
             Cliente = cliente;
         }
 
@@ -41,7 +41,7 @@
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
             Deposito = deposito;
-            Precio = precio;
+            Precio = CalculoPrecioDeReserva();
             Cliente = cliente;
         }
         private int CalculoPrecioDeReserva() {
