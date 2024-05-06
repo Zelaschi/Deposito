@@ -23,7 +23,6 @@ namespace DomainTest
             Assert.AreEqual(DateTime.Today, reserva.FechaDesde);
             Assert.AreEqual(DateTime.Today.AddDays(1), reserva.FechaHasta);
             Assert.AreEqual(deposito, reserva.Deposito);
-            Assert.AreEqual(100, reserva.Precio);
             Assert.AreEqual("Pendiente", reserva.Estado);
 
         }

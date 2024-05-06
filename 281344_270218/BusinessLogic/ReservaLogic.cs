@@ -37,8 +37,8 @@ namespace BusinessLogic
         }
         public void AceptarReserva(Reserva reservaParametro) 
         {
-            Reserva reservaEncontrada = BuscarReservaPorId(reservaParametro.IdReserva);
-            reservaEncontrada.Estado = "Aceptada";
+            reservaParametro.Estado = "Aceptada";
+            _repository.Update(reservaParametro);
         }
     }
 }

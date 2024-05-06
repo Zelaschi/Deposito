@@ -52,11 +52,9 @@ namespace ControllerLayerTest
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOPromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
-<<<<<<< HEAD
+
             aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-=======
-            aDTOreserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
->>>>>>> 6cbd7b973a83617d45bb1f5eff8cd994e70dba0f
+
 
         }
 
@@ -503,8 +501,7 @@ namespace ControllerLayerTest
             _controller.ActualizarPromocion(aDTOPromocion);
         }
 
-<<<<<<< HEAD
-        //PROMOCION
+        //RESERVA
         [TestMethod]
         public void RegistrarReservaDTOTest() {
             _controller.RegistrarCliente(aDTOCliente);
@@ -579,8 +576,6 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
-=======
-        //RESERVA
->>>>>>> 6cbd7b973a83617d45bb1f5eff8cd994e70dba0f
+
     }
 }
