@@ -576,6 +576,11 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
+        [TestMethod]
+        public void RechazarReservaTest()
+        {
+
+        }
 
     }
 }
