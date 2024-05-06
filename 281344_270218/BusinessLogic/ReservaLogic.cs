@@ -40,5 +40,11 @@ namespace BusinessLogic
             reservaParametro.Estado = "Aceptada";
             _repository.Update(reservaParametro);
         }
+        public void RechazarReserva(Reserva reservaParametro)
+        {
+            reservaParametro.Estado = "Rechazada";
+            _repository.Update(reservaParametro);
+        }
+
     }
 }

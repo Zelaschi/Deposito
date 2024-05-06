@@ -304,6 +304,11 @@ namespace ControllerLayer
             Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
             _reservaLogic.AceptarReserva(ReservaEncontrada);
         }
+        public void RechazarReserva(DTOReserva DTOReservaParametro)
+        {
+            Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+            _reservaLogic.RechazarReserva(ReservaEncontrada);
+        }
 
     }
 }
