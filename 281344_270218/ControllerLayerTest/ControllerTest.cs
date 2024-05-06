@@ -343,5 +343,19 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
         }
 
+        //PROMOCION
+
+        [TestMethod]
+
+        public void RegistrarPromocionTest() 
+        {
+            _controller.ResgistrarPromocion(aDTOpromocion);
+
+            Assert.AreEqual(aDTOpromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).Id);
+            Assert.AreEqual(aDTOpromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).Etiqueta);
+            Assert.AreEqual(aDTOpromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).PorcentajeDescuento);
+            Assert.AreEqual(aDTOpromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).FechaInicio);
+            Assert.AreEqual(aDTOpromocion.FechaFIn, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).FechaFin);
+        }
     }
 }
