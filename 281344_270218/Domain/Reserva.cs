@@ -44,7 +44,7 @@
             Precio = CalculoPrecioDeReserva();
             Cliente = cliente;
         }
-        private int CalculoPrecioDeReserva() {
+        public int CalculoPrecioDeReserva() {
             int precioPorDiaDependiendoDelTamaño = 0;
             TimeSpan diferencia = FechaHasta - FechaDesde;
             int cantidadDeDias = diferencia.Days;

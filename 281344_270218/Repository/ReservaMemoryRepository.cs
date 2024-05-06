@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Repository
 {
@@ -26,9 +27,19 @@ namespace Repository
             return _reservas;
         }
 
-        public Reserva? Update(Reserva updatedEntity)
+        public Reserva? Update(Reserva reservaActualizada)
         {
-            throw new NotImplementedException();
+            Reserva reservaEncontrada = Find(x => x.IdReserva == reservaActualizada.IdReserva);
+
+            if (reservaEncontrada != null) {
+                reservaEncontrada.FechaDesde = reservaActualizada.FechaDesde;
+                reservaEncontrada.FechaHasta = reservaActualizada.FechaHasta;
+                reservaEncontrada.Deposito = reservaActualizada.Deposito;
+                reservaEncontrada.Cliente = reservaActualizada.Cliente;
+                reservaEncontrada.Precio = reservaEncontrada.CalculoPrecioDeReserva();
+                reservaEncontrada.Estado = reservaActualizada.Estado;
+            }
+            return reservaEncontrada;
         }
     }
 }
