@@ -444,6 +444,8 @@ namespace ControllerLayerTest
         //PROMOCION
         [TestMethod]
         public void RegistrarReservaDTOTest() {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito);
             _controller.RegistrarReserva(aDTOReserva);
 
             DTOReserva DTOReservaEncontrado = _controller.ObtenerReservaPorId(aDTOReserva.Id);
@@ -453,6 +455,13 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOReserva.FechaHasta, DTOReservaEncontrado.FechaHasta);
             Assert.AreEqual(aDTOReserva.Deposito.Area, DTOReservaEncontrado.Deposito.Area);
             Assert.AreEqual(aDTOReserva.Cliente.NombreYApellido, DTOReservaEncontrado.Cliente.NombreYApellido);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegistrarResrvaConDatosIncorrectosTest() {
+            DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente);
+            
+            _controller.RegistrarReserva(DTOReservaIncorrectaTest);
         }
     }
 }
