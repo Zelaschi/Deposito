@@ -211,6 +211,7 @@ namespace ControllerLayer
         {
             Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
             _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
+
         }
 
         public DTOPromocion BuscarPromocionPorId(int IdParametro)
@@ -244,7 +245,6 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
-<<<<<<< HEAD
         public void RegistrarReserva(DTOReserva DTOReservaParametro) 
         {
             try
@@ -303,9 +303,6 @@ namespace ControllerLayer
             Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
             _reservaLogic.AceptarReserva(ReservaEncontrada);
         }
-=======
 
-
->>>>>>> 6cbd7b973a83617d45bb1f5eff8cd994e70dba0f
     }
 }
