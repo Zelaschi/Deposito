@@ -91,6 +91,9 @@ namespace ControllerLayer
         public void EliminarCliente(DTOCliente DTOClienteParametro)
         { 
             Cliente clienteEncontradoPorMail = _clienteLogic.buscarClientePorMail(DTOClienteParametro.Mail);
+            if (clienteEncontradoPorMail == null) { 
+                throw new Exception("No se encontro el cliente a eliminar!")
+            }
             _clienteLogic.EliminarCliente(clienteEncontradoPorMail.IdPersona);
         }
 
