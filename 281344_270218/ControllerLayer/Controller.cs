@@ -140,6 +140,20 @@ namespace ControllerLayer
             
         }
 
+        public void AgregarPromocionADeposito(DTOPromocion aDTOPromocion, DTODeposito aDTODeposito)
+        {
+            try
+            {
+                Promocion aPromocion = _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion);
+                Deposito aDeposito = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
+                aDeposito.AgregarPromocionADeposito(aPromocion);
+            }
+            catch(InvalidOperationException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public void RegistrarPromocion(DTOPromocion aDTOPromocion)
         {
             try

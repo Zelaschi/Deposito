@@ -110,5 +110,6 @@ namespace BusinessLogicTest
 
             Assert.AreEqual(promo.Id, promocionEncontrada.Id);
         }
+
     }
 }
