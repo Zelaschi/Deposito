@@ -8,8 +8,11 @@ namespace ControllerLayer
         private DTODeposito Deposito { get; set; }
         private DTOCliente Cliente { get; set; }
 
-        public DTOReserva(DateTime fechaInicio, DateTime fechaFin, DTODeposito deposito, DTOCliente cliente)
+        private int IdReservaDTO {  get; set; } 
+
+        public DTOReserva(int idReservaDTO, DateTime fechaInicio, DateTime fechaFin, DTODeposito deposito, DTOCliente cliente)
         {
+            IdReservaDTO = idReservaDTO;
             FechaInicio = fechaInicio;
             FechaFin = fechaFin;
             Deposito = deposito;

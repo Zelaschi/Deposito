@@ -128,8 +128,16 @@ namespace ControllerLayer
         }
         public void RegistrarDeposito(DTODeposito aDTODeposito) 
         {
-            Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
-            _depositoLogic.AddDeposito(aDeposito);
+            try
+            {
+                Deposito aDeposito = new Deposito(aDTODeposito.Id, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+                _depositoLogic.AddDeposito(aDeposito);
+            }
+            catch (ArgumentException e) 
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
 
         public void RegistrarPromocion(DTOPromocion aDTOPromocion)
@@ -195,5 +203,7 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
+
+
     }
 }
