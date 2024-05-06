@@ -218,7 +218,10 @@ namespace ControllerLayer
         public DTOReserva BuscarReservaPorId(int idParametro)
         {
             Reserva reservaEncontrada = _reservaLogic.BuscarReservaPorId(idParametro);
-           
+            if (reservaEncontrada == null)
+            {
+                throw new Exception("Reserva no encontrada!");
+            }
 
             DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
             DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.IdDeposito, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
