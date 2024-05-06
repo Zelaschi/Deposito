@@ -199,5 +199,13 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
+        public void RegistrarReserva(DTOReserva DTOReservaParametro) 
+        {
+            Deposito depositoEncontrado = _depositoLogic.buscarDepositoPorId(DTOReservaParametro.Deposito.Id);
+            Cliente clienteEncontrado = _clienteLogic.buscarClientePorMail(DTOReservaParametro.Cliente.Mail);
+            Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
+
+            _reservaLogic.AgregarReserva(reservaAAgregar);
+        }
     }
 }
