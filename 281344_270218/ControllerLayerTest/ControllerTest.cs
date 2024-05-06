@@ -31,7 +31,7 @@ namespace ControllerLayerTest
         private DTOAdministrador aDTOAdministrador;
         private DTODeposito aDTODeposito;
         private DTOPromocion aDTOPromocion;
-        private DTOReserva aDTOreserva;
+        private DTOReserva aDTOReserva;
 
         [TestInitialize]
         public void setUp() {
@@ -52,7 +52,7 @@ namespace ControllerLayerTest
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOPromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
-            aDTOreserva = new DTOReserva(DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+            aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
 
         }
 
@@ -439,6 +439,20 @@ namespace ControllerLayerTest
             aDTOPromocion.PorcentajeDescuento = 40;
 
             _controller.ActualizarPromocion(aDTOPromocion);
+        }
+
+        //PROMOCION
+        [TestMethod]
+        public void RegistrarReservaDTOTest() {
+            _controller.RegistrarReserva(aDTOReserva);
+
+            DTOReserva DTOReservaEncontrado = _controller.ObtenerReservaPorId(aDTOReserva.Id);
+
+            Assert.AreEqual(aDTOReserva.Id, DTOReservaEncontrado.Id);
+            Assert.AreEqual(aDTOReserva.FechaDesde, DTOReservaEncontrado.FechaDesde);
+            Assert.AreEqual(aDTOReserva.FechaHasta, DTOReservaEncontrado.FechaHasta);
+            Assert.AreEqual(aDTOReserva.Deposito.Area, DTOReservaEncontrado.Deposito.Area);
+            Assert.AreEqual(aDTOReserva.Cliente.NombreYApellido, DTOReservaEncontrado.Cliente.NombreYApellido);
         }
     }
 }

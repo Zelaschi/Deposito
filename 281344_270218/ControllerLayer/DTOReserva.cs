@@ -3,15 +3,17 @@ namespace ControllerLayer
 {
     public class DTOReserva
     {
-        private DateTime FechaInicio { get; set; }
-        private DateTime FechaFin { get; set; }
-        private DTODeposito Deposito { get; set; }
-        private DTOCliente Cliente { get; set; }
+        public int Id { get; set; }
+        public DateTime FechaDesde { get; set; }
+        public DateTime FechaHasta { get; set; }
+        public DTODeposito Deposito { get; set; }
+        public DTOCliente Cliente { get; set; }
 
-        public DTOReserva(DateTime fechaInicio, DateTime fechaFin, DTODeposito deposito, DTOCliente cliente)
+        public DTOReserva(int id, DateTime fechaDesde, DateTime fechaHasta, DTODeposito deposito, DTOCliente cliente)
         {
-            FechaInicio = fechaInicio;
-            FechaFin = fechaFin;
+            Id = id;
+            FechaDesde = fechaDesde;
+            FechaHasta = fechaHasta;
             Deposito = deposito;
             Cliente = cliente;
         }
