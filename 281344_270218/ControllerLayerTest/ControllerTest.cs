@@ -369,5 +369,19 @@ namespace ControllerLayerTest
             _controller.RegistrarPromocion(aDTOpromocion);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+
+        public void RegistrarPromocionFechaFinMayorAFechaInicio()
+        {
+            DateTime fechaInicioMayor = DateTime.Today.AddDays(1);
+            DateTime fechaFinMenor = DateTime.Today;
+
+            aDTOpromocion.FechaInicio = fechaInicioMayor;
+            aDTOpromocion.FechaFIn = fechaFinMenor;
+
+            _controller.RegistrarPromocion(aDTOpromocion);
+        }
+
     }
 }
