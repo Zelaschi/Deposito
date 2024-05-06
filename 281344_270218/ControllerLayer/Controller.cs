@@ -201,27 +201,29 @@ namespace ControllerLayer
         }
         public void RegistrarReserva(DTOReserva DTOReservaParametro) 
         {
-            Deposito depositoEncontrado = _depositoLogic.buscarDepositoPorId(DTOReservaParametro.Deposito.Id);
-            Cliente clienteEncontrado = _clienteLogic.buscarClientePorMail(DTOReservaParametro.Cliente.Mail);
-            Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
+            try
+            {
+                Deposito depositoEncontrado = _depositoLogic.buscarDepositoPorId(DTOReservaParametro.Deposito.Id);
+                Cliente clienteEncontrado = _clienteLogic.buscarClientePorMail(DTOReservaParametro.Cliente.Mail);
+                Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
 
-            _reservaLogic.AgregarReserva(reservaAAgregar);
+                _reservaLogic.AgregarReserva(reservaAAgregar);
+            }
+            catch (ArgumentException e)
+            { 
+                throw new Exception (e.Message);
+            }
+            
         }
         public DTOReserva ObtenerReservaPorId(int idParametro)
         {
-            try
-            {
                 Reserva reservaEncontrada = _reservaLogic.BuscarReservaPorId(idParametro);
                 DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
                 DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.IdDeposito, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
 
                 DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.IdReserva, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar);
 
-                return reservaRetorno;
-            }
-            catch (ArgumentException e) {
-                throw new Exception(e.Message);
-            }
+                return reservaRetorno; 
         }
     }
 }

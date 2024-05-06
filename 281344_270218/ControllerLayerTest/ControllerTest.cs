@@ -458,7 +458,9 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarResrvaConDatosIncorrectosTest() {
+        public void RegistrarReservaConDatosIncorrectosTest() {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito);
             DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente);
             
             _controller.RegistrarReserva(DTOReservaIncorrectaTest);
