@@ -157,6 +157,11 @@ namespace ControllerLayer
             return listaDTOPromociones;
         }
 
+        public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
+        {
+            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
 
+        }
     }
 }

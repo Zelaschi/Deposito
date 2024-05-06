@@ -399,5 +399,13 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOPromocion2.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion2.IdPromocion).IdPromocion);
         }
 
+        [TestMethod]
+
+        public void EliminarPromocionTest()
+        {
+            var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            _controller.RegistrarPromocion(DTOPromocion1);
+            _controller.ElminarPromocion(DTOPromocion1);
+        }
     }
 }
