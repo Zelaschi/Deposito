@@ -27,5 +27,12 @@ namespace DomainTest
             string etiqueta21Caracteres = "Este es un string sencillo de 21 caracteres";
             promo.Etiqueta = etiqueta21Caracteres;
         }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PromocionConMasDe75YMenosDe5() 
+        {
+            promo.PorcentajeDescuento = 1
+            promo.PorcentajeDescuento = 76;
+        }
     }
 }
