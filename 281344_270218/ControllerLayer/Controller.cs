@@ -132,6 +132,19 @@ namespace ControllerLayer
             _depositoLogic.AddDeposito(aDeposito);
         }
 
+        public void RegistrarPromocion(DTOPromocion aDTOPromocion)
+        {
+            try
+            {
+                Promocion aPromocion = new Promocion(aDTOPromocion.IdPromocion, aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
+                _promocionLogic.AgregarPromocion(aPromocion);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
 
     }
 }

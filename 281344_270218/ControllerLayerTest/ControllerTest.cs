@@ -50,8 +50,8 @@ namespace ControllerLayerTest
 
             aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
+            aDTOpromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
-            aDTOpromocion = new DTOPromocion("promo", 20, DateTime.Today, DateTime.Today.AddDays(10));
             aDTOreserva = new DTOReserva(DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
 
         }
@@ -349,7 +349,7 @@ namespace ControllerLayerTest
 
         public void RegistrarPromocionTest() 
         {
-            _controller.ResgistrarPromocion(aDTOpromocion);
+            _controller.RegistrarPromocion(aDTOpromocion);
 
             Assert.AreEqual(aDTOpromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).Id);
             Assert.AreEqual(aDTOpromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOpromocion.IdPromocion).Etiqueta);
