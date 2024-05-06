@@ -426,5 +426,19 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(aDTOPromocion.IdPromocion, promo.IdPromocion);
         }
+
+        [TestMethod]
+
+        public void ActualizarPromocionTest()
+        {
+            _controller.RegistrarPromocion(aDTOPromocion);
+
+            aDTOPromocion.Etiqueta = "nuevaEtiqueta";
+            aDTOPromocion.FechaInicio = DateTime.Today.AddDays(10);
+            aDTOPromocion.FechaFIn = DateTime.Today.AddDays(11);
+            aDTOPromocion.PorcentajeDescuento = 40;
+
+            _controller.ActualizarPromocion(aDTOPromocion);
+        }
     }
 }

@@ -178,5 +178,22 @@ namespace ControllerLayer
             return DTOPromocionRetorno;
             
         }
+
+        public void ActualizarPromocion(DTOPromocion DTOPromocionParametro)
+        {
+            try
+            {
+                Promocion promocion = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+
+                promocion.Etiqueta = DTOPromocionParametro.Etiqueta;
+                promocion.FechaInicio = DTOPromocionParametro.FechaInicio;
+                promocion.FechaFin = DTOPromocionParametro.FechaFIn;
+                promocion.PorcentajeDescuento = DTOPromocionParametro.PorcentajeDescuento;
+            }
+            catch (ArgumentException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
