@@ -640,6 +640,34 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOReserva1.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
             Assert.IsNull(reservaQueNoDeberiaEstar);
         }
+        [TestMethod]
+        public void ObtenerListaReservasRechazadasTest()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito);
 
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+
+            _controller.RegistrarReserva(aDTOReserva1);
+            _controller.RegistrarReserva(aDTOReserva2);
+            _controller.RegistrarReserva(aDTOReserva3);
+            _controller.RegistrarReserva(aDTOReserva4);
+
+            _controller.RechazarReserva(aDTOReserva1);
+            _controller.RechazarReserva(aDTOReserva2);
+            _controller.AceptarReserva(aDTOReserva3);
+
+
+            IList<DTOReserva> ReservasPendientes = _controller.ObtenerListaReservasAceptadas();
+
+            DTOReserva reservaQueNoDeberiaEstar = ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva3.Id);
+            Assert.AreEqual(aDTOReserva1.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva1.Id).FechaHasta);
+            Assert.AreEqual(aDTOReserva2.FechaHasta, ReservasPendientes.FirstOrDefault(x => x.Id == aDTOReserva2.Id).FechaHasta);
+
+            Assert.IsNull(reservaQueNoDeberiaEstar);
+        }
     }
 }
