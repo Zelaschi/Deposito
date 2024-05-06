@@ -211,7 +211,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void EliminarClienteTest() 
+        public void EliminarClienteTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.EliminarCliente(aDTOCliente);
@@ -313,7 +313,7 @@ namespace ControllerLayerTest
         {
             _controller.RegistrarAdministrador(aDTOAdministrador);
             DTOAdministrador admin = _controller.ObtenerAdministrador();
-            
+
             Assert.AreEqual(aDTOAdministrador.Mail, admin.Mail);
         }
         [TestMethod]
@@ -324,7 +324,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void IntentarAgregarSegundoAdministradorTest() 
+        public void IntentarAgregarSegundoAdministradorTest()
         {
             var OtroAdmin = new DTOAdministrador("nombre", "mailvalido@gmail.com", "Password1!");
 
@@ -347,7 +347,7 @@ namespace ControllerLayerTest
 
         [TestMethod]
 
-        public void RegistrarPromocionTest() 
+        public void RegistrarPromocionTest()
         {
             _controller.RegistrarPromocion(aDTOPromocion);
 
@@ -395,7 +395,7 @@ namespace ControllerLayerTest
 
             IList<DTOPromocion> listaDTOPromocion = _controller.listarTodasLasPromociones();
 
-            Assert.AreEqual(DTOPromocion1.IdPromocion, listaDTOPromocion.FirstOrDefault(x=>x.IdPromocion == DTOPromocion1.IdPromocion).IdPromocion);
+            Assert.AreEqual(DTOPromocion1.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion1.IdPromocion).IdPromocion);
             Assert.AreEqual(DTOPromocion2.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion2.IdPromocion).IdPromocion);
         }
 
@@ -462,12 +462,12 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
             DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente);
-            
+
             _controller.RegistrarReserva(DTOReservaIncorrectaTest);
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void BuscarReservaNoRegistradaPorIdTireExceptionTest() 
+        public void BuscarReservaNoRegistradaPorIdTireExceptionTest()
         {
             _controller.BuscarReservaPorId(1);
         }

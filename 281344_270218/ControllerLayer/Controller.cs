@@ -165,7 +165,6 @@ namespace ControllerLayer
         {
             Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
             _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
-
         }
 
         public DTOPromocion BuscarPromocionPorId(int IdParametro)
@@ -242,6 +241,11 @@ namespace ControllerLayer
                 DTOReservas.Add(reservaAuxiliar);
             }
             return DTOReservas;
+        }
+        public void EliminarReserva(DTOReserva reservaParametro)
+        {
+            Reserva reservaEncontradaPorId = _reservaLogic.BuscarReservaPorId(reservaParametro.Id);
+            _reservaLogic.EliminarReserva(reservaEncontradaPorId.IdReserva);
         }
     }
 }
