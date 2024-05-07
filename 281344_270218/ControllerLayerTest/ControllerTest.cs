@@ -59,7 +59,9 @@ namespace ControllerLayerTest
         [TestCleanup]
         public void limpieza()
         {
-            
+            Deposito.UltimoID = 0;
+            Reserva.UltimoID = 0;
+            Persona.contadorID = 1;
         }
 
         //CLIENTE
