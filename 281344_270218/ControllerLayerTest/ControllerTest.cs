@@ -71,6 +71,13 @@ namespace ControllerLayerTest
 
             Assert.IsTrue(_controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password));
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoginConPasswordIncorrectaTest() 
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.LogIn(aDTOCliente.Mail, "PasswordIncorrecta");
+        }
 
         //CLIENTE
         [TestMethod]
