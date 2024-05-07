@@ -375,6 +375,11 @@ namespace ControllerLayer
         {
             Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
 
+            if (aCliente.Password != Pwd)
+            {
+                throw new Exception("Wrong password");
+            }
+
             return true;
         }
     }

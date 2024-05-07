@@ -73,7 +73,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void LoginConPasswordIncorrectaTest() 
+        public void LoginConPasswordIncorrectaTireExcepcionTest() 
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.LogIn(aDTOCliente.Mail, "PasswordIncorrecta");
