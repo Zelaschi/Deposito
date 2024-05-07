@@ -11,6 +11,7 @@
         public string Estado { get; set; } = "Pendiente";
 
         public Cliente Cliente { get; set; }
+        public Promocion PromocionAplicada { get; set; }
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -85,6 +86,7 @@
 
             if (porcentajeDescuentoPromocion != null) 
             {
+                PromocionAplicada = porcentajeDescuentoPromocion;
                 double descuentoPromocion = ((100 - porcentajeDescuentoPromocion.PorcentajeDescuento) * 0.01);
                 double precioConDescuentoPromocion = precioReserva * descuentoPromocion;
                 precioReserva = (int)precioConDescuentoPromocion;

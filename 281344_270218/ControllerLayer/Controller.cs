@@ -201,16 +201,18 @@ namespace ControllerLayer
             List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
             foreach (var promocion in listaPromocines)
             {
-                var DTOpromocion = new DTOPromocion(promocion.Id, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
+                var DTOpromocion = new DTOPromocion(promocion.IdPromocion, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
                 listaDTOPromociones.Add(DTOpromocion);
             }
             return listaDTOPromociones;
         }
-
+        
         public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
         {
             Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
-            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
+            
+
+            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.IdPromocion);
 
         }
 
@@ -223,7 +225,7 @@ namespace ControllerLayer
                 throw new Exception("Promocion no encontrada!");
             }
 
-            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.Id, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
+            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.IdPromocion, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
 
             return DTOPromocionRetorno;
             

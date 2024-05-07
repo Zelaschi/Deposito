@@ -23,14 +23,14 @@
         @foreach (var promocion in _listaPromociones)
         {
             <tr>
-                <td>@promocion.Id</td>
+                <td>@promocion.IdPromocion</td>
                 <td>@promocion.Etiqueta</td>
                 <td>@promocion.PorcentajeDescuento</td>
                 <td>@promocion.FechaInicio</td>
                 <td>@promocion.FechaFin</td>
                 <td>
-                    <a class="btn btn-success btn-sm" href="promocion/@promocion.Id/editar">Editar</a>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion.Id))">Eliminar</button>
+                    <a class="btn btn-success btn-sm" href="promocion/@promocion.IdPromocion/editar">Editar</a>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion.IdPromocion))">Eliminar</button>
                 </td>
             </tr>
         }

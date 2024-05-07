@@ -3,7 +3,7 @@
     public class Promocion
     {
         private static int contadorPromo = 0;
-        public int Id { get; set; }
+        public int IdPromocion { get; set; }
         private string _etiqueta;
         public string Etiqueta {
             get
@@ -43,7 +43,7 @@
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            Id = contadorPromo;
+            IdPromocion = contadorPromo;
             contadorPromo++;
             Etiqueta = etiqueta;
             PorcentajeDescuento = porcentajeDescuento;
@@ -55,7 +55,7 @@
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            Id = id;
+            IdPromocion = id;
             Etiqueta = etiqueta;
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;
