@@ -676,7 +676,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void EliminarPromocionEnUsoDeErrorTest() 
+        public void EliminarPromocionEnUsoTireExceptionTest() 
         {
             _controller.RegistrarPromocion(aDTOPromocion);
             _controller.RegistrarDeposito(aDTODeposito);
