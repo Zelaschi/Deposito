@@ -22,6 +22,7 @@ namespace ControllerLayer
             _reservaLogic = reservaLogic;
         }
 
+
         public void RegistrarCliente(DTOCliente aDTOCliente)
         {
             try
@@ -368,6 +369,13 @@ namespace ControllerLayer
                 }
             }
             return DTOReservas;
+        }
+
+        public bool LogIn(string Mail, string Pwd)
+        {
+            Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+
+            return true;
         }
     }
 }

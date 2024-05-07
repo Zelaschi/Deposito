@@ -69,7 +69,7 @@ namespace ControllerLayerTest
         {
             _controller.RegistrarCliente(aDTOCliente);
 
-            Assert.IsTrue(_controller.Login(aDTOCliente.Mail, aDTOCliente.Password));
+            Assert.IsTrue(_controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password));
         }
 
         //CLIENTE
