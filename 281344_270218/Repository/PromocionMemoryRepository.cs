@@ -13,7 +13,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            _promociones.RemoveAll(x => x.Id == id);
+            _promociones.RemoveAll(x => x.IdPromocion == id);
         }
 
         public Promocion? Find(Func<Promocion, bool> filter)
@@ -28,7 +28,7 @@ namespace Repository
 
         public Promocion? Update(Promocion promoActualizada)
         {
-            Promocion promocionEncontrada = Find(x => x.Id == promoActualizada.Id);
+            Promocion promocionEncontrada = Find(x => x.IdPromocion == promoActualizada.IdPromocion);
 
             if (promocionEncontrada != null)
             {

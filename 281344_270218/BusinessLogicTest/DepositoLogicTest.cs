@@ -108,7 +108,7 @@ namespace BusinessLogicTest
             
             Promocion promocionEncontrada = deposito1.hayPromocionHoy();
 
-            Assert.AreEqual(promo.Id, promocionEncontrada.Id);
+            Assert.AreEqual(promo.IdPromocion, promocionEncontrada.IdPromocion);
         }
 
     }

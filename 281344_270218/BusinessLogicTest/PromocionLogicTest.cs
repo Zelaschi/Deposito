@@ -23,7 +23,7 @@ namespace BusinessLogicTest
         public void AgregarPromocionTest() {
             Promocion retorno = _promocionLogic.AgregarPromocion(promo);
 
-            Assert.AreEqual(promo.Id, retorno.Id);
+            Assert.AreEqual(promo.IdPromocion, retorno.IdPromocion);
         }
         [TestMethod]
         public void ListarTodasLasPromocionesTest ()
@@ -36,8 +36,8 @@ namespace BusinessLogicTest
 
             IList<Promocion> listaPromociones = _promocionLogic.listarTodasLasPromociones();
 
-            Assert.AreEqual(promo1.Id, listaPromociones.FirstOrDefault(x => x.Id == promo1.Id).Id);
-            Assert.AreEqual(promo2.Id, listaPromociones.FirstOrDefault(x => x.Id == promo2.Id).Id);
+            Assert.AreEqual(promo1.IdPromocion, listaPromociones.FirstOrDefault(x => x.IdPromocion == promo1.IdPromocion).IdPromocion);
+            Assert.AreEqual(promo2.IdPromocion, listaPromociones.FirstOrDefault(x => x.IdPromocion == promo2.IdPromocion).IdPromocion);
         }
 
         [TestMethod]
@@ -45,9 +45,9 @@ namespace BusinessLogicTest
         {
             _promocionLogic.AgregarPromocion(promo);
 
-            Promocion promoPorFind = _promocionLogic.buscarPromocionPorId(promo.Id);
+            Promocion promoPorFind = _promocionLogic.buscarPromocionPorId(promo.IdPromocion);
 
-            Assert.AreEqual(promo.Id, promoPorFind.Id);
+            Assert.AreEqual(promo.IdPromocion, promoPorFind.IdPromocion);
         }
 
         [TestMethod]
@@ -63,9 +63,9 @@ namespace BusinessLogicTest
         {
             _promocionLogic.AgregarPromocion(promo);
 
-            _promocionLogic.EliminarPromocion(promo.Id);
+            _promocionLogic.EliminarPromocion(promo.IdPromocion);
 
-            var promocionEliminada = _promocionLogic.buscarPromocionPorId(promo.Id);
+            var promocionEliminada = _promocionLogic.buscarPromocionPorId(promo.IdPromocion);
 
             Assert.IsNull(promocionEliminada);
         }
@@ -81,7 +81,7 @@ namespace BusinessLogicTest
             DateTime fechaInicioActualizada = DateTime.Now;
             DateTime fechaFinActualizada = DateTime.Now.AddDays(16);
 
-            Promocion promoActualizada = new Promocion(promo.Id, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
+            Promocion promoActualizada = new Promocion(promo.IdPromocion, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
 
             Promocion promoActualizdaRetorno = _promocionLogic.ActualizarInfoPromocion(promoActualizada);
 

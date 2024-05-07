@@ -2,7 +2,7 @@
 {
     public class Reserva
     {
-        private static int UltimoID { get; set; } = 0;
+        public static int UltimoID { get; set; } = 0;
         public int IdReserva { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
@@ -27,6 +27,7 @@
             }
         }
         public Cliente Cliente { get; set; }
+        public Promocion PromocionAplicada { get; set; }
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -101,6 +102,7 @@
 
             if (porcentajeDescuentoPromocion != null) 
             {
+                PromocionAplicada = porcentajeDescuentoPromocion;
                 double descuentoPromocion = ((100 - porcentajeDescuentoPromocion.PorcentajeDescuento) * 0.01);
                 double precioConDescuentoPromocion = precioReserva * descuentoPromocion;
                 precioReserva = (int)precioConDescuentoPromocion;
