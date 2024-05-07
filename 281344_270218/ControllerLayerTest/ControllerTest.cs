@@ -64,6 +64,14 @@ namespace ControllerLayerTest
             Persona.contadorID = 1;
         }
 
+        [TestMethod]
+        public void LoginTest()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+
+            Assert.IsTrue(_controller.Login(aDTOCliente.Mail, aDTOCliente.Password));
+        }
+
         //CLIENTE
         [TestMethod]
         public void RegistrarClienteTest()
