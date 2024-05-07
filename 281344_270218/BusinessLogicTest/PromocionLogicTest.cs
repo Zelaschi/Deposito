@@ -100,5 +100,6 @@ namespace BusinessLogicTest
 
             Assert.IsNull(promoNull);
         }
+
     }
 }
