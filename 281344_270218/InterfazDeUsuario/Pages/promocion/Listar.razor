@@ -12,15 +12,16 @@
 </h1>
 
 <table class="table">
-    <thread>
+    <thead>
         <tr>
             <th>Id</th>
             <th>Etiqueta</th>
             <th>Porcentaje</th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
+            <th>Acciones</th>
         </tr>
-    </thread>
+    </thead>
     <tbody>
         @foreach (var promocion in promocionesRegistradas)
         {
@@ -50,5 +51,6 @@
     private void BorrarPromocion(DTOPromocion promocion)
     {
         Controller.ElminarPromocion(promocion);
+        promocionesRegistradas = Controller.listarTodasLasPromociones().ToList();
     }
 }

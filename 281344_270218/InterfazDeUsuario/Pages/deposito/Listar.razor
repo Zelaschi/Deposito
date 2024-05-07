@@ -17,14 +17,15 @@
 
 
 <table class="table">
-    <thread>
+    <thead>
     <tr>
         <th>Id</th>
         <th>Area</th>
         <th>Tamanio</th>
         <th>Climatizacion</th>
+        <th>Acciones</th>
     </tr>
-    </thread>
+    </thead>
     <tbody>
         @foreach (var deposito in depositosRegistrados)
         {
@@ -52,6 +53,8 @@
     private void BorrarDeposito(DTODeposito deposito)
     {
         Controller.ElminarDeposito(deposito);
+        depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+        
     }
 }
 
