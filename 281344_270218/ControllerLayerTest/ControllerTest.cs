@@ -420,7 +420,20 @@ namespace ControllerLayerTest
             _controller.ElminarDeposito(aDTODeposito);
             _controller.BuscarDepositoPorId(aDTODeposito.Id);
         }
+        [TestMethod]
+        public void ListarTodasLosDepositosTest()
+        {
+            var DTODeposito1 = new DTODeposito(1, "A", "Pequenio", true);
+            var DTODeposito2 = new DTODeposito(2, "A", "Pequenio", true);
 
+            _controller.RegistrarDeposito(DTODeposito1);
+            _controller.RegistrarDeposito(DTODeposito2);
+
+            IList<DTODeposito> listaDTODeposito = _controller.listarTodosLosDepositos();
+
+            Assert.AreEqual(DTODeposito1.Id, listaDTODeposito.FirstOrDefault(x => x.Id == DTODeposito1.Id).Id);
+            Assert.AreEqual(DTODeposito2.Id, listaDTODeposito.FirstOrDefault(x => x.Id == DTODeposito2.Id).Id);
+        }
 
 
         //PROMOCION

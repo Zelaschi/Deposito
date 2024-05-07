@@ -162,6 +162,18 @@ namespace ControllerLayer
             }
         }
 
+        public IList<DTODeposito> listarTodosLosDepositos()
+        {
+            IList<Deposito> listaDepositos = _depositoLogic.GetAll();
+            List<DTODeposito> listaDTODepositos = new List<DTODeposito>();
+            foreach (var deposito in listaDepositos)
+            {
+                var DTODeposito = new DTODeposito(deposito.IdDeposito, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
+                listaDTODepositos.Add(DTODeposito);
+            }
+            return listaDTODepositos;
+        }
+
         public DTODeposito BuscarDepositoPorId(int IdParametro)
         {
             var depositoEncontrado = _depositoLogic.buscarDepositoPorId(IdParametro);

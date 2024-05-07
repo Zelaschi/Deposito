@@ -2,10 +2,12 @@
 
 <PageTitle>Lista Depositos</PageTitle>
 
-@using Domain
 @using BusinessLogic
+@using Domain
+@using ControllerLayer
 
 @inject DepositoLogic DepositoLogic
+@inject Controller Controller
 @inject NavigationManager NavigationManager
 
 <h1>
@@ -24,15 +26,15 @@
     </tr>
     </thread>
     <tbody>
-        @foreach (var deposito in _listaDepositos)
+        @foreach (var deposito in depositosRegistrados)
         {
             <tr>
-                <td>@deposito.IdDeposito</td>
+                <td>@deposito.Id</td>
                 <td>@deposito.Area</td>
                 <td>@deposito.Tamanio</td>
                 <td>@deposito.Climatizacion</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito.IdDeposito))">Eliminar</button>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito))">Eliminar</button>
                 </td>
             </tr>
         }
@@ -40,7 +42,21 @@
 </table>
 
 @code {
-    private List<Deposito> _listaDepositos = new List<Deposito>();
+    private List<DTODeposito> depositosRegistrados;
+
+    protected override void OnInitialized()
+    {
+        depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+    }
+
+    private void BorrarDeposito(DTODeposito deposito)
+    {
+        Controller.ElminarDeposito(deposito);
+    }
+}
+
+
+    @* private List<Deposito> _listaDepositos = new List<Deposito>();
 
     protected override void OnInitialized()
     {
@@ -51,5 +67,4 @@
     {
         DepositoLogic.EliminarDeposito(id);
         _listaDepositos = DepositoLogic.GetAll().ToList();
-    }
-}
+    } *@
