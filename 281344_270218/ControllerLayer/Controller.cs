@@ -22,6 +22,7 @@ namespace ControllerLayer
             _reservaLogic = reservaLogic;
         }
 
+
         public void RegistrarCliente(DTOCliente aDTOCliente)
         {
             try
@@ -137,7 +138,7 @@ namespace ControllerLayer
         {
             try
             {
-                Deposito aDeposito = new Deposito(aDTODeposito.Id, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+                Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
                 _depositoLogic.AddDeposito(aDeposito);
             }
             catch (ArgumentException e) 
@@ -186,7 +187,7 @@ namespace ControllerLayer
         {
             try
             {
-                Promocion aPromocion = new Promocion(aDTOPromocion.IdPromocion, aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
+                Promocion aPromocion = new Promocion(aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
                 _promocionLogic.AgregarPromocion(aPromocion);
             }
             catch (ArgumentException e)
@@ -201,16 +202,28 @@ namespace ControllerLayer
             List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
             foreach (var promocion in listaPromocines)
             {
-                var DTOpromocion = new DTOPromocion(promocion.Id, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
+                var DTOpromocion = new DTOPromocion(promocion.IdPromocion, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
                 listaDTOPromociones.Add(DTOpromocion);
             }
             return listaDTOPromociones;
         }
+        private void validarQuePromocionNoEsteEnUso(DTOPromocion DTOPromocionParametro) {
+            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
 
+            foreach (var reserva in Reservas)
+            {
+                if (reserva.PromocionAplicada.IdPromocion == promocionEncontradaPorId.IdPromocion) {
+                    throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");                
+                }
+            }
+        }
         public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
         {
             Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
-            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.Id);
+            validarQuePromocionNoEsteEnUso(DTOPromocionParametro);
+
+            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.IdPromocion);
 
         }
 
@@ -223,7 +236,7 @@ namespace ControllerLayer
                 throw new Exception("Promocion no encontrada!");
             }
 
-            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.Id, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
+            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.IdPromocion, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
 
             return DTOPromocionRetorno;
             
@@ -356,6 +369,18 @@ namespace ControllerLayer
                 }
             }
             return DTOReservas;
+        }
+
+        public bool LogIn(string Mail, string Pwd)
+        {
+            Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+
+            if (aCliente.Password != Pwd)
+            {
+                throw new Exception("Wrong password");
+            }
+
+            return true;
         }
     }
 }

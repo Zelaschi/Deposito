@@ -50,23 +50,46 @@ namespace ControllerLayerTest
 
             aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
-            aDTOPromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
 
             aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+        }
 
+        [TestCleanup]
+        public void limpieza()
+        {
+            Deposito.UltimoID = 0;
+            Reserva.UltimoID = 0;
+            Persona.contadorID = 1;
+            Promocion.contadorPromo = 0;
+        }
 
+        [TestMethod]
+        public void LoginTest()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+
+            Assert.IsTrue(_controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoginConPasswordIncorrectaTireExcepcionTest() 
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.LogIn(aDTOCliente.Mail, "PasswordIncorrecta");
         }
 
         //CLIENTE
         [TestMethod]
         public void RegistrarClienteTest()
         {
-            _controller.RegistrarCliente(aDTOCliente);
+            DTOCliente clienteTest = new DTOCliente("nombree", "mailvalido@gmail.com", "Password1!");
+            _controller.RegistrarCliente(clienteTest);
 
-            Assert.AreEqual(aDTOCliente.Mail, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).Mail);
-            Assert.AreEqual(aDTOCliente.NombreYApellido, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).NombreYApellido);
-            Assert.AreEqual(aDTOCliente.Password, _clienteLogic.buscarClientePorMail(aDTOCliente.Mail).Password);
+            Assert.AreEqual(clienteTest.Mail, _clienteLogic.buscarClientePorMail(clienteTest.Mail).Mail);
+            Assert.AreEqual(clienteTest.NombreYApellido, _clienteLogic.buscarClientePorMail(clienteTest.Mail).NombreYApellido);
+            Assert.AreEqual(clienteTest.Password, _clienteLogic.buscarClientePorMail(clienteTest.Mail).Password);
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
@@ -366,17 +389,17 @@ namespace ControllerLayerTest
         public void AgregarPromocionADepositoTest()
         {
             DTODeposito aDTODeposito = new DTODeposito(1, "A", "Grande", true);
-            DTOPromocion aDTOPromocion = new DTOPromocion(1, "etiquietaPromo", 20, DateTime.Today, DateTime.Today.AddDays(1));
-            
+            DTOPromocion aDTOPromocion = new DTOPromocion(0, "etiquietaPromo", 20, DateTime.Today, DateTime.Today.AddDays(1));
+
             _controller.RegistrarPromocion(aDTOPromocion);
             _controller.RegistrarDeposito(aDTODeposito);
-            
+
             Deposito depo = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
             Promocion promo = _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion);
 
             depo.AgregarPromocionADeposito(promo);
-            
-            Assert.AreEqual(promo.Id, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.Id == promo.Id).Id);
+
+            Assert.AreEqual(promo.IdPromocion, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.IdPromocion == promo.IdPromocion).IdPromocion);
         }
 
         [TestMethod]
@@ -408,7 +431,7 @@ namespace ControllerLayerTest
         {
             _controller.RegistrarPromocion(aDTOPromocion);
 
-            Assert.AreEqual(aDTOPromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).Id);
+            Assert.AreEqual(aDTOPromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).IdPromocion);
             Assert.AreEqual(aDTOPromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).Etiqueta);
             Assert.AreEqual(aDTOPromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).PorcentajeDescuento);
             Assert.AreEqual(aDTOPromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).FechaInicio);
@@ -444,8 +467,8 @@ namespace ControllerLayerTest
 
         public void ListarTodasLasPromocionesTest()
         {
-            var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
-            var DTOPromocion2 = new DTOPromocion(2, "etiqueta2", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion1 = new DTOPromocion(0, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion2 = new DTOPromocion(1, "etiqueta2", 20, DateTime.Today, DateTime.Today.AddDays(1));
 
             _controller.RegistrarPromocion(DTOPromocion1);
             _controller.RegistrarPromocion(DTOPromocion2);
@@ -455,14 +478,14 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOPromocion1.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion1.IdPromocion).IdPromocion);
             Assert.AreEqual(DTOPromocion2.IdPromocion, listaDTOPromocion.FirstOrDefault(x => x.IdPromocion == DTOPromocion2.IdPromocion).IdPromocion);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        
+
 
         public void EliminarPromocionTest()
         {
-            var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion1 = new DTOPromocion(0, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
             _controller.RegistrarPromocion(DTOPromocion1);
             _controller.ElminarPromocion(DTOPromocion1);
             _controller.BuscarPromocionPorId(DTOPromocion1.IdPromocion);
@@ -472,7 +495,7 @@ namespace ControllerLayerTest
         public void BuscarPromocionPorIdTest()
         {
             _controller.RegistrarPromocion(aDTOPromocion);
-            DTOPromocion promo = _controller.BuscarPromocionPorId(aDTOPromocion.IdPromocion);
+            DTOPromocion promo = _controller.BuscarPromocionPorId(0);
 
             Assert.AreEqual(aDTOPromocion.IdPromocion, promo.IdPromocion);
         }
@@ -497,6 +520,7 @@ namespace ControllerLayerTest
             aDTOPromocion.FechaInicio = DateTime.Today.AddDays(10);
             aDTOPromocion.FechaFIn = DateTime.Today.AddDays(11);
             aDTOPromocion.PorcentajeDescuento = 40;
+            aDTOPromocion.IdPromocion = 0;
 
             _controller.ActualizarPromocion(aDTOPromocion);
         }
@@ -559,7 +583,7 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void EliminarReservaQueNoExisteTireExceptionTest() 
+        public void EliminarReservaQueNoExisteTireExceptionTest()
         {
             _controller.EliminarReserva(aDTOReserva);
         }
@@ -572,7 +596,7 @@ namespace ControllerLayerTest
 
             _controller.AceptarReserva(aDTOReserva);
 
-            DTOReserva DTOReservaEncontrado= _controller.BuscarReservaPorId(aDTOReserva.Id);
+            DTOReserva DTOReservaEncontrado = _controller.BuscarReservaPorId(aDTOReserva.Id);
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
@@ -590,7 +614,7 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Rechazada");
         }
         [TestMethod]
-        public void ObtenerListaReservasPendientesTest() 
+        public void ObtenerListaReservasPendientesTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
@@ -669,5 +693,17 @@ namespace ControllerLayerTest
 
             Assert.IsNull(reservaQueNoDeberiaEstar);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarPromocionEnUsoTireExceptionTest() 
+        {
+            aDTOPromocion.IdPromocion = 0;
+            _controller.RegistrarPromocion(aDTOPromocion);
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.AgregarPromocionADeposito(aDTOPromocion, aDTODeposito);
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.ElminarPromocion(aDTOPromocion);
+        }
+
     }
 }

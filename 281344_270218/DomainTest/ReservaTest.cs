@@ -87,6 +87,22 @@ namespace DomainTest
 
             Assert.AreEqual(reserva.Precio, 108);
         }
+        [TestMethod]
+        public void quePromocionAplicadaSeaLaQueSeLeAplico()
+        {
+            Deposito depositoTest = new Deposito("A", "Grande", true);
+            Promocion promo1Test = new Promocion("etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo2Test = new Promocion("etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo3Test = new Promocion("etiqueta", 70, DateTime.Today, DateTime.Today.AddDays(10));
+
+            depositoTest.AgregarPromocionADeposito(promo1Test);
+            depositoTest.AgregarPromocionADeposito(promo2Test);
+            depositoTest.AgregarPromocionADeposito(promo3Test);
+
+            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(3), depositoTest, cliente);
+
+            Assert.AreEqual(reserva.PromocionAplicada.IdPromocion, promo3Test.IdPromocion);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]

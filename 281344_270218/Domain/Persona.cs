@@ -6,7 +6,7 @@ namespace Domain
 {
     public abstract class Persona
     {
-        private static int contadorID = 1;
+        public static int contadorID = 1;
         public int IdPersona { get; set; }
 
         private bool noVacioONull(string value) {
