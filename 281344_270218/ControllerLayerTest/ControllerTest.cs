@@ -85,7 +85,12 @@ namespace ControllerLayerTest
         {
             _controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password);
         }
-
+        [TestMethod]
+        public void EsAdministradorTest() { 
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            bool esAdmin = _controller.esAdministrador(string aDTOAdministrador.Mail);
+            Assert.IsTrue(esAdmin);
+        }
         //CLIENTE
         [TestMethod]
         public void RegistrarClienteTest()
