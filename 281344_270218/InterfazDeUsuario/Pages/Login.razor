@@ -1,50 +1,65 @@
-﻿@page "/login"
+﻿@page "/"
+@layout LoginLayout
 
-@using BusinessLogic
-@using Domain 
-@using InterfazDeUsuario.Data
+<PageTitle>Lista Depositos</PageTitle>
 
-@inject SessionLogic SessionLogic
 @inject NavigationManager NavigationManager
-@inject ClienteLogic ClienteLogic
 
-<h1>Login</h1>
+@using ControllerLayer
 
-<form @onsubmit="HandleLogin">
+@inject Controller Controller
+@inject DTOSesion DtoSesion
 
-    <div class="form-group">
-        <label for="mail">Mail</label>
-        <input type="text" class="form-control" id="username" @bind="cliente.Mail" required />
-    </div>
-    <div class="form-group">
-        <label for="contrasenia">Contrasenia</label>
-        <input type="password" class="form-control" id="password" @bind="cliente.Password" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-
-</form>
-
+<main class="container d-flex flex-column align-items-center">
+    <h1 class="mb-4 mt-5">Log In</h1>
+    <form class="w-25">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" aria-describedby="Email" @bind="email">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" aria-describedby="Email" @bind="password">
+            @if (!errorOk)
+            {
+                <p class="text-danger">@errorMessage</p>
+            }
+        </div>
+        <div class="container d-flex flex-column align-items-center mt-4">
+            <button type="button" class="btn btn-primary" @onclick="EjecutarLogin">Log in</button>
+        </div>
+    </form>
+    <p class="mt-4"><a class="text-black">Log in</a>/<a href="/register">Register</a></p>
+</main>
 
 @code {
-    private Cliente cliente = new Cliente("juan Perez", "juanperez@gmail.com", "JuanPerez1!");
-    private string mensajeError;
-    private void HandleLogin()
+
+    private string email;
+    private string password;
+    private bool errorOk;
+    private string errorMessage;
+
+    protected override void OnInitialized()
     {
-        if (SessionLogic.ValidarCredenciales(cliente))
+        errorOk = true;
+    }
+
+    private void EjecutarLogin()
+    {
+        try
         {
-            SessionLogic.Login(cliente);
-            NavigationManager.NavigateTo("/");
+            if (Controller.LogIn(email, password))
+            {
+                DtoSesion.SesionMail = email;
+                NavigationManager.NavigateTo($"/reserva");
+            }
         }
-        else
+        catch (Exception e)
         {
-            mensajeError = "Nombre o contrasenia invalidos";
+            errorOk = false;
+            errorMessage = e.Message;
         }
     }
+
 }
 
-@if (!string.IsNullOrEmpty(mensajeError))
-{
-    <div class="alert alert-danger">
-        @mensajeError
-    </div>
-}

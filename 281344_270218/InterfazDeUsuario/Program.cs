@@ -26,6 +26,7 @@ builder.Services.AddSingleton<AdministradorLogic>();
 builder.Services.AddSingleton<ReservaLogic>();
 builder.Services.AddSingleton<SessionLogic>();
 builder.Services.AddSingleton<Controller>();
+builder.Services.AddSingleton<DTOSesion>();
 
 
 var app = builder.Build();
