@@ -91,6 +91,7 @@ namespace ControllerLayerTest
             Assert.AreEqual(clienteTest.NombreYApellido, _clienteLogic.buscarClientePorMail(clienteTest.Mail).NombreYApellido);
             Assert.AreEqual(clienteTest.Password, _clienteLogic.buscarClientePorMail(clienteTest.Mail).Password);
         }
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void RegistrarClienteConMailInvalidoTest() {
@@ -372,6 +373,18 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTODeposito.Area, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Area);
             Assert.AreEqual(aDTODeposito.Tamanio, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Tamanio);
             Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
+        }
+        [TestMethod]
+        public void RegistrarDepositoDevuelvaIdTest()
+        {
+            int idRetorno = _controller.RegistrarDeposito(aDTODeposito);
+
+            DTODeposito DTOEncontrado = _controller.BuscarDepositoPorId(idRetorno);
+
+            Assert.AreEqual(aDTODeposito.Id, DTOEncontrado.Id);
+            Assert.AreEqual(aDTODeposito.Area, DTOEncontrado.Area);
+            Assert.AreEqual(aDTODeposito.Tamanio, DTOEncontrado.Tamanio);
+            Assert.AreEqual(aDTODeposito.Climatizacion, DTOEncontrado.Climatizacion);
         }
 
         [TestMethod]

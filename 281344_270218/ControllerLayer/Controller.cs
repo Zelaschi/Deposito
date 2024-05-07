@@ -134,12 +134,13 @@ namespace ControllerLayer
             }
             
         }
-        public void RegistrarDeposito(DTODeposito aDTODeposito) 
+        public int RegistrarDeposito(DTODeposito aDTODeposito) 
         {
             try
             {
                 Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
                 _depositoLogic.AddDeposito(aDeposito);
+                return aDeposito.IdDeposito;
             }
             catch (ArgumentException e) 
             {

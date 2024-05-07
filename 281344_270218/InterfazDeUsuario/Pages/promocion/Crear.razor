@@ -11,23 +11,23 @@
 
 <h1>Crear Promocion</h1>
 <form>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">Etiqueta</label>
         <input type="text" class="form-control" id="etiqueta" @bind="unaEtiqueta"/>
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">PorcentajeDescuento</label>
         <input type="number" class="form-control" id="porcentajeDescuento" @bind="unPorcentajeDescuento" />
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">FechaDesde</label>
         <input type="date" class="form-control" id="fechaDesde" @bind="unaFechaInicio" />
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">FechaHasta</label>
         <input type="date" class="form-control" id="fechaHasta" @bind="unaFechaFin" />
     </div>
-    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar Cambios</button>
+    <button type="button" class="btn btn-primary m-2" @onclick="GuardarCambios">Guardar Cambios</button>
 </form>
 
 @if (!datosCorrectos)
