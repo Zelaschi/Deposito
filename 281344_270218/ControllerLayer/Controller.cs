@@ -206,11 +206,21 @@ namespace ControllerLayer
             }
             return listaDTOPromociones;
         }
-        
+        private void validarQuePromocionNoEsteEnUso(DTOPromocion DTOPromocionParametro) {
+            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+
+            foreach (var reserva in Reservas)
+            {
+                if (reserva.PromocionAplicada.IdPromocion == promocionEncontradaPorId.IdPromocion) {
+                    throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");                
+                }
+            }
+        }
         public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
         {
             Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
-            
+            validarQuePromocionNoEsteEnUso(DTOPromocionParametro);
 
             _promocionLogic.EliminarPromocion(promocionEncontradaPorId.IdPromocion);
 
