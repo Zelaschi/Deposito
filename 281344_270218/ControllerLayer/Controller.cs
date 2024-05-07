@@ -386,14 +386,21 @@ namespace ControllerLayer
 
         public bool LogIn(string Mail, string Pwd)
         {
-            Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
-
-            if (aCliente.Password != Pwd)
+            try
             {
-                throw new Exception("Wrong password");
-            }
+                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
 
-            return true;
+                if (aCliente.Password != Pwd)
+                {
+                    throw new Exception("Wrong password");
+                }
+
+                return true;
+            }
+            catch (NullReferenceException) {
+                throw new Exception("Cliente no registrado.");
+            }
+            
         }
     }
 }
