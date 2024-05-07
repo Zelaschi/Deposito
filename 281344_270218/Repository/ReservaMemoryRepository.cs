@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Repository
 {
@@ -30,8 +31,12 @@ namespace Repository
         {
             Reserva reservaEncontrada = Find(x => x.IdReserva == reservaActualizada.IdReserva);
 
-            if(reservaEncontrada != null) 
-            {
+            if (reservaEncontrada != null) {
+                reservaEncontrada.FechaDesde = reservaActualizada.FechaDesde;
+                reservaEncontrada.FechaHasta = reservaActualizada.FechaHasta;
+                reservaEncontrada.Deposito = reservaActualizada.Deposito;
+                reservaEncontrada.Cliente = reservaActualizada.Cliente;
+                reservaEncontrada.Precio = reservaEncontrada.CalculoPrecioDeReserva();
                 reservaEncontrada.Estado = reservaActualizada.Estado;
             }
             return reservaEncontrada;

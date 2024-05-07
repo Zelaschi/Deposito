@@ -19,7 +19,16 @@
                 _etiqueta = value;
             }
         }
-        public int PorcentajeDescuento { get; set; }
+        private int _porcentajeDescuento;
+        public int PorcentajeDescuento { 
+            get { return _porcentajeDescuento; } 
+            set {
+                if (value < 5 || value > 75) {
+                    throw new ArgumentException("El porcentaje de descuento debe ser mayor a 5 y menor a 75");
+                }
+                _porcentajeDescuento = value;
+            } 
+        }
         public DateTime FechaInicio { get; set; }
 
         public DateTime FechaFin { get; set; }

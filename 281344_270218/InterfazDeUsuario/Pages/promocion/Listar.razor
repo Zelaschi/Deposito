@@ -1,0 +1,53 @@
+﻿@page "/promocion"
+
+@using BusinessLogic
+@using Domain
+
+@inject PromocionLogic PromocionLogic
+<h1>
+    Lista Promociones
+    <a href="/promocion/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Promocion</a> 
+</h1>
+
+<table class="table">
+    <thread>
+        <tr>
+            <th>Id</th>
+            <th>Etiqueta</th>
+            <th>Porcentaje</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+        </tr>
+    </thread>
+    <tbody>
+        @foreach (var promocion in _listaPromociones)
+        {
+            <tr>
+                <td>@promocion.Id</td>
+                <td>@promocion.Etiqueta</td>
+                <td>@promocion.PorcentajeDescuento</td>
+                <td>@promocion.FechaInicio</td>
+                <td>@promocion.FechaFin</td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="promocion/@promocion.Id/editar">Editar</a>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion.Id))">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Promocion>? _listaPromociones = new List<Promocion>();
+
+    protected override void OnInitialized()
+    {
+        _listaPromociones = PromocionLogic.listarTodasLasPromociones().ToList();
+    }
+
+    private void BorrarPromocion(int id)
+    {
+        PromocionLogic.EliminarPromocion(id);
+        _listaPromociones = PromocionLogic.listarTodasLasPromociones().ToList();
+    }
+}

@@ -3,18 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{E23127C1-6291-4724-BC85-5E1ED827F7B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{E23127C1-6291-4724-BC85-5E1ED827F7B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainTest", "DomainTest\DomainTest.csproj", "{AADC7607-2C94-4EB5-85D5-B8C1D89E27FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainTest", "DomainTest\DomainTest.csproj", "{AADC7607-2C94-4EB5-85D5-B8C1D89E27FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{957A67D4-C7D9-4AEB-A8F8-896DE1021D02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{957A67D4-C7D9-4AEB-A8F8-896DE1021D02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicTest", "BusinessLogicTest\BusinessLogicTest.csproj", "{B8286A5F-ED37-4CEA-B4BA-28B71B68DC08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicTest", "BusinessLogicTest\BusinessLogicTest.csproj", "{B8286A5F-ED37-4CEA-B4BA-28B71B68DC08}"
 	ProjectSection(ProjectDependencies) = postProject
 		{957A67D4-C7D9-4AEB-A8F8-896DE1021D02} = {957A67D4-C7D9-4AEB-A8F8-896DE1021D02}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{F7167C65-E58E-43D3-995C-04A48E28C908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{F7167C65-E58E-43D3-995C-04A48E28C908}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterfazDeUsuario", "InterfazDeUsuario\InterfazDeUsuario.csproj", "{17727607-CABA-4FD4-A20C-2E9B8490766E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerLayer", "ControllerLayer\ControllerLayer.csproj", "{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerLayerTest", "ControllerLayerTest\ControllerLayerTest.csproj", "{2E65F697-8F42-4EA2-9AE2-17FA006240AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +48,18 @@ Global
 		{F7167C65-E58E-43D3-995C-04A48E28C908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7167C65-E58E-43D3-995C-04A48E28C908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7167C65-E58E-43D3-995C-04A48E28C908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17727607-CABA-4FD4-A20C-2E9B8490766E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E65F697-8F42-4EA2-9AE2-17FA006240AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,45 @@
+﻿@page "/promocion/crear"
+
+<PageTitle>Crear Promocion</PageTitle>
+
+@using BusinessLogic
+@using Domain
+
+@inject PromocionLogic PromocionLogic
+@inject NavigationManager NavigationManager
+
+<h1>Crear Promocion</h1>
+<form>
+    <div class="form-group">
+        <label for="title">Etiqueta</label>
+        <input type="text" class="form-control" id="etiqueta" @bind="promocionActual.Etiqueta"/>
+    </div>
+    <div class="form-group">
+        <label for="title">PorcentajeDescuento</label>
+        <input type="number" class="form-control" id="porcentajeDescuento" @bind="promocionActual.PorcentajeDescuento" />
+    </div>
+    <div class="form-group">
+        <label for="title">FechaDesde</label>
+        <input type="date" class="form-control" id="fechaDesde" @bind="promocionActual.FechaInicio" />
+    </div>
+    <div class="form-group">
+        <label for="title">FechaHasta</label>
+        <input type="date" class="form-control" id="fechaHasta" @bind="promocionActual.FechaFin" />
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar Cambios</button>
+</form>
+
+@code {
+    private Promocion? promocionActual;
+
+    protected override void OnInitialized()
+    {
+        promocionActual = new Promocion("etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(1));
+    }
+
+    private void GuardarCambios()
+    {
+        PromocionLogic.AgregarPromocion(promocionActual);
+        NavigationManager.NavigateTo("/promocion");
+    }
+}

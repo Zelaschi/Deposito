@@ -1,0 +1,55 @@
+﻿@page "/deposito"
+
+<PageTitle>Lista Depositos</PageTitle>
+
+@using Domain
+@using BusinessLogic
+
+@inject DepositoLogic DepositoLogic
+@inject NavigationManager NavigationManager
+
+<h1>
+    Lista Depositos
+    <a href="/deposito/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Deposito</a>
+</h1>
+
+
+<table class="table">
+    <thread>
+    <tr>
+        <th>Id</th>
+        <th>Area</th>
+        <th>Tamanio</th>
+        <th>Climatizacion</th>
+    </tr>
+    </thread>
+    <tbody>
+        @foreach (var deposito in _listaDepositos)
+        {
+            <tr>
+                <td>@deposito.IdDeposito</td>
+                <td>@deposito.Area</td>
+                <td>@deposito.Tamanio</td>
+                <td>@deposito.Climatizacion</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito.IdDeposito))">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Deposito> _listaDepositos = new List<Deposito>();
+
+    protected override void OnInitialized()
+    {
+        _listaDepositos = DepositoLogic.GetAll().ToList();
+    }
+
+    private void BorrarDeposito(int id)
+    {
+        DepositoLogic.EliminarDeposito(id);
+        _listaDepositos = DepositoLogic.GetAll().ToList();
+    }
+}
