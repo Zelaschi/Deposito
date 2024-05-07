@@ -50,7 +50,7 @@ namespace ControllerLayerTest
 
             aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
-            aDTOPromocion = new DTOPromocion(1, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
 
             aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
@@ -62,6 +62,7 @@ namespace ControllerLayerTest
             Deposito.UltimoID = 0;
             Reserva.UltimoID = 0;
             Persona.contadorID = 1;
+            Promocion.contadorPromo = 0;
         }
 
         [TestMethod]
@@ -388,7 +389,7 @@ namespace ControllerLayerTest
         public void AgregarPromocionADepositoTest()
         {
             DTODeposito aDTODeposito = new DTODeposito(1, "A", "Grande", true);
-            DTOPromocion aDTOPromocion = new DTOPromocion(1, "etiquietaPromo", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            DTOPromocion aDTOPromocion = new DTOPromocion(0, "etiquietaPromo", 20, DateTime.Today, DateTime.Today.AddDays(1));
 
             _controller.RegistrarPromocion(aDTOPromocion);
             _controller.RegistrarDeposito(aDTODeposito);
@@ -466,8 +467,8 @@ namespace ControllerLayerTest
 
         public void ListarTodasLasPromocionesTest()
         {
-            var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
-            var DTOPromocion2 = new DTOPromocion(2, "etiqueta2", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion1 = new DTOPromocion(0, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion2 = new DTOPromocion(1, "etiqueta2", 20, DateTime.Today, DateTime.Today.AddDays(1));
 
             _controller.RegistrarPromocion(DTOPromocion1);
             _controller.RegistrarPromocion(DTOPromocion2);
@@ -484,7 +485,7 @@ namespace ControllerLayerTest
 
         public void EliminarPromocionTest()
         {
-            var DTOPromocion1 = new DTOPromocion(1, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
+            var DTOPromocion1 = new DTOPromocion(0, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));
             _controller.RegistrarPromocion(DTOPromocion1);
             _controller.ElminarPromocion(DTOPromocion1);
             _controller.BuscarPromocionPorId(DTOPromocion1.IdPromocion);
@@ -494,7 +495,7 @@ namespace ControllerLayerTest
         public void BuscarPromocionPorIdTest()
         {
             _controller.RegistrarPromocion(aDTOPromocion);
-            DTOPromocion promo = _controller.BuscarPromocionPorId(aDTOPromocion.IdPromocion);
+            DTOPromocion promo = _controller.BuscarPromocionPorId(0);
 
             Assert.AreEqual(aDTOPromocion.IdPromocion, promo.IdPromocion);
         }
@@ -519,6 +520,7 @@ namespace ControllerLayerTest
             aDTOPromocion.FechaInicio = DateTime.Today.AddDays(10);
             aDTOPromocion.FechaFIn = DateTime.Today.AddDays(11);
             aDTOPromocion.PorcentajeDescuento = 40;
+            aDTOPromocion.IdPromocion = 0;
 
             _controller.ActualizarPromocion(aDTOPromocion);
         }
@@ -695,6 +697,7 @@ namespace ControllerLayerTest
         [ExpectedException(typeof(Exception))]
         public void EliminarPromocionEnUsoTireExceptionTest() 
         {
+            aDTOPromocion.IdPromocion = 0;
             _controller.RegistrarPromocion(aDTOPromocion);
             _controller.RegistrarDeposito(aDTODeposito);
             _controller.AgregarPromocionADeposito(aDTOPromocion, aDTODeposito);

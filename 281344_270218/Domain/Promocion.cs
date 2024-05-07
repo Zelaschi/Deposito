@@ -2,7 +2,7 @@
 {
     public class Promocion
     {
-        private static int contadorPromo = 0;
+        public static int contadorPromo = 0;
         public int IdPromocion { get; set; }
         private string _etiqueta;
         public string Etiqueta {

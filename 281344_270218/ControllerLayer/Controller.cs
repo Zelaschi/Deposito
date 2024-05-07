@@ -138,7 +138,7 @@ namespace ControllerLayer
         {
             try
             {
-                Deposito aDeposito = new Deposito(aDTODeposito.Id, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+                Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
                 _depositoLogic.AddDeposito(aDeposito);
             }
             catch (ArgumentException e) 
@@ -187,7 +187,7 @@ namespace ControllerLayer
         {
             try
             {
-                Promocion aPromocion = new Promocion(aDTOPromocion.IdPromocion, aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
+                Promocion aPromocion = new Promocion(aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
                 _promocionLogic.AgregarPromocion(aPromocion);
             }
             catch (ArgumentException e)
