@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Repository;
 using BusinessLogic;
 using Domain;
+using ControllerLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddSingleton<PromocionLogic>();
 builder.Services.AddSingleton<AdministradorLogic>();
 builder.Services.AddSingleton<ReservaLogic>();
 builder.Services.AddSingleton<SessionLogic>();
+builder.Services.AddSingleton<Controller>();
 
 
 var app = builder.Build();

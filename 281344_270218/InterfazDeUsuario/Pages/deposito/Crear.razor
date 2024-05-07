@@ -4,42 +4,64 @@
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer 
 
-@inject PromocionLogic PromocionLogic
-@inject DepositoLogic DepositoLogic
+@inject Controller Controller 
 @inject NavigationManager NavigationManager
 
 <h1>Crear Deposito</h1>
 <form>
     <div class="form-group">
         <label for="title">Area</label>
-        <input type="text" class="form-control" id="Area" @bind="depositoActual.Area"/>
+        <input type="text" class="form-control" id="Area" @bind="unaArea"/>
     </div>
     <div class="form-group">
         <label for="title">Tamanio</label>
-        <input type="text" class="form-control" id="Tamanio" @bind="depositoActual.Tamanio"/>
+        <input type="text" class="form-control" id="Tamanio" @bind="unTamanio"/>
     </div>
     <div class="form-group">
         <label for="title">Climatizacion</label>
-        <input type="checkbox" class="form-check-input" id="Climatizacion" @bind="depositoActual.Climatizacion"/>
+        <input type="checkbox" class="form-check-input" id="Climatizacion" @bind="unaClimatizacion"/>
     </div>
 
     <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar cambios</button>
 </form>
 
-@code{
-    private Deposito? depositoActual;
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
 
-    protected override void OnInitialized()
-    {
-        depositoActual = new Deposito("A", "Pequenio", true);
-    }
+@code{
+    private DTODeposito deposito;
+    private string unaArea;
+    private string unTamanio;
+    private bool unaClimatizacion;
+    private bool datosCorrectos = true;
+    private string mensajeError;
 
     private void GuardarCambios()
     {
-        DepositoLogic.AddDeposito(depositoActual);
-        NavigationManager.NavigateTo("/deposito");
+        try
+        {
+            deposito = new(1, unaArea, unTamanio, unaClimatizacion);
+            Controller.RegistrarDeposito(deposito);
+            NavigationManager.NavigateTo("/deposito");
+        }
+        catch (ArgumentException e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
+
     }
+    
 }
 
 

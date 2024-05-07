@@ -1,10 +1,12 @@
 ﻿@page "/cliente"
 
 @using BusinessLogic
-@using Domain 
+@using Domain
+@using ControllerLayer
 
-@inject ClienteLogic ClienteLogic
+@inject Controller Controller
 @inject NavigationManager NavigationManager
+
 
 <h1>Lista Clientes</h1>
 <h1>
@@ -14,16 +16,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Nombre y Apellido</th>
             <th>Mail</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var cliente in _listaClientes)
+        @foreach (var cliente in clientesRegistrados)
         {
             <tr>
-                <td>@cliente.IdPersona</td>
                 <td>@cliente.NombreYApellido</td>
                 <td>@cliente.Mail</td>
             </tr>
@@ -32,10 +32,11 @@
 </table>
 
 @code {
-    private List<Cliente>? _listaClientes = new List<Cliente>();
-    
+    private List<DTOCliente> clientesRegistrados;
+
     protected override void OnInitialized()
     {
-        _listaClientes = ClienteLogic.listarTodosLosClientes().ToList();
+        clientesRegistrados = Controller.listarTodosLosClientes().ToList();
     }
+
 }

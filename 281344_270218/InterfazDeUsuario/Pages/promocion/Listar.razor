@@ -2,8 +2,10 @@
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer
 
-@inject PromocionLogic PromocionLogic
+@inject Controller Controller
+@inject NavigationManager NavigationManager
 <h1>
     Lista Promociones
     <a href="/promocion/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Promocion</a> 
@@ -20,17 +22,17 @@
         </tr>
     </thread>
     <tbody>
-        @foreach (var promocion in _listaPromociones)
+        @foreach (var promocion in promocionesRegistradas)
         {
             <tr>
-                <td>@promocion.Id</td>
+                <td>@promocion.IdPromocion</td>
                 <td>@promocion.Etiqueta</td>
                 <td>@promocion.PorcentajeDescuento</td>
                 <td>@promocion.FechaInicio</td>
-                <td>@promocion.FechaFin</td>
+                <td>@promocion.FechaFIn</td>
                 <td>
-                    <a class="btn btn-success btn-sm" href="promocion/@promocion.Id/editar">Editar</a>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion.Id))">Eliminar</button>
+                    <a class="btn btn-success btn-sm" href="promocion/@promocion.IdPromocion/editar">Editar</a>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion))">Eliminar</button>
                 </td>
             </tr>
         }
@@ -38,16 +40,15 @@
 </table>
 
 @code {
-    private List<Promocion>? _listaPromociones = new List<Promocion>();
+    private List<DTOPromocion> promocionesRegistradas;
 
     protected override void OnInitialized()
     {
-        _listaPromociones = PromocionLogic.listarTodasLasPromociones().ToList();
+        promocionesRegistradas = Controller.listarTodasLasPromociones().ToList();
     }
 
-    private void BorrarPromocion(int id)
+    private void BorrarPromocion(DTOPromocion promocion)
     {
-        PromocionLogic.EliminarPromocion(id);
-        _listaPromociones = PromocionLogic.listarTodasLasPromociones().ToList();
+        Controller.ElminarPromocion(promocion);
     }
 }

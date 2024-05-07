@@ -4,39 +4,54 @@
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer
 
-@inject ClienteLogic ClienteLogic
+@inject Controller Controller
 @inject NavigationManager NavigationManager
 
 <h1>Crear Cliente</h1>
 <form>
     <div class="form-group">
         <label for="nombreyapellido">Nombre y Apellido</label>
-        <input type="text" class="form-control" id="NombreYApellido" @bind="_clienteActual.NombreYApellido" />
+        <input type="text" class="form-control" id="NombreYApellido" @bind="unNombreYApellido" />
     </div>
     <div class="form-group">
         <label for="mail">Mail</label>
-        <input type="text" class="form-control" id="Mail" @bind="_clienteActual.Mail" />
+        <input type="text" class="form-control" id="Mail" @bind="unMail" />
     </div>
     <div class="form-group">
         <label for="title">Contrasenia</label>
-        <input type="text" class="form-control" id="Contrasenia" @bind="_clienteActual.Password" />
+        <input type="text" class="form-control" id="Contrasenia" @bind="unaContrasenia" />
     </div>
 
     <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar cambios</button>
 </form>
 
-@code {
-    private Cliente? _clienteActual;
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
 
-    protected override void OnInitialized()
-    {
-        _clienteActual = new Cliente("Juan Perez", "juanperez@gmail.com", "Contrasenia1!");
-    }
+@code {
+    private DTOCliente cliente;
+    private string unNombreYApellido;
+    private string unMail;
+    private string unaContrasenia;
+    private bool datosCorrectos = true;
+    private string mensajeError;
 
     private void GuardarCambios()
     {
-        ClienteLogic.AgregarCliente(_clienteActual);
-        NavigationManager.NavigateTo("/cliente");
+        try
+        {
+            cliente = new(unNombreYApellido, unMail, unaContrasenia);
+            Controller.RegistrarCliente(cliente);
+            NavigationManager.NavigateTo("/cliente");
+        }
+        catch(Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
     }
 }
