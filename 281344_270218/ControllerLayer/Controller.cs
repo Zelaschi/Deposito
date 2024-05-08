@@ -20,6 +20,8 @@ namespace ControllerLayer
             _depositoLogic = depositoLogic;
             _promocionLogic = promocionLogic;
             _reservaLogic = reservaLogic;
+            DTOAdministrador aDTOAdministrador = new DTOAdministrador("tomas", "totozelaschi@gmail.com", "Password1!");
+            RegistrarAdministrador(aDTOAdministrador);
         }
 
 
@@ -401,6 +403,10 @@ namespace ControllerLayer
                 throw new Exception("Cliente no registrado.");
             }
             
+        }
+        public bool esAdministrador(string mail) 
+        {
+            return ObtenerAdministrador().Mail.Equals(mail);
         }
     }
 }

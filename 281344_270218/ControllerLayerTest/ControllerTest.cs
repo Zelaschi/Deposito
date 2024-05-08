@@ -73,6 +73,13 @@ namespace ControllerLayerTest
             Assert.IsTrue(_controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password));
         }
         [TestMethod]
+        public void LoginAdminTest()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+
+            Assert.IsTrue(_controller.LogIn(aDTOAdministrador.Mail, aDTOAdministrador.Password));
+        }
+        [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void LoginConPasswordIncorrectaTireExcepcionTest() 
         {
@@ -88,7 +95,7 @@ namespace ControllerLayerTest
         [TestMethod]
         public void EsAdministradorTest() { 
             _controller.RegistrarAdministrador(aDTOAdministrador);
-            bool esAdmin = _controller.esAdministrador(string aDTOAdministrador.Mail);
+            bool esAdmin = _controller.esAdministrador(aDTOAdministrador.Mail);
             Assert.IsTrue(esAdmin);
         }
         //CLIENTE

@@ -51,7 +51,20 @@
             if (Controller.LogIn(email, password))
             {
                 DtoSesion.SesionMail = email;
-                NavigationManager.NavigateTo($"/reserva");
+                if (Controller.esAdministrador(email))
+                {
+                    DtoSesion.esAdministrador = true;    
+                }
+                if (DtoSesion.esAdministrador)
+                {
+                    NavigationManager.NavigateTo($"/admin");
+
+                }
+                else
+                {
+                    NavigationManager.NavigateTo($"/cliente");
+
+                }
             }
         }
         catch (Exception e)
