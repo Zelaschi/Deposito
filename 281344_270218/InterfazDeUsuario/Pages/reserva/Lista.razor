@@ -1,9 +1,14 @@
 ﻿@page "/reserva"
 
+<PageTitle>Crear Reserva</PageTitle>
+
 @using BusinessLogic
 @using Domain
+@using ControllerLayer
 
-@inject ReservaLogic ReservaLogic
+@inject Controller Controller
+@inject NavigationManager NavigationManager
+
 
 <h1>
     Lista Reservas
@@ -20,37 +25,75 @@
         <th>Fecha Desde</th>
         <th>Fecha Hasta</th>
         <th>Deposito</th>
-        <th>Precio</th>
+        <th>Precio</th> 
         <th>Estado</th>
         <th>Cliente</th>
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-        @foreach(var reserva in _listaReservas)
+        @foreach(var reserva in reservasRegistradas)
         {
             <tr>
-                <td>@reserva.IdReserva</td>
+                <td>@reserva.Id</td>
                 <td>@reserva.FechaDesde</td>
                 <td>@reserva.FechaHasta</td>
-                <td>@reserva.Deposito.IdDeposito</td>
-                <td>@reserva.Precio</td>
+                <td>@reserva.Deposito.Id</td>
+                <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>
-                <td>@reserva.Cliente</td>
+                <td>@reserva.Cliente.NombreYApellido</td>
                 <td>
-                    <button class="btn btn-success btn-sm">Confirmar</button>
-                    <button class="btn btn-danger btn-sm">Rechazar</button>
+                    <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
+                    @if (reserva.Estado == "Pendiente")
+                    {
+                        <button class="btn btn-danger btn-sm" @onclick="(() => MostrarJustificacion(reserva))">Rechazar</button>
+                        if (reservaRechazada)
+                        {
+                            <textarea @bind="unaJustificacion" rows="3" cols="30"></textarea>
+                            <button class="btn btn-primary btn-sm" @onclick="() => GuardarRechazo(reserva)">Guardar Rechazo</button>
+                            reservaRechazada = false;
+                        }
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+
+
 @code {
-    private List<Reserva>? _listaReservas = new List<Reserva>();
+    private List<DTOReserva> reservasRegistradas;
+    private bool reservaRechazada = false;
+    private string unaJustificacion;
 
     protected override void OnInitialized()
     {
-        _listaReservas = ReservaLogic.ListarTodasLasReservas().ToList();
+        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+    }
+
+    private void RechazarReserva(DTOReserva reserva)
+    {
+        reserva.Estado = "Rechazada";
+        Controller.RechazarReserva(reserva);
+        
+    }
+
+    private void AceptarReserva(DTOReserva reserva)
+    {
+        reserva.Estado = "Aprobada";
+        Controller.AceptarReserva(reserva);
+        
+    }
+    private void MostrarJustificacion(DTOReserva reserva)
+    {
+        reservaRechazada = true;
+    }
+
+    private void GuardarRechazo(DTOReserva reserva)
+    {
+        Controller.RechazarReserva(reserva);
+        reserva.Estado = "Rechazada";
+        Controller.justificacionRechazo(unaJustificacion, reserva);
     }
 }
