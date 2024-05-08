@@ -203,10 +203,24 @@ namespace ControllerLayer
 
             return DTODepositoRetorno;
         }
+        public void validarQueDepositoNoEsteAsociadoADeposito(DTODeposito aDTODeposito) 
+        {
+            Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
+            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+
+            foreach (var reserva in Reservas)
+            {
+                if (reserva.Deposito.IdDeposito == depositoEncontradoPorId.IdDeposito)
+                {
+                    throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");
+                }
+            }
+        }
 
         public void ElminarDeposito(DTODeposito DTODepositoParametro)
         {
             Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
+            validarQueDepositoNoEsteAsociadoADeposito(DTODepositoParametro);
             _depositoLogic.EliminarDeposito(depositoEncontradoPorId.IdDeposito);
         }
 
