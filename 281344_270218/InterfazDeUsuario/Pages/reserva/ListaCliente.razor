@@ -1,0 +1,56 @@
+﻿@page "/cliente/reserva"
+
+<PageTitle>Crear Reserva</PageTitle>
+
+@using ControllerLayer
+
+@inject Controller Controller
+@inject NavigationManager NavigationManager
+
+
+<h1>
+    Lista Reservas
+</h1>
+<h1>
+    <a href="/cliente/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha Desde</th>
+            <th>Fecha Hasta</th>
+            <th>Deposito</th>
+            <th>Precio</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reserva in reservasRegistradas)
+        {
+            <tr>
+                <td>@reserva.Id</td>
+                <td>@reserva.FechaDesde</td>
+                <td>@reserva.FechaHasta</td>
+                <td>@reserva.Deposito.Id</td>
+                <td>@reserva.PrecioReserva</td>
+                <td>@reserva.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    private List<DTOReserva> reservasRegistradas;
+    private bool reservaRechazada = false;
+    private string unaJustificacion;
+
+    protected override void OnInitialized()
+    {
+        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+    }
+}

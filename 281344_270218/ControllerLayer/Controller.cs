@@ -402,6 +402,7 @@ namespace ControllerLayer
             }
             return DTOReservas;
         }
+        
 
         public void justificacionRechazo(String rechazo, DTOReserva DTOReservaParametro)
         {
@@ -413,10 +414,6 @@ namespace ControllerLayer
         {
             try
             {
-<<<<<<< HEAD
-=======
-
->>>>>>> 32158844885efb9950231137f04893347d9cd613
                 Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
 
                 if (aCliente.Password != Pwd)

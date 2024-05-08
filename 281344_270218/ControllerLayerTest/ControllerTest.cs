@@ -769,6 +769,17 @@ namespace ControllerLayerTest
             _controller.RegistrarReserva(aDTOReserva);
             _controller.ElminarPromocion(aDTOPromocion);
         }
+        [TestMethod]
+        public void listarResevasDeClienteTest() 
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarReserva(aDTOReserva);
+
+            IList<DTOReserva> reservasDeCliente= _controller.listarReservasDeCliente(aDTOCliente);
+
+            Assert.AreEqual(aDTOReserva.Id, reservasDeCliente.FirstOrDefault(x => x.Id == aDTOReserva.Id).Id);
+        }
 
     }
 }
