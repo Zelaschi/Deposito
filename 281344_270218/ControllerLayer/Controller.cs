@@ -134,6 +134,16 @@ namespace ControllerLayer
             }
             
         }
+        public bool EstaRegistradoAdministrador()
+        {
+            try {
+                ObtenerAdministrador();
+                return true;
+            }
+            catch (Exception) {
+                return false;
+            }
+        }
         public int RegistrarDeposito(DTODeposito aDTODeposito) 
         {
             try
