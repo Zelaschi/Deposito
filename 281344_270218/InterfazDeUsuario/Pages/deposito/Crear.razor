@@ -1,45 +1,107 @@
-﻿@page "/deposito/crear"
+﻿@page "/admin/deposito/crear"
 
 <PageTitle>Crear Deposito</PageTitle>
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer 
 
-@inject PromocionLogic PromocionLogic
-@inject DepositoLogic DepositoLogic
+@inject Controller Controller 
 @inject NavigationManager NavigationManager
 
 <h1>Crear Deposito</h1>
 <form>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">Area</label>
-        <input type="text" class="form-control" id="Area" @bind="depositoActual.Area"/>
+        <input type="text" class="form-control" id="Area" @bind="unaArea"/>
     </div>
-    <div class="form-group">
-        <label for="title">Tamanio</label>
-        <input type="text" class="form-control" id="Tamanio" @bind="depositoActual.Tamanio"/>
+    <div class="form-group m-2">
+        <label for="title">Tamaño</label>
+        <br />
+        <select class="form-select" name="title" id="Tamanio" @bind="unTamanio">
+            <option selected>Seleccione un Tamaño de Deposito</option>
+            <option value="Pequenio">Pequeño</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Grande">Grande</option>
+        </select>
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">Climatizacion</label>
-        <input type="checkbox" class="form-check-input" id="Climatizacion" @bind="depositoActual.Climatizacion"/>
+        <input type="checkbox" class="form-check-input" id="Climatizacion" @bind="unaClimatizacion"/>
+    </div>
+    <div class="form-group m2">
+        <label class="m-2">Promociones</label>
+        <br />
+        @foreach (var promocion in promociones)
+        {
+            <div class="m-2">
+                <input class="form-check-input " type="checkbox" value="" id="Promocion" @bind="@promocionesSeleccionadas[promocion]">
+                <label class="form-check-label " for="Promocion">
+                    @promocion.Etiqueta
+                </label>
+            </div>
+        }
     </div>
 
-    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar cambios</button>
+    <button type="button" class="btn btn-primary m-2" @onclick="GuardarCambios">Guardar cambios</button>
 </form>
 
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
+
 @code{
-    private Deposito? depositoActual;
+    private DTODeposito deposito;
+    private string unaArea;
+    private string unTamanio;
+    private bool unaClimatizacion;
+    private bool datosCorrectos = true;
+    private string mensajeError;
+    private List<DTOPromocion> promociones;
+    private Dictionary<DTOPromocion, bool> promocionesSeleccionadas; 
 
     protected override void OnInitialized()
     {
-        depositoActual = new Deposito("A", "Pequenio", true);
-    }
+        promociones = Controller.listarTodasLasPromociones().ToList();
 
+        promocionesSeleccionadas = new Dictionary<DTOPromocion, bool>();
+        foreach (var promocion in promociones)
+        {
+            promocionesSeleccionadas.Add(promocion, false);
+        }
+    }
     private void GuardarCambios()
     {
-        DepositoLogic.AddDeposito(depositoActual);
-        NavigationManager.NavigateTo("/deposito");
+        try
+        {
+
+            deposito = new(1, unaArea, unTamanio, unaClimatizacion);
+            int idDepositoReal = Controller.RegistrarDeposito(deposito);
+            deposito.Id = idDepositoReal;
+            foreach (var iter in promocionesSeleccionadas)
+            {
+                if (iter.Value == true)
+                {
+                    Controller.AgregarPromocionADeposito(iter.Key, deposito);
+                }
+            }
+            NavigationManager.NavigateTo("/admin/deposito");
+        }
+        catch (ArgumentException e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
+
     }
+    
 }
 
 

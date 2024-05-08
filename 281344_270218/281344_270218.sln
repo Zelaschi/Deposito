@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterfazDeUsuario", "Interf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerLayer", "ControllerLayer\ControllerLayer.csproj", "{FD75BFF4-FE2B-44AF-AF67-D879D62F0CF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerLayerTest", "ControllerLayerTest\ControllerLayerTest.csproj", "{2E65F697-8F42-4EA2-9AE2-17FA006240AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerLayerTest", "ControllerLayerTest\ControllerLayerTest.csproj", "{2E65F697-8F42-4EA2-9AE2-17FA006240AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,1 +1,67 @@
-﻿
+﻿@page "/registro"
+@layout LoginLayout
+
+<PageTitle>Lista Depositos</PageTitle>
+
+@inject NavigationManager NavigationManager
+
+@using ControllerLayer
+
+@inject Controller Controller
+<p><a href="/">Volver</a></p>
+
+<h1>Crear Cliente</h1>
+<form>
+    <div class="form-group m-2">
+        <label for="nombreyapellido">Nombre y Apellido</label>
+        <input type="text" class="form-control" id="NombreYApellido" @bind="unNombreYApellido" />
+    </div>
+    <div class="form-group m-2">
+        <label for="mail">Mail</label>
+        <input type="text" class="form-control" id="Mail" @bind="unMail" />
+    </div>
+    <div class="form-group m-2">
+        <label for="title">Contraseña</label>
+        <input type="text" class="form-control" id="Contrasenia1" @bind="unaContrasenia1" />
+    </div>
+    <div class="form-group m-2">
+        <label for="title">Repetir contraseña</label>
+        <input type="text" class="form-control" id="Contrasenia2" @bind="unaContrasenia2" />
+    </div>
+    <button type="button" class="btn btn-primary m-2" @onclick="RegistrarCliente">Registrar Cliente</button>
+</form>
+
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
+
+@code {
+    private DTOCliente cliente;
+    private string unNombreYApellido;
+    private string unMail;
+    private string unaContrasenia1;
+    private string unaContrasenia2;
+
+    private bool datosCorrectos = true;
+    private string mensajeError;
+
+    private void RegistrarCliente()
+    {
+        try
+        {
+            if (!unaContrasenia1.Equals(unaContrasenia2))
+            {
+                throw new Exception("Las contraseñas deben ser iguales!");    
+            }
+            cliente = new(unNombreYApellido, unMail, unaContrasenia1);
+            Controller.RegistrarCliente(cliente);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
+    }
+}

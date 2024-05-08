@@ -1,53 +1,72 @@
-﻿@page "/promocion"
+﻿@page "/admin/promocion"
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer
 
-@inject PromocionLogic PromocionLogic
+@inject Controller Controller
+@inject NavigationManager NavigationManager
 <h1>
     Lista Promociones
-    <a href="/promocion/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Promocion</a> 
+    <a href="/admin/promocion/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Promocion</a>
 </h1>
 
 <table class="table">
-    <thread>
+    <thead>
         <tr>
             <th>Id</th>
             <th>Etiqueta</th>
             <th>Porcentaje</th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
+            <th>Acciones</th>
         </tr>
-    </thread>
+    </thead>
     <tbody>
-        @foreach (var promocion in _listaPromociones)
+        @foreach (var promocion in promocionesRegistradas)
         {
             <tr>
                 <td>@promocion.IdPromocion</td>
                 <td>@promocion.Etiqueta</td>
                 <td>@promocion.PorcentajeDescuento</td>
                 <td>@promocion.FechaInicio</td>
-                <td>@promocion.FechaFin</td>
+                <td>@promocion.FechaFIn</td>
                 <td>
-                    <a class="btn btn-success btn-sm" href="promocion/@promocion.IdPromocion/editar">Editar</a>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion.IdPromocion))">Eliminar</button>
+                    <a class="btn btn-success btn-sm" href="admin/promocion/@promocion.IdPromocion/editar">Editar</a>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion))">Eliminar</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
+
 @code {
-    private List<Promocion>? _listaPromociones = new List<Promocion>();
+    private bool datosCorrectos = true;
+    private string mensajeError;
+
+    private List<DTOPromocion> promocionesRegistradas;
 
     protected override void OnInitialized()
     {
-        _listaPromociones = PromocionLogic.listarTodasLasPromociones().ToList();
+        promocionesRegistradas = Controller.listarTodasLasPromociones().ToList();
     }
 
-    private void BorrarPromocion(int id)
+    private void BorrarPromocion(DTOPromocion promocion)
     {
-        PromocionLogic.EliminarPromocion(id);
-        _listaPromociones = PromocionLogic.listarTodasLasPromociones().ToList();
+        try
+        {
+            Controller.ElminarPromocion(promocion);
+            promocionesRegistradas = Controller.listarTodasLasPromociones().ToList();
+        }
+        catch(Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
     }
 }

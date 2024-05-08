@@ -1,50 +1,131 @@
-﻿@page "/login"
+﻿@page "/"
+@layout LoginLayout
 
-@using BusinessLogic
-@using Domain 
-@using InterfazDeUsuario.Data
+<PageTitle>Lista Depositos</PageTitle>
 
-@inject SessionLogic SessionLogic
 @inject NavigationManager NavigationManager
-@inject ClienteLogic ClienteLogic
 
-<h1>Login</h1>
+@using ControllerLayer
 
-<form @onsubmit="HandleLogin">
+@inject Controller Controller
+@inject DTOSesion DtoSesion
 
-    <div class="form-group">
-        <label for="mail">Mail</label>
-        <input type="text" class="form-control" id="username" @bind="cliente.Mail" required />
-    </div>
-    <div class="form-group">
-        <label for="contrasenia">Contrasenia</label>
-        <input type="password" class="form-control" id="password" @bind="cliente.Password" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+@if (Controller.EstaRegistradoAdministrador())
+{
+    <main class="container d-flex flex-column align-items-center">
+        <h1 class="mb-4 mt-5">Log In</h1>
+        <form class="w-25">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" aria-describedby="Email" @bind="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" aria-describedby="Email" @bind="password">
+                @if (!errorOk)
+                {
+                    <p class="text-danger">@errorMessage</p>
+                }
+            </div>
+            <div class="container d-flex flex-column align-items-center mt-4">
+                <button type="button" class="btn btn-primary" @onclick="EjecutarLogin">Log in</button>
+            </div>
+        </form>
+        <p class="mt-4"><a class="text-black">Log in</a>/<a href="/registro">Registrar</a></p>
+    </main>
+}
+else
+{
+    <h1>Registrar Administrador</h1>
+    <form>
+        <div class="form-group m-2">
+            <label for="nombreyapellido">Nombre y Apellido</label>
+            <input type="text" class="form-control" id="NombreYApellido" @bind="unNombreYApellido" />
+        </div>
+        <div class="form-group m-2">
+            <label for="mail">Mail</label>
+            <input type="text" class="form-control" id="Mail" @bind="unMail" />
+        </div>
+        <div class="form-group m-2">
+            <label for="title">Contraseña</label>
+            <input type="text" class="form-control" id="Contrasenia1" @bind="unaContrasenia1" />
+        </div>
+        <div class="form-group m-2">
+            <label for="title">Repetir contraseña</label>
+            <input type="text" class="form-control" id="Contrasenia2" @bind="unaContrasenia2" />
+        </div>
+        <button type="button" class="btn btn-primary m-2" @onclick="RegistrarAdministrador">Registrar Administrador</button>
+    </form>
 
-</form>
-
-
+}
 @code {
-    private Cliente cliente = new Cliente("juan Perez", "juanperez@gmail.com", "JuanPerez1!");
+    private DTOAdministrador admin;
+    private string unNombreYApellido;
+    private string unMail;
+    private string unaContrasenia1;
+    private string unaContrasenia2;
+    private bool datosCorrectos = true;
     private string mensajeError;
-    private void HandleLogin()
+
+    private void RegistrarAdministrador()
     {
-        if (SessionLogic.ValidarCredenciales(cliente))
+        try
         {
-            SessionLogic.Login(cliente);
+            if (!unaContrasenia1.Equals(unaContrasenia2))
+            {
+                throw new Exception("Las contraseñas deben ser iguales!");
+            }
+            admin = new(unNombreYApellido, unMail, unaContrasenia1);
+            Controller.RegistrarAdministrador(admin);
             NavigationManager.NavigateTo("/");
         }
-        else
+        catch (Exception e)
         {
-            mensajeError = "Nombre o contrasenia invalidos";
+            datosCorrectos = false;
+            mensajeError = e.Message;
         }
     }
+
+    private string email;
+    private string password;
+    private bool errorOk;
+    private string errorMessage;
+
+    protected override void OnInitialized()
+    {
+        errorOk = true;
+    }
+
+    private void EjecutarLogin()
+    {
+        try
+        {
+            if (Controller.LogIn(email, password))
+            {
+                DtoSesion.SesionMail = email;
+                if (Controller.esAdministrador(email))
+                {
+                    DtoSesion.esAdministrador = true;    
+                }
+
+                if (DtoSesion.esAdministrador)
+                {
+                    NavigationManager.NavigateTo($"/admin");
+
+                }
+                else
+                {
+                    NavigationManager.NavigateTo($"/cliente");
+
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            errorOk = false;
+            errorMessage = e.Message;
+        }
+    }
+
 }
 
-@if (!string.IsNullOrEmpty(mensajeError))
-{
-    <div class="alert alert-danger">
-        @mensajeError
-    </div>
-}

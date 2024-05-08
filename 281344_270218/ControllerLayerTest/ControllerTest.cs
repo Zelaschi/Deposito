@@ -53,7 +53,7 @@ namespace ControllerLayerTest
             aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
 
-            aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+            aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 100);
         }
 
         [TestCleanup]
@@ -73,13 +73,31 @@ namespace ControllerLayerTest
             Assert.IsTrue(_controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password));
         }
         [TestMethod]
+        public void LoginAdminTest()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+
+            Assert.IsTrue(_controller.LogIn(aDTOAdministrador.Mail, aDTOAdministrador.Password));
+        }
+        [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void LoginConPasswordIncorrectaTireExcepcionTest() 
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.LogIn(aDTOCliente.Mail, "PasswordIncorrecta");
         }
-
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoginConClienteSinRegistrarTireExceptionTest()
+        {
+            _controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password);
+        }
+        [TestMethod]
+        public void EsAdministradorTest() { 
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            bool esAdmin = _controller.esAdministrador(aDTOAdministrador.Mail);
+            Assert.IsTrue(esAdmin);
+        }
         //CLIENTE
         [TestMethod]
         public void RegistrarClienteTest()
@@ -91,6 +109,7 @@ namespace ControllerLayerTest
             Assert.AreEqual(clienteTest.NombreYApellido, _clienteLogic.buscarClientePorMail(clienteTest.Mail).NombreYApellido);
             Assert.AreEqual(clienteTest.Password, _clienteLogic.buscarClientePorMail(clienteTest.Mail).Password);
         }
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void RegistrarClienteConMailInvalidoTest() {
@@ -248,6 +267,13 @@ namespace ControllerLayerTest
         {
             _controller.EliminarCliente(aDTOCliente);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void AgregarClienteConMismoMailQueElAdministradorDeErrorTest() {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            aDTOCliente.Mail = aDTOAdministrador.Mail;
+            _controller.RegistrarCliente(aDTOCliente);
+        }
 
         //ADMINISTRADOR
         [TestMethod]
@@ -362,6 +388,18 @@ namespace ControllerLayerTest
             _controller.RegistrarAdministrador(aDTOAdministrador);
             _controller.RegistrarAdministrador(OtroAdmin);
         }
+        [TestMethod]
+        public void EstaRegistradoAdministradorTest() 
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            Assert.IsTrue(_controller.EstaRegistradoAdministrador());
+        }
+        [TestMethod]
+        public void EstaRegistradoAdministradorDeFalseCuandoNoEstaRegistradoTest()
+        {
+            Assert.IsFalse(_controller.EstaRegistradoAdministrador());
+        }
+
 
         //DEPOSITO
         [TestMethod]
@@ -372,6 +410,18 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTODeposito.Area, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Area);
             Assert.AreEqual(aDTODeposito.Tamanio, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Tamanio);
             Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
+        }
+        [TestMethod]
+        public void RegistrarDepositoDevuelvaIdTest()
+        {
+            int idRetorno = _controller.RegistrarDeposito(aDTODeposito);
+
+            DTODeposito DTOEncontrado = _controller.BuscarDepositoPorId(idRetorno);
+
+            Assert.AreEqual(aDTODeposito.Id, DTOEncontrado.Id);
+            Assert.AreEqual(aDTODeposito.Area, DTOEncontrado.Area);
+            Assert.AreEqual(aDTODeposito.Tamanio, DTOEncontrado.Tamanio);
+            Assert.AreEqual(aDTODeposito.Climatizacion, DTOEncontrado.Climatizacion);
         }
 
         [TestMethod]
@@ -420,7 +470,29 @@ namespace ControllerLayerTest
             _controller.ElminarDeposito(aDTODeposito);
             _controller.BuscarDepositoPorId(aDTODeposito.Id);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarDepositoConReservaAsociadaAElDeErrorTest() 
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.ElminarDeposito(aDTODeposito);
+        }
+        [TestMethod]
+        public void ListarTodasLosDepositosTest()
+        {
+            var DTODeposito1 = new DTODeposito(1, "A", "Pequenio", true);
+            var DTODeposito2 = new DTODeposito(2, "A", "Pequenio", true);
 
+            _controller.RegistrarDeposito(DTODeposito1);
+            _controller.RegistrarDeposito(DTODeposito2);
+
+            IList<DTODeposito> listaDTODeposito = _controller.listarTodosLosDepositos();
+
+            Assert.AreEqual(DTODeposito1.Id, listaDTODeposito.FirstOrDefault(x => x.Id == DTODeposito1.Id).Id);
+            Assert.AreEqual(DTODeposito2.Id, listaDTODeposito.FirstOrDefault(x => x.Id == DTODeposito2.Id).Id);
+        }
 
 
         //PROMOCION
@@ -545,7 +617,7 @@ namespace ControllerLayerTest
         public void RegistrarReservaConDatosIncorrectosTest() {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
-            DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente);
+            DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(DTOReservaIncorrectaTest);
         }
@@ -560,7 +632,7 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -613,16 +685,18 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Rechazada");
         }
+
+
         [TestMethod]
         public void ObtenerListaReservasPendientesTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva1);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -645,10 +719,10 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva1);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -670,10 +744,10 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva1);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -703,6 +777,17 @@ namespace ControllerLayerTest
             _controller.AgregarPromocionADeposito(aDTOPromocion, aDTODeposito);
             _controller.RegistrarReserva(aDTOReserva);
             _controller.ElminarPromocion(aDTOPromocion);
+        }
+        [TestMethod]
+        public void listarResevasDeClienteTest() 
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarReserva(aDTOReserva);
+
+            IList<DTOReserva> reservasDeCliente= _controller.listarReservasDeCliente(aDTOCliente);
+
+            Assert.AreEqual(aDTOReserva.Id, reservasDeCliente.FirstOrDefault(x => x.Id == aDTOReserva.Id).Id);
         }
 
     }

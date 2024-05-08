@@ -1,15 +1,16 @@
-using InterfazDeUsuario.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Repository;
 using BusinessLogic;
 using Domain;
+using ControllerLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
 
 builder.Services.AddSingleton<IRepository<Cliente>, ClienteMemoryRepository>();
 builder.Services.AddSingleton<IRepository<Deposito>, DepositoMemoryRepository>();
@@ -22,7 +23,8 @@ builder.Services.AddSingleton<DepositoLogic>();
 builder.Services.AddSingleton<PromocionLogic>();
 builder.Services.AddSingleton<AdministradorLogic>();
 builder.Services.AddSingleton<ReservaLogic>();
-builder.Services.AddSingleton<SessionLogic>();
+builder.Services.AddSingleton<Controller>();
+builder.Services.AddSingleton<DTOSesion>();
 
 
 var app = builder.Build();

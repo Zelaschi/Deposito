@@ -1,45 +1,67 @@
-﻿@page "/promocion/crear"
+﻿@page "/admin/promocion/crear"
 
 <PageTitle>Crear Promocion</PageTitle>
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer
 
-@inject PromocionLogic PromocionLogic
+@inject Controller Controller
 @inject NavigationManager NavigationManager
 
 <h1>Crear Promocion</h1>
 <form>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">Etiqueta</label>
-        <input type="text" class="form-control" id="etiqueta" @bind="promocionActual.Etiqueta"/>
+        <input type="text" class="form-control" id="etiqueta" @bind="unaEtiqueta"/>
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">PorcentajeDescuento</label>
-        <input type="number" class="form-control" id="porcentajeDescuento" @bind="promocionActual.PorcentajeDescuento" />
+        <input type="number" class="form-control" id="porcentajeDescuento" @bind="unPorcentajeDescuento" />
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">FechaDesde</label>
-        <input type="date" class="form-control" id="fechaDesde" @bind="promocionActual.FechaInicio" />
+        <input type="date" class="form-control" id="fechaDesde" @bind="unaFechaInicio" />
     </div>
-    <div class="form-group">
+    <div class="form-group m-2">
         <label for="title">FechaHasta</label>
-        <input type="date" class="form-control" id="fechaHasta" @bind="promocionActual.FechaFin" />
+        <input type="date" class="form-control" id="fechaHasta" @bind="unaFechaFin" />
     </div>
-    <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar Cambios</button>
+    <button type="button" class="btn btn-primary m-2" @onclick="GuardarCambios">Guardar Cambios</button>
 </form>
 
-@code {
-    private Promocion? promocionActual;
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
 
-    protected override void OnInitialized()
-    {
-        promocionActual = new Promocion("etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(1));
-    }
+@code {
+    private DTOPromocion promocion;
+    private string unaEtiqueta;
+    private int unPorcentajeDescuento;
+    private DateTime unaFechaInicio;
+    private DateTime unaFechaFin;
+    private bool datosCorrectos = true;
+    private string mensajeError;
 
     private void GuardarCambios()
     {
-        PromocionLogic.AgregarPromocion(promocionActual);
-        NavigationManager.NavigateTo("/promocion");
+        try
+        {
+            promocion = new(1, unaEtiqueta, unPorcentajeDescuento, unaFechaInicio, unaFechaFin);
+            Controller.RegistrarPromocion(promocion);
+            NavigationManager.NavigateTo("/admin/promocion");
+        }
+        catch (ArgumentException e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
+        catch(Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
     }
+
 }

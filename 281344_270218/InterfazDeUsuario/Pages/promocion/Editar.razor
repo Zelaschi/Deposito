@@ -1,47 +1,72 @@
-﻿@page "/promocion/{id:int}/editar"
+﻿@page "/admin/promocion/{IdPromocion:int}/editar"
+
 
 @using BusinessLogic
 @using Domain
+@using ControllerLayer
 
-@inject PromocionLogic PromocionLogic
+@inject Controller Controller
 @inject NavigationManager NavigationManager
 
 <form>
     <div class="form-group">
         <label for="title">Etiqueta</label>
-        <input type="text" class="form-control" id="etiqueta" @bind="promocionActual.Etiqueta" />
+        <input type="text" class="form-control" id="etiqueta" @bind="unaEtiqueta" />
     </div>
     <div class="form-group">
         <label for="title">PorcentajeDescuento</label>
-        <input type="number" class="form-control" id="porcentajeDescuento" @bind="promocionActual.PorcentajeDescuento" />
+        <input type="number" class="form-control" id="porcentajeDescuento" @bind="unPorcentajeDescuento" />
     </div>
     <div class="form-group">
         <label for="title">FechaDesde</label>
-        <input type="date" class="form-control" id="fechaDesde" @bind="promocionActual.FechaInicio" />
+        <input type="date" class="form-control" id="fechaDesde" @bind="unaFechaInicio" />
     </div>
     <div class="form-group">
         <label for="title">FechaHasta</label>
-        <input type="date" class="form-control" id="fechaHasta" @bind="promocionActual.FechaFin" />
+        <input type="date" class="form-control" id="fechaHasta" @bind="unaFechaFin" />
     </div>
     <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar Cambios</button>
 </form>
 
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
 
 @code {
     [Parameter]
 
-    public int Id{ get; set; }
+    public int IdPromocion { get; set; }
 
-    private Promocion? promocionActual;
+    private DTOPromocion promocionActual;
+    private string unaEtiqueta;
+    private int unPorcentajeDescuento;
+    private DateTime unaFechaInicio;
+    private DateTime unaFechaFin;
+    private bool datosCorrectos = true;
+    private string mensajeError;
 
     protected override void OnInitialized()
     {
-        promocionActual = PromocionLogic.buscarPromocionPorId(Id);
+        promocionActual = Controller.BuscarPromocionPorId(IdPromocion);
     }
 
     private void GuardarCambios()
     {
-        PromocionLogic.ActualizarInfoPromocion(promocionActual);
-        NavigationManager.NavigateTo("/promocion");
+        try
+        {
+            promocionActual.Etiqueta = unaEtiqueta;
+            promocionActual.PorcentajeDescuento = unPorcentajeDescuento;
+            promocionActual.FechaInicio = unaFechaInicio;
+            promocionActual.FechaFIn = unaFechaFin;
+
+            Controller.ActualizarPromocion(promocionActual);
+            NavigationManager.NavigateTo("/admin/promocion");
+        }
+        catch(Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
     }
 }
