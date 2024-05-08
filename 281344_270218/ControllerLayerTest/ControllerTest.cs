@@ -381,6 +381,18 @@ namespace ControllerLayerTest
             _controller.RegistrarAdministrador(aDTOAdministrador);
             _controller.RegistrarAdministrador(OtroAdmin);
         }
+        [TestMethod]
+        public void EstaRegistradoAdministradorTest() 
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            Assert.IsTrue(_controller.EstaRegistradoAdministrador());
+        }
+        [TestMethod]
+        public void EstaRegistradoAdministradorDeFalseCuandoNoEstaRegistradoTest()
+        {
+            Assert.IsFalse(_controller.EstaRegistradoAdministrador());
+        }
+
 
         //DEPOSITO
         [TestMethod]

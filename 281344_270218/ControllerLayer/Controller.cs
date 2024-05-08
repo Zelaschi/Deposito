@@ -20,8 +20,6 @@ namespace ControllerLayer
             _depositoLogic = depositoLogic;
             _promocionLogic = promocionLogic;
             _reservaLogic = reservaLogic;
-            DTOAdministrador aDTOAdministrador = new DTOAdministrador("tomas", "totozelaschi@gmail.com", "Password1!");
-            RegistrarAdministrador(aDTOAdministrador);
         }
 
 
@@ -391,6 +389,10 @@ namespace ControllerLayer
             try
             {
                 Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+                if (aCliente == null)
+                {
+
+                }
 
                 if (aCliente.Password != Pwd)
                 {
@@ -399,11 +401,27 @@ namespace ControllerLayer
 
                 return true;
             }
-            catch (NullReferenceException) {
-                throw new Exception("Cliente no registrado.");
+            catch (NullReferenceException)
+            {
+                try
+                {
+                    Administrador aAdmin = _administradorLogic.ObtenerAdministrador();
+                    if (aAdmin.Password != Pwd)
+                    {
+                        throw new Exception("Wrong password");
+                    }
+                    return true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new Exception(e.Message);
+                }
+
+                throw new Exception("Cliente no encontrado!");
+
             }
-            
         }
+
         public bool esAdministrador(string mail) 
         {
             return ObtenerAdministrador().Mail.Equals(mail);
