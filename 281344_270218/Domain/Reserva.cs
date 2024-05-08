@@ -44,40 +44,43 @@
             Precio = precio;
             Cliente = cliente;
         }
+        private int precioPorDia(string tamanio) {
+            switch (tamanio)
+            {
+                case "Pequenio":
+                    return 50;
+                case "Mediano":
+                    return 75;
+                case "Grande":
+                    return 100;
+            }
+            return 0;
+        }
+        private double descuentoDependiendoCantidadDeDias(int diferenciaDeDias) 
+        {
+            if (diferenciaDeDias >= 7 && diferenciaDeDias <= 14)
+            {
+                return 0.05;
+            }
+            else if (diferenciaDeDias > 14)
+            {
+                return 0.10;
+            }
+            return 0;
+        }
         private int CalculoPrecioDeReserva() {
-            int precioPorDiaDependiendoDelTamaño = 0;
+            int precioPorDiaDependiendoDelTamaño = precioPorDia(Deposito.Tamanio);
             TimeSpan diferencia = FechaHasta - FechaDesde;
-            int cantidadDeDias = diferencia.Days;
-            double descuento = 0;
+            int diferenciaEnCantidadDeDias = diferencia.Days;
+            double descuento = descuentoDependiendoCantidadDeDias(diferenciaEnCantidadDeDias);
             var porcentajeDescuentoPromocion = Deposito.mejorPromocionHoy();
             int precioReserva;
 
-            switch (Deposito.Tamanio)
-            {
-                case "Pequenio":
-                    precioPorDiaDependiendoDelTamaño = 50;
-                    break;
-                case "Mediano":
-                    precioPorDiaDependiendoDelTamaño = 75;
-                    break;
-                case "Grande":
-                    precioPorDiaDependiendoDelTamaño = 100;
-                    break;
-            }
-
-            if (cantidadDeDias >= 7 && cantidadDeDias <= 14)
-            {
-                descuento = 0.05;
-            }
-            else if (cantidadDeDias > 14) {
-                descuento = 0.10;
-            }
-
-            precioReserva = precioPorDiaDependiendoDelTamaño * cantidadDeDias;
+            precioReserva = precioPorDiaDependiendoDelTamaño * diferenciaEnCantidadDeDias;
 
             if (Deposito.Climatizacion)
             {
-                precioReserva += 20 * cantidadDeDias;
+                precioReserva += 20 * diferenciaEnCantidadDeDias;
             }
 
             double precioConDescuento = precioReserva * (1 - descuento);
