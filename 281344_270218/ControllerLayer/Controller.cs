@@ -404,10 +404,6 @@ namespace ControllerLayer
             try
             {
                 Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
-                if (aCliente == null)
-                {
-
-                }
 
                 if (aCliente.Password != Pwd)
                 {
