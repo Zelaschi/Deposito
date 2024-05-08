@@ -27,7 +27,11 @@ namespace ControllerLayer
         {
             try
             {
-
+                if (EstaRegistradoAdministrador()) {
+                    if (aDTOCliente.Mail == ObtenerAdministrador().Mail) {
+                        throw new Exception("Mail de administrador!");
+                    }
+                }
                 Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
                 _clienteLogic.AgregarCliente(aCliente);
             }
