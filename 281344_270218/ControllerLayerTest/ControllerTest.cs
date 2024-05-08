@@ -267,6 +267,13 @@ namespace ControllerLayerTest
         {
             _controller.EliminarCliente(aDTOCliente);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void AgregarClienteConMismoMailQueElAdministradorDeErrorTest() {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            aDTOCliente.Mail = aDTOAdministrador.Mail;
+            _controller.RegistrarCliente(aDTOCliente);
+        }
 
         //ADMINISTRADOR
         [TestMethod]

@@ -27,6 +27,7 @@ namespace ControllerLayer
         {
             try
             {
+
                 Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
                 _clienteLogic.AgregarCliente(aCliente);
             }
