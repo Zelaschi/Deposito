@@ -402,7 +402,22 @@ namespace ControllerLayer
             }
             return DTOReservas;
         }
-        
+        public IList<DTOReserva> listarReservasDeCliente(DTOCliente aDTOCliente) {
+            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+            List<DTOReserva> DTOReservas = new List<DTOReserva>();
+            foreach (var reserva in Reservas)
+            {
+                if (reserva.Cliente.Mail.Equals(aDTOCliente.Mail))
+                {
+                    DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
+                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                    DTOReservas.Add(reservaAuxiliar);
+                }
+            }
+            return DTOReservas;
+
+        }
 
         public void justificacionRechazo(String rechazo, DTOReserva DTOReservaParametro)
         {
