@@ -43,15 +43,14 @@
                 <td>@reserva.Estado</td>
                 <td>@reserva.Cliente.NombreYApellido</td>
                 <td>
-                    <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
                     @if (reserva.Estado == "Pendiente")
                     {
-                        <button class="btn btn-danger btn-sm" @onclick="(() => MostrarJustificacion(reserva))">Rechazar</button>
-                        if (reservaRechazada)
+                        <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
+                        <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
+                        @if (!datosCorrectos)
                         {
-                            <textarea @bind="unaJustificacion" rows="3" cols="30"></textarea>
-                            <button class="btn btn-primary btn-sm" @onclick="() => GuardarRechazo(reserva)">Guardar Rechazo</button>
-                            reservaRechazada = false;
+                            <p class="text-danger">@mensajeError</p>
                         }
                     }
                 </td>
@@ -66,6 +65,8 @@
     private List<DTOReserva> reservasRegistradas;
     private bool reservaRechazada = false;
     private string unaJustificacion;
+    private bool datosCorrectos = true;
+    private string mensajeError;
 
     protected override void OnInitialized()
     {
@@ -76,14 +77,17 @@
     {
         reserva.Estado = "Rechazada";
         Controller.RechazarReserva(reserva);
-        
+        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+
     }
 
     private void AceptarReserva(DTOReserva reserva)
     {
         reserva.Estado = "Aprobada";
         Controller.AceptarReserva(reserva);
-        
+        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+
+
     }
     private void MostrarJustificacion(DTOReserva reserva)
     {
@@ -92,10 +96,21 @@
 
     private void GuardarRechazo(DTOReserva reserva)
     {
-        Controller.RechazarReserva(reserva);
-        reserva.Estado = "Rechazada";
-        Controller.justificacionRechazo(unaJustificacion, reserva);
-        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        try
+        {
+            if (unaJustificacion == null)
+            {
+                throw new Exception("Falta justificacion");    
+            }
+            Controller.RechazarReserva(reserva);
+            reserva.Estado = "Rechazada";
+            Controller.justificacionRechazo(unaJustificacion, reserva);
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
 
     }
 }

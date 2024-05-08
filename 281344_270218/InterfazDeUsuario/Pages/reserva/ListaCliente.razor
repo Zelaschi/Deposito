@@ -6,6 +6,8 @@
 
 @inject Controller Controller
 @inject NavigationManager NavigationManager
+@inject DTOSesion DtoSesion
+
 
 
 <h1>
@@ -28,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var reserva in reservasRegistradas)
+        @foreach (var reserva in reservasDeCliente)
         {
             <tr>
                 <td>@reserva.Id</td>
@@ -45,12 +47,13 @@
 
 
 @code {
-    private List<DTOReserva> reservasRegistradas;
+    private List<DTOReserva> reservasDeCliente;
     private bool reservaRechazada = false;
     private string unaJustificacion;
 
     protected override void OnInitialized()
     {
-        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        DTOCliente clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
+        reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
     }
 }

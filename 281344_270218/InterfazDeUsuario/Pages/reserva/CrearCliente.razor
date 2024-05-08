@@ -1,11 +1,10 @@
-﻿@page "/admin/reserva/crear"
+﻿@page "/cliente/reserva/crear"
 
 <PageTitle>Crear Reserva</PageTitle>
 
-@using BusinessLogic
-@using Domain
 @using ControllerLayer
 
+@inject DTOSesion DtoSesion
 @inject Controller Controller
 @inject NavigationManager NavigationManager
 
@@ -21,26 +20,15 @@
     </div>
     <div class="form-group">
         <label for="Deposito">Seleccionar deposito</label>
-        <select class="form-control" @bind="@_idDepositoSeleccionado" >
+        <select class="form-control" @bind="@_idDepositoSeleccionado">
             <option diable selected value="">Seleccionar Deposito</option>
-            @foreach(var deposito in depositosDisponibles)
+            @foreach (var deposito in depositosDisponibles)
             {
                 <option value="@deposito.Id">@deposito.Id</option>
             }
         </select>
     </div>
-    <div class="form-group">
-        <label for="Cliente">Seleccionar cliente</label>
-        <select class="form-control" @bind="@_mailClienteSeleccionado">
-            <option diable selected value="">Seleccionar Cliente</option>
-            @foreach (var cliente in clientesDisponibles)
-            {
-                <option value="@cliente.Mail">@cliente.NombreYApellido</option>
-            }
-        </select>
-    </div>
-
-    <button type="button" class="btn btn-primary m-" @onclick="GuardarCambios">Guardar cambios</button>
+    <button type="button" class="btn btn-primary m-2" @onclick="GuardarCambios">Guardar cambios</button>
 </form>
 
 @if (!datosCorrectos)
@@ -49,13 +37,12 @@
 }
 
 @code {
+    private DTOCliente cliente;
     private DTOReserva reserva;
     private DateTime unaFechaDesde;
     private DateTime unaFechaHasta;
     private DTODeposito unDeposito;
-    private DTOCliente unCliente;
     private int precio;
-    private DTOCliente cliente;
     private List<DTODeposito> depositosDisponibles;
     private List<DTOCliente> clientesDisponibles;
     private int _idDepositoSeleccionado;
@@ -65,6 +52,7 @@
 
     protected override void OnInitialized()
     {
+        cliente = Controller.buscarClientePorMail(DtoSesion.SesionMail);
         depositosDisponibles = Controller.listarTodosLosDepositos().ToList();
         clientesDisponibles = Controller.listarTodosLosClientes().ToList();
     }
@@ -74,8 +62,7 @@
         try
         {
             unDeposito = Controller.BuscarDepositoPorId(_idDepositoSeleccionado);
-            unCliente = Controller.buscarClientePorMail(_mailClienteSeleccionado);
-            reserva = new(1, unaFechaDesde, unaFechaHasta, unDeposito, unCliente, 1);
+            reserva = new(1, unaFechaDesde, unaFechaHasta, unDeposito, cliente, 1);
             int idReservaReal = Controller.RegistrarReserva(reserva);
             reserva.Id = idReservaReal;
             NavigationManager.NavigateTo("/admin/reserva");
@@ -88,4 +75,3 @@
     }
 
 }
- 
