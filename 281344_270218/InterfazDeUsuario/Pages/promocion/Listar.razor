@@ -8,7 +8,7 @@
 @inject NavigationManager NavigationManager
 <h1>
     Lista Promociones
-    <a href="/promocion/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Promocion</a> 
+    <a href="/admin/promocion/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Promocion</a>
 </h1>
 
 <table class="table">
@@ -32,7 +32,7 @@
                 <td>@promocion.FechaInicio</td>
                 <td>@promocion.FechaFIn</td>
                 <td>
-                    <a class="btn btn-success btn-sm" href="promocion/@promocion.IdPromocion/editar">Editar</a>
+                    <a class="btn btn-success btn-sm" href="admin/promocion/@promocion.IdPromocion/editar">Editar</a>
                     <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion))">Eliminar</button>
                 </td>
             </tr>

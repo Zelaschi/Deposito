@@ -1,4 +1,4 @@
-﻿@page "/reserva/crear"
+﻿@page "/admin/reserva/crear"
 
 <PageTitle>Crear Reserva</PageTitle>
 
@@ -76,8 +76,9 @@
             unDeposito = Controller.BuscarDepositoPorId(_idDepositoSeleccionado);
             unCliente = Controller.buscarClientePorMail(_mailClienteSeleccionado);
             reserva = new(1, unaFechaDesde, unaFechaHasta, unDeposito, unCliente, 1);
-            Controller.RegistrarReserva(reserva);
-            NavigationManager.NavigateTo("/reserva");
+            int idReservaReal = Controller.RegistrarReserva(reserva);
+            reserva.Id = idReservaReal;
+            NavigationManager.NavigateTo("/admin/reserva");
         }
         catch (Exception e)
         {

@@ -14,7 +14,7 @@
     Lista Reservas
 </h1>
 <h1>
-    <a href="/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+    <a href="/admin/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
 </h1>
 
 
@@ -95,5 +95,7 @@
         Controller.RechazarReserva(reserva);
         reserva.Estado = "Rechazada";
         Controller.justificacionRechazo(unaJustificacion, reserva);
+        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+
     }
 }

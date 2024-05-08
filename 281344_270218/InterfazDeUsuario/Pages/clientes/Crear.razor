@@ -46,7 +46,7 @@
         {
             cliente = new(unNombreYApellido, unMail, unaContrasenia);
             Controller.RegistrarCliente(cliente);
-            NavigationManager.NavigateTo("/cliente");
+            NavigationManager.NavigateTo("/admin/cliente");
         }
         catch(Exception e)
         {

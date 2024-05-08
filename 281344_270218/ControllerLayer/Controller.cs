@@ -286,7 +286,9 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
-        public void RegistrarReserva(DTOReserva DTOReservaParametro) 
+
+        //HACER TEST 
+        public int RegistrarReserva(DTOReserva DTOReservaParametro) 
         {
             try
             {
@@ -295,6 +297,7 @@ namespace ControllerLayer
                 Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
 
                 _reservaLogic.AgregarReserva(reservaAAgregar);
+                return reservaAAgregar.IdReserva;
             }
             catch (ArgumentException e)
             { 
@@ -410,11 +413,8 @@ namespace ControllerLayer
         {
             try
             {
-                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
-                if (aCliente == null)
-                {
 
-                }
+                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
 
                 if (aCliente.Password != Pwd)
                 {
