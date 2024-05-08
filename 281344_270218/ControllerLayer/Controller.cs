@@ -203,7 +203,7 @@ namespace ControllerLayer
 
             return DTODepositoRetorno;
         }
-        public void validarQueDepositoNoEsteAsociadoADeposito(DTODeposito aDTODeposito) 
+        public void validarQueDepositoNoEsteAsociadoAReserva(DTODeposito aDTODeposito) 
         {
             Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
             IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
@@ -220,7 +220,7 @@ namespace ControllerLayer
         public void ElminarDeposito(DTODeposito DTODepositoParametro)
         {
             Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
-            validarQueDepositoNoEsteAsociadoADeposito(DTODepositoParametro);
+            validarQueDepositoNoEsteAsociadoAReserva(DTODepositoParametro);
             _depositoLogic.EliminarDeposito(depositoEncontradoPorId.IdDeposito);
         }
 
