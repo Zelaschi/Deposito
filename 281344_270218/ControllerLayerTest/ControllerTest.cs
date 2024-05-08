@@ -73,13 +73,31 @@ namespace ControllerLayerTest
             Assert.IsTrue(_controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password));
         }
         [TestMethod]
+        public void LoginAdminTest()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+
+            Assert.IsTrue(_controller.LogIn(aDTOAdministrador.Mail, aDTOAdministrador.Password));
+        }
+        [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void LoginConPasswordIncorrectaTireExcepcionTest() 
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.LogIn(aDTOCliente.Mail, "PasswordIncorrecta");
         }
-
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoginConClienteSinRegistrarTireExceptionTest()
+        {
+            _controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password);
+        }
+        [TestMethod]
+        public void EsAdministradorTest() { 
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            bool esAdmin = _controller.esAdministrador(aDTOAdministrador.Mail);
+            Assert.IsTrue(esAdmin);
+        }
         //CLIENTE
         [TestMethod]
         public void RegistrarClienteTest()
@@ -249,6 +267,13 @@ namespace ControllerLayerTest
         {
             _controller.EliminarCliente(aDTOCliente);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void AgregarClienteConMismoMailQueElAdministradorDeErrorTest() {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            aDTOCliente.Mail = aDTOAdministrador.Mail;
+            _controller.RegistrarCliente(aDTOCliente);
+        }
 
         //ADMINISTRADOR
         [TestMethod]
@@ -363,6 +388,18 @@ namespace ControllerLayerTest
             _controller.RegistrarAdministrador(aDTOAdministrador);
             _controller.RegistrarAdministrador(OtroAdmin);
         }
+        [TestMethod]
+        public void EstaRegistradoAdministradorTest() 
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            Assert.IsTrue(_controller.EstaRegistradoAdministrador());
+        }
+        [TestMethod]
+        public void EstaRegistradoAdministradorDeFalseCuandoNoEstaRegistradoTest()
+        {
+            Assert.IsFalse(_controller.EstaRegistradoAdministrador());
+        }
+
 
         //DEPOSITO
         [TestMethod]

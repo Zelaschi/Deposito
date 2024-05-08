@@ -1,4 +1,3 @@
-using InterfazDeUsuario.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Repository;
@@ -24,8 +23,8 @@ builder.Services.AddSingleton<DepositoLogic>();
 builder.Services.AddSingleton<PromocionLogic>();
 builder.Services.AddSingleton<AdministradorLogic>();
 builder.Services.AddSingleton<ReservaLogic>();
-builder.Services.AddSingleton<SessionLogic>();
 builder.Services.AddSingleton<Controller>();
+builder.Services.AddSingleton<DTOSesion>();
 
 
 var app = builder.Build();

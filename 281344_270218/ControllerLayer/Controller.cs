@@ -27,6 +27,11 @@ namespace ControllerLayer
         {
             try
             {
+                if (EstaRegistradoAdministrador()) {
+                    if (aDTOCliente.Mail == ObtenerAdministrador().Mail) {
+                        throw new Exception("Mail de administrador!");
+                    }
+                }
                 Cliente aCliente = new Cliente(aDTOCliente.NombreYApellido, aDTOCliente.Mail, aDTOCliente.Password);
                 _clienteLogic.AgregarCliente(aCliente);
             }
@@ -133,6 +138,16 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
             
+        }
+        public bool EstaRegistradoAdministrador()
+        {
+            try {
+                ObtenerAdministrador();
+                return true;
+            }
+            catch (Exception) {
+                return false;
+            }
         }
         public int RegistrarDeposito(DTODeposito aDTODeposito) 
         {
@@ -393,14 +408,45 @@ namespace ControllerLayer
 
         public bool LogIn(string Mail, string Pwd)
         {
-            Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
-
-            if (aCliente.Password != Pwd)
+            try
             {
-                throw new Exception("Wrong password");
-            }
+                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+                if (aCliente == null)
+                {
 
-            return true;
+                }
+
+                if (aCliente.Password != Pwd)
+                {
+                    throw new Exception("Wrong password");
+                }
+
+                return true;
+            }
+            catch (NullReferenceException)
+            {
+                try
+                {
+                    Administrador aAdmin = _administradorLogic.ObtenerAdministrador();
+                    if (aAdmin.Password != Pwd)
+                    {
+                        throw new Exception("Wrong password");
+                    }
+                    return true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new Exception(e.Message);
+                }
+
+                throw new Exception("Cliente no encontrado!");
+
+            }
+        }
+
+        public bool esAdministrador(string mail) 
+        {
+            return ObtenerAdministrador().Mail.Equals(mail);
         }
     }
 }
