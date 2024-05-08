@@ -471,6 +471,15 @@ namespace ControllerLayerTest
             _controller.BuscarDepositoPorId(aDTODeposito.Id);
         }
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void EliminarDepositoConReservaAsociadaAElDeErrorTest() 
+        {
+            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.ElminarDeposito(aDTODeposito);
+        }
+        [TestMethod]
         public void ListarTodasLosDepositosTest()
         {
             var DTODeposito1 = new DTODeposito(1, "A", "Pequenio", true);
