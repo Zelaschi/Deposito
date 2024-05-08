@@ -1,4 +1,4 @@
-﻿@* @page "/reserva/crear"
+﻿@page "/admin/reserva/crear"
 
 <PageTitle>Crear Reserva</PageTitle>
 
@@ -20,26 +20,22 @@
         <input type="datetime" class="form-control" id="fechaHasta" @bind="unaFechaHasta" />
     </div>
     <div class="form-group">
-        <label for="Deposito">Deposito</label>
-        <select class="form-control" value="@_idDepositoSeleccionado" >
+        <label for="Deposito">Seleccionar deposito</label>
+        <select class="form-control" @bind="@_idDepositoSeleccionado" >
             <option diable selected value="">Seleccionar Deposito</option>
             @foreach(var deposito in depositosDisponibles)
             {
-                <option value="@deposito.Id" selected="@(deposito.Id==_idDepositoSeleccionado)">
-                    @deposito.Id
-                </option>
+                <option value="@deposito.Id">@deposito.Id</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label for="Deposito">Deposito</label>
-        <select class="form-control" value="@_mailClienteSeleccionado">
-            <option diable selected value="">Seleccionar Deposito</option>
+        <label for="Cliente">Seleccionar cliente</label>
+        <select class="form-control" @bind="@_mailClienteSeleccionado">
+            <option diable selected value="">Seleccionar Cliente</option>
             @foreach (var cliente in clientesDisponibles)
             {
-                <option value="@cliente.Mail" selected="@(cliente.Mail==_mailClienteSeleccionado)">
-                    @cliente.Mail
-                </option>
+                <option value="@cliente.Mail">@cliente.NombreYApellido</option>
             }
         </select>
     </div>
@@ -70,7 +66,7 @@
     protected override void OnInitialized()
     {
         depositosDisponibles = Controller.listarTodosLosDepositos().ToList();
-
+        clientesDisponibles = Controller.listarTodosLosClientes().ToList();
     }
 
     private void GuardarCambios()
@@ -79,7 +75,10 @@
         {
             unDeposito = Controller.BuscarDepositoPorId(_idDepositoSeleccionado);
             unCliente = Controller.buscarClientePorMail(_mailClienteSeleccionado);
-            reserva = new(1, unaFechaDesde, unaFechaHasta, unDeposito, unCliente);
+            reserva = new(1, unaFechaDesde, unaFechaHasta, unDeposito, unCliente, 1);
+            int idReservaReal = Controller.RegistrarReserva(reserva);
+            reserva.Id = idReservaReal;
+            NavigationManager.NavigateTo("/admin/reserva");
         }
         catch (Exception e)
         {
@@ -89,4 +88,4 @@
     }
 
 }
- *@
+ 

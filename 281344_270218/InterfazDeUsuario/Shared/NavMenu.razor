@@ -20,27 +20,27 @@
         <nav class="flex-column">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/promocion">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Promociones
+                    <span class="oi oi-tags" aria-hidden="true"></span> Promociones
                 </NavLink>
             </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/deposito">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Depositos
+                    <span class="oi oi-home" aria-hidden="true"></span> Depositos
                 </NavLink>
             </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/reserva">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Reservas
+                    <span class="oi oi-book" aria-hidden="true"></span> Reservas
                 </NavLink>
             </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/cliente">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Clientes
+                    <span class="oi oi-person" aria-hidden="true"></span> Clientes
                 </NavLink>
             </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="/" @onclick="CerrarSesion">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Cerrar Session
+                    <span class="oi oi-account-logout" aria-hidden="true"></span> Cerrar Sesion
                 </NavLink>
             </div>
 
@@ -49,8 +49,17 @@
 }
 else
 {
-    
-    
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="cliente/reserva">
+            <span class="oi oi-book" aria-hidden="true"></span> Reservas
+        </NavLink>
+    </div>
+
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/" @onclick="CerrarSesion">
+            <span class="oi oi-account-logout" aria-hidden="true"></span> Cerrar Sesion
+        </NavLink>
+    </div>
 }
 
 

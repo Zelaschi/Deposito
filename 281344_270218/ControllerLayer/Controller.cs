@@ -196,7 +196,7 @@ namespace ControllerLayer
 
             if (depositoEncontrado == null)
             {
-                throw new Exception("Deposito no encontrada!");
+                throw new Exception("Deposito no encontrado!");
             }
 
             var DTODepositoRetorno = new DTODeposito(depositoEncontrado.IdDeposito, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
@@ -286,7 +286,9 @@ namespace ControllerLayer
                 throw new Exception(e.Message);
             }
         }
-        public void RegistrarReserva(DTOReserva DTOReservaParametro) 
+
+        //HACER TEST 
+        public int RegistrarReserva(DTOReserva DTOReservaParametro) 
         {
             try
             {
@@ -295,6 +297,7 @@ namespace ControllerLayer
                 Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
 
                 _reservaLogic.AgregarReserva(reservaAAgregar);
+                return reservaAAgregar.IdReserva;
             }
             catch (ArgumentException e)
             { 
@@ -313,7 +316,7 @@ namespace ControllerLayer
             DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
             DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.IdDeposito, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
 
-            DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.IdReserva, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+            DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.IdReserva, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
             reservaRetorno.Estado = reservaEncontrada.Estado;
 
             return reservaRetorno; 
@@ -326,7 +329,7 @@ namespace ControllerLayer
             {
                 DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                 DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+                DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
                 DTOReservas.Add(reservaAuxiliar);
             }
             return DTOReservas;
@@ -350,6 +353,7 @@ namespace ControllerLayer
             Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
             _reservaLogic.RechazarReserva(ReservaEncontrada);
         }
+
         public IList<DTOReserva> ObtenerListaReservasPendientes() 
         {
             IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
@@ -360,7 +364,7 @@ namespace ControllerLayer
                 {
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                     DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
                     DTOReservas.Add(reservaAuxiliar);
                 }
             }
@@ -376,7 +380,7 @@ namespace ControllerLayer
                 {
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                     DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
                     DTOReservas.Add(reservaAuxiliar);
                 }
             }
@@ -392,17 +396,27 @@ namespace ControllerLayer
                 {
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                     DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar);
+                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
                     DTOReservas.Add(reservaAuxiliar);
                 }
             }
             return DTOReservas;
         }
 
+        public void justificacionRechazo(String rechazo, DTOReserva DTOReservaParametro)
+        {
+            Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+            ReservaEncontrada.JustificacionRechazo = rechazo;
+        }
+
         public bool LogIn(string Mail, string Pwd)
         {
             try
             {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 32158844885efb9950231137f04893347d9cd613
                 Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
 
                 if (aCliente.Password != Pwd)

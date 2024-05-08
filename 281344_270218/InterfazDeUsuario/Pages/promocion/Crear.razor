@@ -50,7 +50,7 @@
         {
             promocion = new(1, unaEtiqueta, unPorcentajeDescuento, unaFechaInicio, unaFechaFin);
             Controller.RegistrarPromocion(promocion);
-            NavigationManager.NavigateTo("/promocion");
+            NavigationManager.NavigateTo("/admin/promocion");
         }
         catch (ArgumentException e)
         {

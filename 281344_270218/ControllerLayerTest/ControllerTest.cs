@@ -53,7 +53,7 @@ namespace ControllerLayerTest
             aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
 
-            aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
+            aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 100);
         }
 
         [TestCleanup]
@@ -608,7 +608,7 @@ namespace ControllerLayerTest
         public void RegistrarReservaConDatosIncorrectosTest() {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
-            DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente);
+            DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(DTOReservaIncorrectaTest);
         }
@@ -623,7 +623,7 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -676,16 +676,18 @@ namespace ControllerLayerTest
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Rechazada");
         }
+
+
         [TestMethod]
         public void ObtenerListaReservasPendientesTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva1);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -708,10 +710,10 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva1);
             _controller.RegistrarReserva(aDTOReserva2);
@@ -733,10 +735,10 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
-            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente);
-            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente);
+            DTOReserva aDTOReserva1 = new DTOReserva(1, DateTime.Today.AddDays(10), DateTime.Today.AddDays(11), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva2 = new DTOReserva(2, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva3 = new DTOReserva(3, DateTime.Today.AddDays(10), DateTime.Today.AddDays(19), aDTODeposito, aDTOCliente, 1);
+            DTOReserva aDTOReserva4 = new DTOReserva(4, DateTime.Today.AddDays(7), DateTime.Today.AddDays(14), aDTODeposito, aDTOCliente, 1);
 
             _controller.RegistrarReserva(aDTOReserva1);
             _controller.RegistrarReserva(aDTOReserva2);
