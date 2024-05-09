@@ -65,7 +65,7 @@
             reserva = new(1, unaFechaDesde, unaFechaHasta, unDeposito, cliente, 1);
             int idReservaReal = Controller.RegistrarReserva(reserva);
             reserva.Id = idReservaReal;
-            NavigationManager.NavigateTo("/admin/reserva");
+            NavigationManager.NavigateTo("/cliente/reserva");
         }
         catch (Exception e)
         {
