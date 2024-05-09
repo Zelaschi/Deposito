@@ -97,6 +97,13 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
+        public void LoginConPasswordIncorrectaAdminTireExcepcionTest()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            _controller.LogIn(aDTOAdministrador.Mail, "PasswordIncorrecta");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void LoginConPasswordIncorrectaTireExcepcionTest() 
         {
             _controller.RegistrarCliente(aDTOCliente);

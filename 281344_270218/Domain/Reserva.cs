@@ -50,10 +50,7 @@
 
         public Reserva(int id, DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio, Cliente cliente)
         {
-            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
-            {
-                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
-            }
+            
             IdReserva = id;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
