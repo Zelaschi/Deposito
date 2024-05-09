@@ -51,8 +51,15 @@
     </tbody>
 </table>
 
+@if (!datosCorrectos)
+{
+    <p class="text-danger">@mensajeError</p>
+}
+
 @code {
     private List<DTODeposito> depositosRegistrados;
+    private bool datosCorrectos = true;
+    private string mensajeError;
 
     protected override void OnInitialized()
     {
@@ -61,8 +68,16 @@
 
     private void BorrarDeposito(DTODeposito deposito)
     {
-        Controller.EliminarDeposito(deposito);
-        depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+        try
+        {
+            Controller.EliminarDeposito(deposito);
+            depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
         
     }
 }
