@@ -33,7 +33,15 @@
             <tr>
                 <td>@deposito.Id</td>
                 <td>@deposito.Area</td>
-                <td>@deposito.Tamanio</td>
+                @if (deposito.Tamanio.Equals("Pequenio"))
+                {
+                    <td>Pequeño</td>
+                }
+                else
+                {
+                    <td>@deposito.Tamanio</td>
+
+                }
                 <td>@deposito.Climatizacion</td>
                 <td>
                     <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito))">Eliminar</button>
