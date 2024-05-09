@@ -180,7 +180,7 @@ namespace ControllerLayer
             {
                 if (reserva.Deposito.IdDeposito == depositoEncontradoPorId.IdDeposito)
                 {
-                    throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");
+                    throw new Exception("No se puede eliminar un deposito que esta siendo utilizado para una reseva.");
                 }
             }
         }
