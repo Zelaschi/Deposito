@@ -71,38 +71,6 @@ namespace ControllerLayer
 
             return DTOClienteRetorno;
         }
-        public DTOCliente buscarClientePorId(int IdParametro)
-        {
-            var clienteEncontrado = _clienteLogic.buscarClientePorId(IdParametro);
-
-            if (clienteEncontrado == null)
-            {
-                throw new Exception("Cliente no encontrado!");
-            }
-
-            var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
-
-            return DTOClienteRetorno;
-        }
-        public DTOCliente ActualizarInfoCliente(DTOCliente DTOClienteParametro) {
-
-            Cliente clienteEncontradoPorMail = _clienteLogic.buscarClientePorMail(DTOClienteParametro.Mail);
-            Cliente clienteActualizado = new Cliente(clienteEncontradoPorMail.IdPersona, DTOClienteParametro.NombreYApellido, DTOClienteParametro.Mail, DTOClienteParametro.Password);
-
-            Cliente clienteRetornoActualizacion = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
-            DTOCliente DTOClienteRetorno = new DTOCliente(clienteRetornoActualizacion.NombreYApellido, clienteRetornoActualizacion.Mail, clienteRetornoActualizacion.Password);
-
-            return DTOClienteRetorno;
-        }
-        public void EliminarCliente(DTOCliente DTOClienteParametro)
-        { 
-            Cliente clienteEncontradoPorMail = _clienteLogic.buscarClientePorMail(DTOClienteParametro.Mail);
-            if (clienteEncontradoPorMail == null) {
-                throw new Exception("No se encontro el cliente a eliminar!");
-            }
-            _clienteLogic.EliminarCliente(clienteEncontradoPorMail.IdPersona);
-        }
-
 
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
         {
@@ -217,7 +185,7 @@ namespace ControllerLayer
             }
         }
 
-        public void ElminarDeposito(DTODeposito DTODepositoParametro)
+        public void EliminarDeposito(DTODeposito DTODepositoParametro)
         {
             Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
             validarQueDepositoNoEsteAsociadoAReserva(DTODepositoParametro);
@@ -301,7 +269,6 @@ namespace ControllerLayer
             }
         }
 
-        //HACER TEST 
         public int RegistrarReserva(DTOReserva DTOReservaParametro) 
         {
             try
@@ -349,15 +316,7 @@ namespace ControllerLayer
             }
             return DTOReservas;
         }
-        public void EliminarReserva(DTOReserva reservaParametro)
-        {
-            Reserva reservaEncontradaPorId = _reservaLogic.BuscarReservaPorId(reservaParametro.Id);
-            if (reservaEncontradaPorId == null)
-            {
-                throw new Exception("La reserva a eliminar no fue encontrada!");
-            }
-            _reservaLogic.EliminarReserva(reservaEncontradaPorId.IdReserva);
-        }
+
         public void AceptarReserva(DTOReserva DTOReservaParametro)
         {
             Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
@@ -369,54 +328,7 @@ namespace ControllerLayer
             _reservaLogic.RechazarReserva(ReservaEncontrada);
         }
 
-        public IList<DTOReserva> ObtenerListaReservasPendientes() 
-        {
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-            List<DTOReserva> DTOReservas = new List<DTOReserva>();
-            foreach (var reserva in Reservas)
-            {
-                if (reserva.Estado.Equals("Pendiente")) 
-                {
-                    DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                    DTOReservas.Add(reservaAuxiliar);
-                }
-            }
-            return DTOReservas;
-        }
-        public IList<DTOReserva> ObtenerListaReservasAceptadas()
-        {
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-            List<DTOReserva> DTOReservas = new List<DTOReserva>();
-            foreach (var reserva in Reservas)
-            {
-                if (reserva.Estado.Equals("Aceptada"))
-                {
-                    DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                    DTOReservas.Add(reservaAuxiliar);
-                }
-            }
-            return DTOReservas;
-        }
-        public IList<DTOReserva> ObtenerListaReservasRechazadas()
-        {
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-            List<DTOReserva> DTOReservas = new List<DTOReserva>();
-            foreach (var reserva in Reservas)
-            {
-                if (reserva.Estado.Equals("Rechazada"))
-                {
-                    DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                    DTOReservas.Add(reservaAuxiliar);
-                }
-            }
-            return DTOReservas;
-        }
+
         public IList<DTOReserva> listarReservasDeCliente(DTOCliente aDTOCliente) {
             IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
             List<DTOReserva> DTOReservas = new List<DTOReserva>();

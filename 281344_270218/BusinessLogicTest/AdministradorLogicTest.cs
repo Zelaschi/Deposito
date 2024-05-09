@@ -34,17 +34,6 @@ namespace BusinessLogicTest
             Assert.AreEqual(admin.Mail, administradorRetorno.Mail);
             Assert.AreEqual(admin.Password, administradorRetorno.Password);
         }
-        [TestMethod]
-        public void GetAdministradorTest()
-        {
-
-            Administrador administradorRetorno = _administradorLogic.AsignarAdministrador(admin);
-
-            IList<Administrador> listaConAdmin = _administradorLogic.getAdministrador();
-
-
-            Assert.AreEqual(admin.NombreYApellido, listaConAdmin.FirstOrDefault(x => x.IdPersona == 0).NombreYApellido);
-        }
 
         [TestMethod]
         public void ActualizarInfoAdministradorTest()

@@ -13,7 +13,6 @@ namespace BusinessLogicTest
         private Reserva? reserva;
         private int idReserva = 1;
         private Deposito? deposito;
-        private int idDeposito = 1;
         private Cliente? cliente;
         private int idCliente = 1;
 
@@ -26,7 +25,7 @@ namespace BusinessLogicTest
             _reservaLogic = new ReservaLogic(_reservaRepository);
 
             
-            deposito = new Deposito(idDeposito, "A", "Pequenio", true);
+            deposito = new Deposito("A", "Pequenio", true);
             cliente = new Cliente(idCliente, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
             reserva = new Reserva(idReserva, DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
         }
@@ -107,6 +106,5 @@ namespace BusinessLogicTest
             
             Assert.IsNull(reservaNull);
         }
-
     }
 }

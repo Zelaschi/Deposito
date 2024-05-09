@@ -12,7 +12,7 @@ namespace BusinessLogic
             _repository = clienteRepository;
         }
 
-        public void validarClienteMailNoRepetido(Cliente clienteParametro) {
+        private void validarClienteMailNoRepetido(Cliente clienteParametro) {
             if (_repository.Find(clienteBuscado => clienteBuscado.Mail == clienteParametro.Mail ) != null)
             {
                 throw new InvalidOperationException("Mail Repetido!");

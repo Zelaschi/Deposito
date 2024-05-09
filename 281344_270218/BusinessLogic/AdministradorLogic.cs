@@ -17,7 +17,7 @@ namespace BusinessLogic
             return _repository.Add(admin);
         }
 
-        public IList<Administrador>? getAdministrador() {
+        private IList<Administrador>? getAdministrador() {
             return _repository.FindAll();
         }
         public Administrador ObtenerAdministrador()

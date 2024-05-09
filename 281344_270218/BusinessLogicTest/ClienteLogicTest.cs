@@ -141,6 +141,15 @@ namespace BusinessLogicTest
 
             Assert.IsNull(clienteNull);
         }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+
+        public void DosClientesConMismoMailTireException()
+        {
+            _clienteLogic.AgregarCliente(cliente1);
+            _clienteLogic.AgregarCliente(cliente1);
+
+        }
 
     }
 }

@@ -11,9 +11,8 @@ namespace BusinessLogicTest
         private DepositoLogic? _depositoLogic;
         private IRepository<Deposito>? _depositoRepository;
         private Deposito? deposito1;
-        private int idDeposito1 = 1;
         private Deposito? deposito2;
-        private int idDeposito2 = 2;
+
 
         [TestInitialize]
 
@@ -30,8 +29,13 @@ namespace BusinessLogicTest
             var tamanio2 = "Mediano";
             bool climatizacion2 = true;
 
-            deposito1 = new Deposito(idDeposito1, area1, tamanio1, climatizacion1);
-            deposito2 = new Deposito(idDeposito2, area2, tamanio2, climatizacion2);
+            deposito1 = new Deposito( area1, tamanio1, climatizacion1);
+            deposito2 = new Deposito( area2, tamanio2, climatizacion2);
+        }
+        [TestCleanup]
+        public void clear() 
+        {
+            Deposito.UltimoID = 0;
         }
 
         [TestMethod]
@@ -52,8 +56,8 @@ namespace BusinessLogicTest
             Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
             Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
 
-            Assert.AreEqual(idDeposito1, depositoRetorno1.IdDeposito);
-            Assert.AreEqual(idDeposito2, depositoRetorno2.IdDeposito);
+            Assert.AreEqual(deposito1.IdDeposito, depositoRetorno1.IdDeposito);
+            Assert.AreEqual(deposito2.IdDeposito, depositoRetorno2.IdDeposito);
         }
 
         [TestMethod]
@@ -106,7 +110,7 @@ namespace BusinessLogicTest
 
             deposito1.AgregarPromocionADeposito(promo);
             
-            Promocion promocionEncontrada = deposito1.hayPromocionHoy();
+            Promocion promocionEncontrada = deposito1.mejorPromocionHoy();
 
             Assert.AreEqual(promo.IdPromocion, promocionEncontrada.IdPromocion);
         }
