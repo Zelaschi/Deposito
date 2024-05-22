@@ -27,7 +27,13 @@ namespace BusinessLogicTest
             
             deposito = new Deposito("A", "Pequenio", true);
             cliente = new Cliente(idCliente, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
-            reserva = new Reserva(idReserva, DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+            reserva = new Reserva( DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+        }
+
+        [TestCleanup]
+        public void limpieza()
+        {
+            Reserva.UltimoID = 0;
         }
 
         [TestMethod]
@@ -93,6 +99,7 @@ namespace BusinessLogicTest
             string estadoActualizado = "Aceptada";
 
             Reserva reservaActualizda = new Reserva(reserva.FechaDesde, fechaHastaActualizada, deposito, cliente);
+            reservaActualizda.IdReserva = reserva.IdReserva;
             reservaActualizda.Estado = estadoActualizado;
 
             Reserva reservaActualizadaRetorno = _reservaLogic.ActualizarReserva(reservaActualizda);

@@ -98,6 +98,5 @@ namespace Domain
             Mail = mail;
             Password = password;
         }
-
     }
 }

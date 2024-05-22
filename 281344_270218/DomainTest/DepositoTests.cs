@@ -11,6 +11,11 @@ namespace DomainTest
         public void TestInitialize(){
             deposito = new Deposito("A", "Grande", true);
         }
+        [TestCleanup]
+        public void limpieza()
+        {
+            Deposito.UltimoID = 0;
+        }
 
         [TestMethod]
         public void DepositoInicializadoConValoresCorrectos()
@@ -31,8 +36,6 @@ namespace DomainTest
         [TestMethod]
         public void IncrementarIdCuandoSeCreaDepositoTest()
         {
-            Deposito.ResetId();
-
             Deposito deposito1 = new Deposito("A", "Grande", false);
             Deposito deposito2 = new Deposito("C", "Mediano", false);
             Deposito deposito3 = new Deposito("B", "Pequenio", true);

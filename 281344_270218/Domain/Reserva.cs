@@ -6,6 +6,7 @@
         public int IdReserva { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
+        public int DepositoId { get; set; }
         public Deposito Deposito { get; set; }
         public int Precio { get; set; }
         public string Estado { get; set; } = "Pendiente";
@@ -26,6 +27,8 @@
                 _justificacionRechazo = value;
             }
         }
+
+        public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
         public Promocion PromocionAplicada { get; set; }
 
@@ -43,19 +46,10 @@
             IdReserva = ++UltimoID;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
+            DepositoId = deposito.IdDeposito;
             Deposito = deposito;
             Precio = CalculoPrecioDeReserva();
-            Cliente = cliente;
-        }
-
-        public Reserva(int id, DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio, Cliente cliente)
-        {
-            
-            IdReserva = id;
-            FechaDesde = fechaDesde;
-            FechaHasta = fechaHasta;
-            Deposito = deposito;
-            Precio = CalculoPrecioDeReserva();
+            ClienteId = cliente.IdPersona;
             Cliente = cliente;
         }
         private int precioPorDia(string tamanio) {
@@ -120,10 +114,12 @@
             IdReserva = ++UltimoID;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
+            DepositoId = deposito.IdDeposito;
             Deposito = deposito;
+            ClienteId = cliente.IdPersona;
             Cliente = cliente;
             Precio = CalculoPrecioDeReserva();
         }
-        
+        public Reserva() { }
     }
 }

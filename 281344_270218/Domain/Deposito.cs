@@ -47,10 +47,6 @@
         public bool Climatizacion { get; set; }
         public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
-        public static void ResetId()
-        {
-            UltimoID = 0;
-        }
 
         public Deposito(string area, string tamanio, bool climatizacion)
         {
