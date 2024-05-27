@@ -23,7 +23,7 @@ namespace DomainTest
             var mailEsperado = "pedroazambuja@gmail.com";
             var passwordEsperada = "Password1!";
 
-            Assert.AreEqual(admin.IdPersona, idEsperado);
+            Assert.AreEqual(admin.PersonaId, idEsperado);
             Assert.AreEqual(admin.NombreYApellido, nombreYApellidoEsperado);
             Assert.AreEqual(admin.Mail,mailEsperado);
             Assert.AreEqual(admin.Password, passwordEsperada);

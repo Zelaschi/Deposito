@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240522235402_primeraMigration")]
-    partial class primeraMigration
+    [Migration("20240527192612_1toN Reserva")]
+    partial class _1toNReserva
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,48 +25,55 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Deposito", b =>
                 {
-                    b.Property<int>("IdDeposito")
+                    b.Property<int>("DepositoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDeposito"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepositoId"), 1L, 1);
 
                     b.Property<string>("Area")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Climatizacion")
                         .HasColumnType("bit");
 
                     b.Property<string>("Tamanio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdDeposito");
+                    b.HasKey("DepositoId");
 
                     b.ToTable("Depositos");
                 });
 
             modelBuilder.Entity("Domain.Persona", b =>
                 {
-                    b.Property<int>("IdPersona")
+                    b.Property<int>("PersonaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPersona"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonaId"), 1L, 1);
 
                     b.Property<string>("Mail")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NombreYApellido")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("tipoUsuario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdPersona");
+                    b.HasKey("PersonaId");
+
+                    b.HasAlternateKey("Mail");
 
                     b.ToTable("Persona", (string)null);
 
@@ -75,11 +82,11 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Promocion", b =>
                 {
-                    b.Property<int>("IdPromocion")
+                    b.Property<int>("PromocionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPromocion"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PromocionId"), 1L, 1);
 
                     b.Property<string>("Etiqueta")
                         .IsRequired()
@@ -94,18 +101,18 @@ namespace Repository.Migrations
                     b.Property<int>("PorcentajeDescuento")
                         .HasColumnType("int");
 
-                    b.HasKey("IdPromocion");
+                    b.HasKey("PromocionId");
 
                     b.ToTable("Promociones");
                 });
 
             modelBuilder.Entity("Domain.Reserva", b =>
                 {
-                    b.Property<int>("IdReserva")
+                    b.Property<int>("ReservaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdReserva"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservaId"), 1L, 1);
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
@@ -129,16 +136,16 @@ namespace Repository.Migrations
                     b.Property<int>("Precio")
                         .HasColumnType("int");
 
-                    b.Property<int>("PromocionAplicadaIdPromocion")
+                    b.Property<int?>("PromocionId")
                         .HasColumnType("int");
 
-                    b.HasKey("IdReserva");
+                    b.HasKey("ReservaId");
 
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("DepositoId");
 
-                    b.HasIndex("PromocionAplicadaIdPromocion");
+                    b.HasIndex("PromocionId");
 
                     b.ToTable("Reservas");
                 });
@@ -160,28 +167,41 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Reserva", b =>
                 {
                     b.HasOne("Domain.Cliente", "Cliente")
-                        .WithMany()
+                        .WithMany("Reservas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Deposito", "Deposito")
-                        .WithMany()
+                        .WithMany("Reservas")
                         .HasForeignKey("DepositoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Promocion", "PromocionAplicada")
-                        .WithMany()
-                        .HasForeignKey("PromocionAplicadaIdPromocion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Reservas")
+                        .HasForeignKey("PromocionId");
 
                     b.Navigation("Cliente");
 
                     b.Navigation("Deposito");
 
                     b.Navigation("PromocionAplicada");
+                });
+
+            modelBuilder.Entity("Domain.Deposito", b =>
+                {
+                    b.Navigation("Reservas");
+                });
+
+            modelBuilder.Entity("Domain.Promocion", b =>
+                {
+                    b.Navigation("Reservas");
+                });
+
+            modelBuilder.Entity("Domain.Cliente", b =>
+                {
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

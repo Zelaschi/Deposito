@@ -41,7 +41,7 @@ namespace BusinessLogicTest
         {
             Reserva reservaRetorno = _reservaLogic.AgregarReserva(reserva);
 
-            Assert.AreEqual(idReserva, reservaRetorno.IdReserva);
+            Assert.AreEqual(idReserva, reservaRetorno.ReservaId);
             Assert.AreEqual(reserva.FechaDesde, reservaRetorno.FechaDesde);
             Assert.AreEqual(reserva.FechaHasta, reservaRetorno.FechaHasta);
             Assert.AreEqual(reserva.Deposito, reservaRetorno.Deposito);
@@ -56,7 +56,7 @@ namespace BusinessLogicTest
             Reserva reservaRetorno = _reservaLogic.AgregarReserva(reserva);
 
             IList<Reserva> resultReservas = _reservaLogic.ListarTodasLasReservas();
-            Assert.AreEqual(reserva.IdReserva, resultReservas.FirstOrDefault(x => x.IdReserva == reserva.IdReserva).IdReserva);
+            Assert.AreEqual(reserva.ReservaId, resultReservas.FirstOrDefault(x => x.ReservaId == reserva.ReservaId).ReservaId);
         }
 
         [TestMethod]
@@ -65,9 +65,9 @@ namespace BusinessLogicTest
         {
             _reservaLogic.AgregarReserva(reserva);
 
-            Reserva reservaPorId = _reservaLogic.BuscarReservaPorId(reserva.IdReserva);
+            Reserva reservaPorId = _reservaLogic.BuscarReservaPorId(reserva.ReservaId);
 
-            Assert.AreEqual(reserva.IdReserva, reservaPorId.IdReserva);
+            Assert.AreEqual(reserva.ReservaId, reservaPorId.ReservaId);
         }
 
         [TestMethod]
@@ -85,9 +85,9 @@ namespace BusinessLogicTest
         {
             _reservaLogic.AgregarReserva(reserva);
 
-            _reservaLogic.EliminarReserva(reserva.IdReserva);
+            _reservaLogic.EliminarReserva(reserva.ReservaId);
 
-            var reservaEliminada = _reservaLogic.BuscarReservaPorId(reserva.IdReserva);
+            var reservaEliminada = _reservaLogic.BuscarReservaPorId(reserva.ReservaId);
 
             Assert.IsNull(reservaEliminada);
         }
@@ -99,7 +99,7 @@ namespace BusinessLogicTest
             string estadoActualizado = "Aceptada";
 
             Reserva reservaActualizda = new Reserva(reserva.FechaDesde, fechaHastaActualizada, deposito, cliente);
-            reservaActualizda.IdReserva = reserva.IdReserva;
+            reservaActualizda.ReservaId = reserva.ReservaId;
             reservaActualizda.Estado = estadoActualizado;
 
             Reserva reservaActualizadaRetorno = _reservaLogic.ActualizarReserva(reservaActualizda);

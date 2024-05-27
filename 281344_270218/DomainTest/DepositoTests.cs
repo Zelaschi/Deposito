@@ -40,9 +40,9 @@ namespace DomainTest
             Deposito deposito2 = new Deposito("C", "Mediano", false);
             Deposito deposito3 = new Deposito("B", "Pequenio", true);
 
-            Assert.AreEqual(1, deposito1.IdDeposito);
-            Assert.AreEqual(2, deposito2.IdDeposito);
-            Assert.AreEqual(3, deposito3.IdDeposito);
+            Assert.AreEqual(1, deposito1.DepositoId);
+            Assert.AreEqual(2, deposito2.DepositoId);
+            Assert.AreEqual(3, deposito3.DepositoId);
         }
     }
 }

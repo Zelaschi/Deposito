@@ -2,8 +2,11 @@
 {
     public class Deposito
     {
+        public IList<DepositoPromocion> DepositoPromocions { get; set; }
+        public IList<Reserva> Reservas { get; set; }
+
+        public int DepositoId { get; set; }
         public static int UltimoID { get; set; } = 0;
-        public int IdDeposito { get; set; }
         private string _area;
         public string? Area
         {
@@ -45,6 +48,7 @@
             }
         }
         public bool Climatizacion { get; set; }
+
         public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
 
@@ -53,7 +57,7 @@
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
-            IdDeposito = ++UltimoID;
+            DepositoId = ++UltimoID;
         }
 
         
@@ -67,23 +71,7 @@
             listaPromocionesQueAplicanADeposito.Add(promoParametro);
             return promoParametro;
         }
-
-
-
-        private IList<Promocion> promocionesHoy() 
-        {
-            List<Promocion> promosHoy = new List<Promocion>();
-            foreach (var promocion in listaPromocionesQueAplicanADeposito)
-            {
-                if (promocion.FechaInicio.CompareTo(DateTime.Now) <= 0 && promocion.FechaFin.CompareTo(DateTime.Now) > 0)
-                {
-                    promosHoy.Add(promocion);
-                }
-            }
-            return promosHoy;
-        }
         public Promocion? mejorPromocionHoy() {
-            IList<Promocion> promocionesHoy = this.promocionesHoy();
             int mejorDescuento = 0;
             Promocion mejorPromocion = null;
 

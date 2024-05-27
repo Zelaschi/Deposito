@@ -11,5 +11,7 @@ namespace Domain
         public Cliente(string nombreYApellido, string mail, string password) : base( nombreYApellido, mail, password) { }
 
         public Cliente(int id, string nombreYApellido, string mail, string password) : base(id, nombreYApellido, mail, password) { }
+        public IList<Reserva> Reservas { get; set; }
+
     }
 }

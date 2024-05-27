@@ -3,7 +3,7 @@
     public class Reserva
     {
         public static int UltimoID { get; set; } = 0;
-        public int IdReserva { get; set; }
+        public int ReservaId { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
         public int DepositoId { get; set; }
@@ -30,7 +30,8 @@
 
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
-        public Promocion PromocionAplicada { get; set; }
+        public int? PromocionId { get; set; }
+        public Promocion? PromocionAplicada { get; set; }
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -43,13 +44,13 @@
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            IdReserva = ++UltimoID;
+            ReservaId = ++UltimoID;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
-            DepositoId = deposito.IdDeposito;
+            DepositoId = deposito.DepositoId;
             Deposito = deposito;
             Precio = CalculoPrecioDeReserva();
-            ClienteId = cliente.IdPersona;
+            ClienteId = cliente.PersonaId;
             Cliente = cliente;
         }
         private int precioPorDia(string tamanio) {
@@ -111,15 +112,16 @@
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            IdReserva = ++UltimoID;
+            ReservaId = ++UltimoID;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
-            DepositoId = deposito.IdDeposito;
+            DepositoId = deposito.DepositoId;
             Deposito = deposito;
-            ClienteId = cliente.IdPersona;
+            ClienteId = cliente.PersonaId;
             Cliente = cliente;
             Precio = CalculoPrecioDeReserva();
         }
+        //EF
         public Reserva() { }
     }
 }

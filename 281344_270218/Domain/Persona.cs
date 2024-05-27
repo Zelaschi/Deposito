@@ -7,7 +7,7 @@ namespace Domain
     public abstract class Persona
     {
         public static int contadorID = 1;
-        public int IdPersona { get; set; }
+        public int PersonaId { get; set; }
 
         private bool noVacioONull(string value) {
             return value is null || value.Length == 0;
@@ -85,14 +85,14 @@ namespace Domain
 
         public Persona(int id, string nombreyApellido, string mail, string password)
         {
-            IdPersona = id;
+            PersonaId = id;
             NombreYApellido = nombreyApellido;
             Mail = mail;
             Password = password;
         }
         public Persona(string nombreyApellido, string mail, string password)
         {
-            IdPersona = contadorID;
+            PersonaId = contadorID;
             contadorID++;
             NombreYApellido = nombreyApellido;
             Mail = mail;

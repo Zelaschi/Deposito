@@ -157,7 +157,7 @@ namespace DomainTest
 
             Cliente cliente2 = new Cliente(nombreYApellidoTest2, mailTest2, passwordTest2);
 
-            Assert.AreNotEqual(cliente1.IdPersona, cliente2.IdPersona);
+            Assert.AreNotEqual(cliente1.PersonaId, cliente2.PersonaId);
         }
     }
 }

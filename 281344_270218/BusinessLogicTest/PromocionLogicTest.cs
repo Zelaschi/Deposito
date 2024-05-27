@@ -23,7 +23,7 @@ namespace BusinessLogicTest
         public void AgregarPromocionTest() {
             Promocion retorno = _promocionLogic.AgregarPromocion(promo);
 
-            Assert.AreEqual(promo.IdPromocion, retorno.IdPromocion);
+            Assert.AreEqual(promo.PromocionId, retorno.PromocionId);
         }
         [TestMethod]
         public void ListarTodasLasPromocionesTest ()
@@ -36,8 +36,8 @@ namespace BusinessLogicTest
 
             IList<Promocion> listaPromociones = _promocionLogic.listarTodasLasPromociones();
 
-            Assert.AreEqual(promo1.IdPromocion, listaPromociones.FirstOrDefault(x => x.IdPromocion == promo1.IdPromocion).IdPromocion);
-            Assert.AreEqual(promo2.IdPromocion, listaPromociones.FirstOrDefault(x => x.IdPromocion == promo2.IdPromocion).IdPromocion);
+            Assert.AreEqual(promo1.PromocionId, listaPromociones.FirstOrDefault(x => x.PromocionId == promo1.PromocionId).PromocionId);
+            Assert.AreEqual(promo2.PromocionId, listaPromociones.FirstOrDefault(x => x.PromocionId == promo2.PromocionId).PromocionId);
         }
 
         [TestMethod]
@@ -45,9 +45,9 @@ namespace BusinessLogicTest
         {
             _promocionLogic.AgregarPromocion(promo);
 
-            Promocion promoPorFind = _promocionLogic.buscarPromocionPorId(promo.IdPromocion);
+            Promocion promoPorFind = _promocionLogic.buscarPromocionPorId(promo.PromocionId);
 
-            Assert.AreEqual(promo.IdPromocion, promoPorFind.IdPromocion);
+            Assert.AreEqual(promo.PromocionId, promoPorFind.PromocionId);
         }
 
         [TestMethod]
@@ -63,9 +63,9 @@ namespace BusinessLogicTest
         {
             _promocionLogic.AgregarPromocion(promo);
 
-            _promocionLogic.EliminarPromocion(promo.IdPromocion);
+            _promocionLogic.EliminarPromocion(promo.PromocionId);
 
-            var promocionEliminada = _promocionLogic.buscarPromocionPorId(promo.IdPromocion);
+            var promocionEliminada = _promocionLogic.buscarPromocionPorId(promo.PromocionId);
 
             Assert.IsNull(promocionEliminada);
         }
@@ -81,7 +81,7 @@ namespace BusinessLogicTest
             DateTime fechaInicioActualizada = DateTime.Now;
             DateTime fechaFinActualizada = DateTime.Now.AddDays(16);
 
-            Promocion promoActualizada = new Promocion(promo.IdPromocion, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
+            Promocion promoActualizada = new Promocion(promo.PromocionId, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
 
             Promocion promoActualizdaRetorno = _promocionLogic.ActualizarInfoPromocion(promoActualizada);
 

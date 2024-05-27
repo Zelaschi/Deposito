@@ -13,7 +13,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            _clientes.RemoveAll(x => x.IdPersona == id);
+            _clientes.RemoveAll(x => x.PersonaId == id);
         }
 
         public Cliente? Find(Func<Cliente, bool> filter)
@@ -28,7 +28,7 @@ namespace Repository
 
         public Cliente? Update(Cliente clienteActualizado)
         {
-            Cliente clienteEncontrado = Find(x => x.IdPersona == clienteActualizado.IdPersona);
+            Cliente clienteEncontrado = Find(x => x.PersonaId == clienteActualizado.PersonaId);
 
             if (clienteEncontrado != null)
             {

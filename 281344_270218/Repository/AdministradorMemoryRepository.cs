@@ -28,7 +28,7 @@ namespace Repository
 
         public Administrador? Update(Administrador administradorActualizado)
         {
-            Administrador administradorEncontrado = Find(x => x.IdPersona == administradorActualizado.IdPersona);
+            Administrador administradorEncontrado = Find(x => x.PersonaId == administradorActualizado.PersonaId);
 
             if (administradorEncontrado != null)
             {

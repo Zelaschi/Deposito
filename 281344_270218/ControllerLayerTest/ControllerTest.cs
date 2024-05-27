@@ -407,7 +407,7 @@ namespace ControllerLayerTest
         public void RegistrarDepositoTest() {
             _controller.RegistrarDeposito(aDTODeposito);
 
-            Assert.AreEqual(aDTODeposito.Id, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).IdDeposito);
+            Assert.AreEqual(aDTODeposito.Id, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).DepositoId);
             Assert.AreEqual(aDTODeposito.Area, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Area);
             Assert.AreEqual(aDTODeposito.Tamanio, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Tamanio);
             Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
@@ -450,7 +450,7 @@ namespace ControllerLayerTest
 
             depo.AgregarPromocionADeposito(promo);
 
-            Assert.AreEqual(promo.IdPromocion, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.IdPromocion == promo.IdPromocion).IdPromocion);
+            Assert.AreEqual(promo.PromocionId, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.PromocionId == promo.PromocionId).PromocionId);
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -468,7 +468,7 @@ namespace ControllerLayerTest
             depo.AgregarPromocionADeposito(promo);
             depo.AgregarPromocionADeposito(promo);
 
-            Assert.AreEqual(promo.IdPromocion, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.IdPromocion == promo.IdPromocion).IdPromocion);
+            Assert.AreEqual(promo.PromocionId, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.PromocionId == promo.PromocionId).PromocionId);
         }
 
         [TestMethod]
@@ -532,7 +532,7 @@ namespace ControllerLayerTest
         {
             _controller.RegistrarPromocion(aDTOPromocion);
 
-            Assert.AreEqual(aDTOPromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).IdPromocion);
+            Assert.AreEqual(aDTOPromocion.IdPromocion, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).PromocionId);
             Assert.AreEqual(aDTOPromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).Etiqueta);
             Assert.AreEqual(aDTOPromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).PorcentajeDescuento);
             Assert.AreEqual(aDTOPromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion).FechaInicio);
@@ -582,8 +582,6 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-
-
         public void EliminarPromocionTest()
         {
             var DTOPromocion1 = new DTOPromocion(0, "etiqueta1", 20, DateTime.Today, DateTime.Today.AddDays(1));

@@ -29,7 +29,7 @@ namespace BusinessLogicTest
         {
             Administrador administradorRetorno = _administradorLogic.AsignarAdministrador(admin);
 
-            Assert.AreEqual(0, administradorRetorno.IdPersona);
+            Assert.AreEqual(0, administradorRetorno.PersonaId);
             Assert.AreEqual(admin.NombreYApellido, administradorRetorno.NombreYApellido);
             Assert.AreEqual(admin.Mail, administradorRetorno.Mail);
             Assert.AreEqual(admin.Password, administradorRetorno.Password);
@@ -66,7 +66,7 @@ namespace BusinessLogicTest
             _administradorLogic.AsignarAdministrador(admin);
             Administrador AdminRetorno = _administradorLogic.ObtenerAdministrador();
 
-            Assert.AreEqual(admin.IdPersona, AdminRetorno.IdPersona);
+            Assert.AreEqual(admin.PersonaId, AdminRetorno.PersonaId);
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]

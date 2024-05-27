@@ -24,7 +24,7 @@ namespace BusinessLogic
 
         public Reserva? BuscarReservaPorId(int id) 
         {
-            return _repository.Find(x => x.IdReserva == id);
+            return _repository.Find(x => x.ReservaId == id);
         }
 
         public void EliminarReserva(int id) 

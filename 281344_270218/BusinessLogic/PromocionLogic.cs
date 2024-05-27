@@ -23,7 +23,7 @@ namespace BusinessLogic
 
         public Promocion? buscarPromocionPorId(int IdParametro)
         {
-            return _repository.Find(x => x.IdPromocion == IdParametro);
+            return _repository.Find(x => x.PromocionId == IdParametro);
         }
 
         public void EliminarPromocion(int id)

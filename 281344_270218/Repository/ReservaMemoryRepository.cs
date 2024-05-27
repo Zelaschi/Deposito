@@ -14,7 +14,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            _reservas.RemoveAll(x => x.IdReserva == id);
+            _reservas.RemoveAll(x => x.ReservaId == id);
         }
 
         public Reserva? Find(Func<Reserva, bool> filter)
@@ -29,7 +29,7 @@ namespace Repository
 
         public Reserva? Update(Reserva reservaActualizada)
         {
-            Reserva reservaEncontrada = Find(x => x.IdReserva == reservaActualizada.IdReserva);
+            Reserva reservaEncontrada = Find(x => x.ReservaId == reservaActualizada.ReservaId);
 
             if (reservaEncontrada != null) {
                 reservaEncontrada.FechaDesde = reservaActualizada.FechaDesde;

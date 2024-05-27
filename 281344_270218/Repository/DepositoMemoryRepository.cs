@@ -14,7 +14,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            _depositos.RemoveAll(x => x.IdDeposito == id);
+            _depositos.RemoveAll(x => x.DepositoId == id);
         }
 
         public Deposito? Find(Func<Deposito, bool> filter)

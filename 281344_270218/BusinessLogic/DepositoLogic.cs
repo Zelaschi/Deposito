@@ -26,7 +26,7 @@ namespace BusinessLogic
 
         public Deposito? buscarDepositoPorId(int idParametro)
         {
-            return _repository.Find(x => x.IdDeposito ==  idParametro);
+            return _repository.Find(x => x.DepositoId ==  idParametro);
         }
 
         public void EliminarDeposito(int id)

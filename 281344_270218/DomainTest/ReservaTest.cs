@@ -101,7 +101,7 @@ namespace DomainTest
 
             Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(3), depositoTest, cliente);
 
-            Assert.AreEqual(reserva.PromocionAplicada.IdPromocion, promo3Test.IdPromocion);
+            Assert.AreEqual(reserva.PromocionAplicada.PromocionId, promo3Test.PromocionId);
         }
 
         [TestMethod]

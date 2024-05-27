@@ -123,7 +123,7 @@ namespace ControllerLayer
             {
                 Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
                 _depositoLogic.AddDeposito(aDeposito);
-                return aDeposito.IdDeposito;
+                return aDeposito.DepositoId;
             }
             catch (ArgumentException e) 
             {
@@ -152,7 +152,7 @@ namespace ControllerLayer
             List<DTODeposito> listaDTODepositos = new List<DTODeposito>();
             foreach (var deposito in listaDepositos)
             {
-                var DTODeposito = new DTODeposito(deposito.IdDeposito, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
+                var DTODeposito = new DTODeposito(deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
                 listaDTODepositos.Add(DTODeposito);
             }
             return listaDTODepositos;
@@ -167,7 +167,7 @@ namespace ControllerLayer
                 throw new Exception("Deposito no encontrado!");
             }
 
-            var DTODepositoRetorno = new DTODeposito(depositoEncontrado.IdDeposito, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
+            var DTODepositoRetorno = new DTODeposito(depositoEncontrado.DepositoId, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
 
             return DTODepositoRetorno;
         }
@@ -178,7 +178,7 @@ namespace ControllerLayer
 
             foreach (var reserva in Reservas)
             {
-                if (reserva.Deposito.IdDeposito == depositoEncontradoPorId.IdDeposito)
+                if (reserva.Deposito.DepositoId == depositoEncontradoPorId.DepositoId)
                 {
                     throw new Exception("No se puede eliminar un deposito que esta siendo utilizado para una reseva.");
                 }
@@ -189,7 +189,7 @@ namespace ControllerLayer
         {
             Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
             validarQueDepositoNoEsteAsociadoAReserva(DTODepositoParametro);
-            _depositoLogic.EliminarDeposito(depositoEncontradoPorId.IdDeposito);
+            _depositoLogic.EliminarDeposito(depositoEncontradoPorId.DepositoId);
         }
 
 
@@ -212,7 +212,7 @@ namespace ControllerLayer
             List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
             foreach (var promocion in listaPromocines)
             {
-                var DTOpromocion = new DTOPromocion(promocion.IdPromocion, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
+                var DTOpromocion = new DTOPromocion(promocion.PromocionId, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
                 listaDTOPromociones.Add(DTOpromocion);
             }
             return listaDTOPromociones;
@@ -223,7 +223,7 @@ namespace ControllerLayer
 
             foreach (var reserva in Reservas)
             {
-                if (reserva.PromocionAplicada.IdPromocion == promocionEncontradaPorId.IdPromocion) {
+                if (reserva.PromocionAplicada.PromocionId == promocionEncontradaPorId.PromocionId) {
                     throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");                
                 }
             }
@@ -233,7 +233,7 @@ namespace ControllerLayer
             Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
             validarQuePromocionNoEsteEnUso(DTOPromocionParametro);
 
-            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.IdPromocion);
+            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.PromocionId);
 
         }
 
@@ -246,7 +246,7 @@ namespace ControllerLayer
                 throw new Exception("Promocion no encontrada!");
             }
 
-            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.IdPromocion, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
+            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.PromocionId, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
 
             return DTOPromocionRetorno;
             
@@ -278,7 +278,7 @@ namespace ControllerLayer
                 Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
 
                 _reservaLogic.AgregarReserva(reservaAAgregar);
-                return reservaAAgregar.IdReserva;
+                return reservaAAgregar.ReservaId;
             }
             catch (ArgumentException e)
             { 
@@ -295,9 +295,9 @@ namespace ControllerLayer
             }
 
             DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
-            DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.IdDeposito, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
+            DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.DepositoId, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
 
-            DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.IdReserva, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
+            DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.ReservaId, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
             reservaRetorno.Estado = reservaEncontrada.Estado;
 
             return reservaRetorno; 
@@ -309,8 +309,8 @@ namespace ControllerLayer
             foreach (var reserva in Reservas)
             {
                 DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
                 reservaAuxiliar.Estado = reserva.Estado;
                 DTOReservas.Add(reservaAuxiliar);
             }
@@ -337,8 +337,8 @@ namespace ControllerLayer
                 if (reserva.Cliente.Mail.Equals(aDTOCliente.Mail))
                 {
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.IdDeposito, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.IdReserva, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
                     DTOReservas.Add(reservaAuxiliar);
                 }
             }

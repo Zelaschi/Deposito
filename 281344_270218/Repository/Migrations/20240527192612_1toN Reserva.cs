@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class primeraMigration : Migration
+    public partial class _1toNReserva : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,38 +13,39 @@ namespace Repository.Migrations
                 name: "Depositos",
                 columns: table => new
                 {
-                    IdDeposito = table.Column<int>(type: "int", nullable: false)
+                    DepositoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Area = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tamanio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tamanio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Climatizacion = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Depositos", x => x.IdDeposito);
+                    table.PrimaryKey("PK_Depositos", x => x.DepositoId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Persona",
                 columns: table => new
                 {
-                    IdPersona = table.Column<int>(type: "int", nullable: false)
+                    PersonaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreYApellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NombreYApellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Mail = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     tipoUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persona", x => x.IdPersona);
+                    table.PrimaryKey("PK_Persona", x => x.PersonaId);
+                    table.UniqueConstraint("AK_Persona_Mail", x => x.Mail);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Promociones",
                 columns: table => new
                 {
-                    IdPromocion = table.Column<int>(type: "int", nullable: false)
+                    PromocionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Etiqueta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PorcentajeDescuento = table.Column<int>(type: "int", nullable: false),
@@ -53,14 +54,14 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promociones", x => x.IdPromocion);
+                    table.PrimaryKey("PK_Promociones", x => x.PromocionId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Reservas",
                 columns: table => new
                 {
-                    IdReserva = table.Column<int>(type: "int", nullable: false)
+                    ReservaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FechaDesde = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaHasta = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -69,29 +70,28 @@ namespace Repository.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JustificacionRechazo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    PromocionAplicadaIdPromocion = table.Column<int>(type: "int", nullable: false)
+                    PromocionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservas", x => x.IdReserva);
+                    table.PrimaryKey("PK_Reservas", x => x.ReservaId);
                     table.ForeignKey(
                         name: "FK_Reservas_Depositos_DepositoId",
                         column: x => x.DepositoId,
                         principalTable: "Depositos",
-                        principalColumn: "IdDeposito",
+                        principalColumn: "DepositoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservas_Persona_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Persona",
-                        principalColumn: "IdPersona",
+                        principalColumn: "PersonaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reservas_Promociones_PromocionAplicadaIdPromocion",
-                        column: x => x.PromocionAplicadaIdPromocion,
+                        name: "FK_Reservas_Promociones_PromocionId",
+                        column: x => x.PromocionId,
                         principalTable: "Promociones",
-                        principalColumn: "IdPromocion",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PromocionId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -105,9 +105,9 @@ namespace Repository.Migrations
                 column: "DepositoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_PromocionAplicadaIdPromocion",
+                name: "IX_Reservas_PromocionId",
                 table: "Reservas",
-                column: "PromocionAplicadaIdPromocion");
+                column: "PromocionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
