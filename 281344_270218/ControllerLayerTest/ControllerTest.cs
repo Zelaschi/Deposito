@@ -3,6 +3,8 @@ using BusinessLogic;
 using Repository;
 using ControllerLayer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Repository.Context;
+using Repository.SQL;
 
 
 namespace ControllerLayerTest
@@ -11,9 +13,13 @@ namespace ControllerLayerTest
     public class ControllerTest
     {
         private Controller _controller;
+        private readonly DepositoContextFactory _contextFactory = new DepositoContextEnMemoria();
+        private DepositoContext _context;
+
 
         private ClienteLogic _clienteLogic;
-        private IRepository<Cliente> _clienteRepository;
+        private ClienteRepository _clienteRepository;
+
         private AdministradorLogic _administradorLogic;
         private IRepository<Administrador> _administradorRespository;
         private DepositoLogic _depositoLogic;
@@ -35,8 +41,11 @@ namespace ControllerLayerTest
 
         [TestInitialize]
         public void setUp() {
-            _clienteRepository = new ClienteMemoryRepository();
+            _context = _contextFactory.CrearContext();
+
+            _clienteRepository = new ClienteRepository(_context);
             _clienteLogic = new ClienteLogic(_clienteRepository);
+
             _administradorRespository = new AdministradorMemoryRepository();
             _administradorLogic = new AdministradorLogic(_administradorRespository);
             _depositoRespository = new DepositoMemoryRepository();
@@ -59,6 +68,8 @@ namespace ControllerLayerTest
         [TestCleanup]
         public void limpieza()
         {
+            _context.Database.EnsureDeleted();
+
             Deposito.UltimoID = 0;
             Reserva.UltimoID = 0;
             Persona.contadorID = 1;
@@ -67,7 +78,8 @@ namespace ControllerLayerTest
         [TestMethod]
         public void CrearControllerOkTest() 
         {
-            var clienteRepository = new ClienteMemoryRepository();
+            var clienteRepository = new ClienteRepository(_context);
+
             var clienteLogic = new ClienteLogic(clienteRepository);
             var administradorRespository = new AdministradorMemoryRepository();
             var administradorLogic = new AdministradorLogic(administradorRespository);

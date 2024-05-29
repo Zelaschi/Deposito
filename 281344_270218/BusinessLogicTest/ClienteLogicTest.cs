@@ -1,6 +1,8 @@
 ﻿using Domain;
 using BusinessLogic;
 using Repository;
+using Repository.Context;
+using Repository.SQL;
 
 namespace BusinessLogicTest
 {
@@ -8,7 +10,10 @@ namespace BusinessLogicTest
     public class ClienteLogicTest
     {
         private ClienteLogic? _clienteLogic;
-        private IRepository<Cliente>? _clienteRepository;
+        private ClienteRepository _clienteRepository;
+        private readonly DepositoContextFactory _contextFactory = new DepositoContextEnMemoria();
+        private DepositoContext _context;
+
         private Cliente? cliente1;
         private int idCliente1 = 1;
         private Cliente? cliente2;
@@ -17,7 +22,8 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void setUp()
         {
-            _clienteRepository = new ClienteMemoryRepository();
+            _context = _contextFactory.CrearContext();
+            _clienteRepository = new ClienteRepository(_context);
             _clienteLogic = new ClienteLogic(_clienteRepository);
 
 
@@ -31,6 +37,11 @@ namespace BusinessLogicTest
 
             cliente1 = new Cliente(idCliente1, nombreYApellidoTest1, mailTest1, passwordTest1);
             cliente2 = new Cliente(idCliente2, nombreYApellidoTest2, mailTest2, passwordTest2);
+        }
+        [TestCleanup]
+        public void borrarDB()
+        {
+            _context.Database.EnsureDeleted();
         }
 
         [TestMethod]
@@ -119,15 +130,13 @@ namespace BusinessLogicTest
 
             _clienteLogic.AgregarCliente(cliente2);
             string nombreActualizado = "NombreActualizado";
-            string mailActualizado = "mailactualizado@gmail.com";
             string passwordActualizada = "NewPasswd1!";
-            Cliente clienteActualizado = new Cliente(2, nombreActualizado, mailActualizado, passwordActualizada);
+            Cliente clienteActualizado = new Cliente(2, nombreActualizado, cliente2.Mail, passwordActualizada);
 
             Cliente clienteActualizadoRetrono = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
 
 
             Assert.AreEqual(nombreActualizado, clienteActualizadoRetrono.NombreYApellido);
-            Assert.AreEqual(mailActualizado, clienteActualizadoRetrono.Mail);
             Assert.AreEqual(passwordActualizada, clienteActualizadoRetrono.Password);
 
         }

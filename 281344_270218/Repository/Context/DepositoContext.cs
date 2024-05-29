@@ -1,7 +1,6 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using System.Runtime.Intrinsics.Arm;
+
 
 public class DepositoContext : DbContext
 {
@@ -11,10 +10,21 @@ public class DepositoContext : DbContext
     public DbSet<Reserva> Reservas { get; set; }
     public DbSet<DepositoPromocion> DepositoPromocions {get;set;}
 
+    public DepositoContext(DbContextOptions<DepositoContext> options) : base(options) {
+        if (!Database.IsInMemory()) 
+        {
+            Database.Migrate();
+        }
+
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //Fijarse que la base de datos este creada en DBeaver
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDBTest;User Id=sa;Password=Passw1rd;");
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDBTest;User Id=sa;Password=Passw1rd;");
+        }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

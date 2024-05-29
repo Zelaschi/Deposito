@@ -1,19 +1,22 @@
 ﻿using Repository;
 using Domain;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Repository.SQL;
 
 namespace BusinessLogic
 {
     public class ClienteLogic
     {
-        private readonly IRepository<Cliente> _repository;
+        private readonly ClienteRepository _repository;
 
-        public ClienteLogic(IRepository<Cliente> clienteRepository)
+        public ClienteLogic(ClienteRepository repositorio)
         {
-            _repository = clienteRepository;
+            _repository = repositorio;
         }
 
-        private void validarClienteMailNoRepetido(Cliente clienteParametro) {
-            if (_repository.Find(clienteBuscado => clienteBuscado.Mail == clienteParametro.Mail ) != null)
+        private void validarClienteMailNoRepetido(Cliente clienteParametro)
+        {
+            if (_repository.Find(clienteBuscado => clienteBuscado.Mail == clienteParametro.Mail) != null)
             {
                 throw new InvalidOperationException("Mail Repetido!");
             }
@@ -29,7 +32,8 @@ namespace BusinessLogic
             return _repository.FindAll();
         }
 
-        public Cliente? buscarClientePorId(int IdParametro) {
+        public Cliente? buscarClientePorId(int IdParametro)
+        {
             return _repository.Find(x => x.PersonaId == IdParametro);
         }
 
@@ -38,7 +42,8 @@ namespace BusinessLogic
             return _repository.Find(x => x.Mail.Equals(MailParametro));
         }
 
-        public void EliminarCliente(int id) {
+        public void EliminarCliente(int id)
+        {
             _repository.Delete(id);
         }
         public Cliente ActualizarInfoCliente(Cliente clienteActualizado)
@@ -46,7 +51,6 @@ namespace BusinessLogic
             return _repository.Update(clienteActualizado);
         }
 
-
-
     }
 }
+
