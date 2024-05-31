@@ -13,7 +13,7 @@ namespace Repository
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("No se puede eliminar el administrador!");
         }
 
         public Administrador? Find(Func<Administrador, bool> filter)

@@ -23,10 +23,12 @@
             }
         }
         private int _porcentajeDescuento;
+        private int minPorcentaje = 5;
+        private int maxPorcentaje = 75;
         public int PorcentajeDescuento { 
             get { return _porcentajeDescuento; } 
             set {
-                if (value < 5 || value > 75) {
+                if (value < minPorcentaje || value > maxPorcentaje) {
                     throw new ArgumentException("El porcentaje de descuento debe ser mayor a 5 y menor a 75");
                 }
                 _porcentajeDescuento = value;

@@ -49,7 +49,7 @@
         }
         public bool Climatizacion { get; set; }
 
-        public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
+        private List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
 
         public Deposito(string area, string tamanio, bool climatizacion)

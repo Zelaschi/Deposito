@@ -462,7 +462,7 @@ namespace ControllerLayerTest
 
             depo.AgregarPromocionADeposito(promo);
 
-            Assert.AreEqual(promo.PromocionId, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.PromocionId == promo.PromocionId).PromocionId);
+            Assert.AreEqual(promo.PromocionId, depo.mejorPromocionHoy().PromocionId);
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -480,7 +480,7 @@ namespace ControllerLayerTest
             depo.AgregarPromocionADeposito(promo);
             depo.AgregarPromocionADeposito(promo);
 
-            Assert.AreEqual(promo.PromocionId, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.PromocionId == promo.PromocionId).PromocionId);
+         
         }
 
         [TestMethod]
