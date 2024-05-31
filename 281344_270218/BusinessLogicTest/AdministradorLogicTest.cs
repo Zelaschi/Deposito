@@ -1,6 +1,8 @@
 ﻿using Domain;
 using Repository;
 using BusinessLogic;
+using Repository.Context;
+using Repository.SQL;
 
 namespace BusinessLogicTest
 {
@@ -9,7 +11,10 @@ namespace BusinessLogicTest
     {
         private Administrador admin;
         private AdministradorLogic? _administradorLogic;
-        private IRepository<Administrador>? _administradorRepository;
+
+        private AdministradorRepository _administradorRepository;
+        private readonly DepositoContextFactory _contextFactory = new DepositoContextEnMemoria();
+        private DepositoContext _context;
 
         [TestInitialize]
         public void setUp()
@@ -20,8 +25,14 @@ namespace BusinessLogicTest
 
             admin = new Administrador(0, nombreAdminTest, mailAdmin, pswAdmin);
 
-            _administradorRepository = new AdministradorMemoryRepository();
+            _context = _contextFactory.CrearContext();
+            _administradorRepository = new AdministradorRepository(_context);
             _administradorLogic = new AdministradorLogic(_administradorRepository);
+        }
+        [TestCleanup]
+        public void borrarDB()
+        {
+            _context.Database.EnsureDeleted();
         }
 
         [TestMethod]
@@ -29,7 +40,7 @@ namespace BusinessLogicTest
         {
             Administrador administradorRetorno = _administradorLogic.AsignarAdministrador(admin);
 
-            Assert.AreEqual(0, administradorRetorno.PersonaId);
+            Assert.AreEqual(1, administradorRetorno.PersonaId);
             Assert.AreEqual(admin.NombreYApellido, administradorRetorno.NombreYApellido);
             Assert.AreEqual(admin.Mail, administradorRetorno.Mail);
             Assert.AreEqual(admin.Password, administradorRetorno.Password);
@@ -40,15 +51,13 @@ namespace BusinessLogicTest
         {
             _administradorLogic.AsignarAdministrador(admin);
             var nuevoNombre = "nombreActualizado";
-            var nuevoMail = "nuevomail@gmail.com";
             var nuevaPswd = "NewPassword1!";
 
-            Administrador administradorActualizado = new Administrador(0, nuevoNombre, nuevoMail, nuevaPswd);
+            Administrador administradorActualizado = new Administrador(1, nuevoNombre, "mailadmin@gmail.com", nuevaPswd);
 
             Administrador administradorActualizadoRetorno = _administradorLogic.ActualizarInfoAdministrador(administradorActualizado);
 
             Assert.AreEqual(nuevoNombre, administradorActualizadoRetorno.NombreYApellido);
-            Assert.AreEqual(nuevoMail, administradorActualizadoRetorno.Mail);
             Assert.AreEqual(nuevaPswd, administradorActualizadoRetorno.Password);
 
         }

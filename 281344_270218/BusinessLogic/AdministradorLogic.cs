@@ -1,13 +1,14 @@
 ﻿using Domain;
 using Repository;
+using Repository.SQL;
 
 namespace BusinessLogic
 {
     public class AdministradorLogic
     {
-        private IRepository<Administrador> _repository;
-        public AdministradorLogic(IRepository<Administrador> administradorRepository) {
-            _repository = administradorRepository;
+        private readonly AdministradorRepository _repository;
+        public AdministradorLogic(AdministradorRepository repositorio) {
+            _repository = repositorio;
         }
         public Administrador AsignarAdministrador(Administrador admin)
         {
