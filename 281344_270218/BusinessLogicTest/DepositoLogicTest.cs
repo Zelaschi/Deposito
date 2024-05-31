@@ -72,10 +72,10 @@ namespace BusinessLogicTest
             Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
             Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
 
-            IList<Deposito> resultDeposito = _depositoLogic.GetAll();
+            IList<Deposito> depositos = _depositoLogic.GetAll();
 
-            Assert.AreEqual(deposito1.DepositoId, resultDeposito.FirstOrDefault(x => x.DepositoId == 1).DepositoId);
-            Assert.AreEqual(deposito2.DepositoId, resultDeposito.FirstOrDefault(x => x.DepositoId == 2).DepositoId);
+            Assert.AreEqual(deposito1.DepositoId, depositos.FirstOrDefault(x => x.DepositoId == 1).DepositoId);
+            Assert.AreEqual(deposito2.DepositoId, depositos.FirstOrDefault(x => x.DepositoId == 2).DepositoId);
         }
 
         [TestMethod]

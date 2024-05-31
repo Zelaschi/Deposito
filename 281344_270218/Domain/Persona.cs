@@ -41,13 +41,13 @@ namespace Domain
             get { return _mail; }
             set
             {
-                string pattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+                string patronMailCorrecto = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
                 if (noVacioONull(value))
                 {
                     throw new CampoNoPuedeSerVacioNiNull("NombreYApellido no puede ser vacio ni null");
 
                 }
-                else if (Regex.IsMatch(value, pattern))
+                else if (Regex.IsMatch(value, patronMailCorrecto))
                 {
                     _mail = value;
                 }
@@ -64,13 +64,13 @@ namespace Domain
             get { return _password; }
             set
             {
-                string pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+                string patronContraseniaCorrecta = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
                 if (noVacioONull(value))
                 {
                     throw new CampoNoPuedeSerVacioNiNull("Password no puede ser vacio ni null");
                 }
-                else if (Regex.IsMatch(value, pattern))
+                else if (Regex.IsMatch(value, patronContraseniaCorrecta))
                 {
                     _password = value;
                 }

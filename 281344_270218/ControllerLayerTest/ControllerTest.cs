@@ -19,9 +19,9 @@ namespace ControllerLayerTest
 
         private ClienteLogic _clienteLogic;
         private ClienteRepository _clienteRepository;
-
         private AdministradorLogic _administradorLogic;
-        private IRepository<Administrador> _administradorRespository;
+        private AdministradorRepository _administradorRespository;
+
         private DepositoLogic _depositoLogic;
         private IRepository<Deposito> _depositoRespository;
         private PromocionLogic _promocionLogic;
@@ -45,9 +45,9 @@ namespace ControllerLayerTest
 
             _clienteRepository = new ClienteRepository(_context);
             _clienteLogic = new ClienteLogic(_clienteRepository);
-
-            _administradorRespository = new AdministradorMemoryRepository();
+            _administradorRespository = new AdministradorRepository(_context);
             _administradorLogic = new AdministradorLogic(_administradorRespository);
+
             _depositoRespository = new DepositoMemoryRepository();
             _depositoLogic = new DepositoLogic(_depositoRespository);
             _promocionRespository = new PromocionMemoryRepository();
@@ -79,10 +79,10 @@ namespace ControllerLayerTest
         public void CrearControllerOkTest() 
         {
             var clienteRepository = new ClienteRepository(_context);
-
             var clienteLogic = new ClienteLogic(clienteRepository);
-            var administradorRespository = new AdministradorMemoryRepository();
+            var administradorRespository = new AdministradorRepository(_context);
             var administradorLogic = new AdministradorLogic(administradorRespository);
+
             var depositoRespository = new DepositoMemoryRepository();
             var depositoLogic = new DepositoLogic(depositoRespository);
             var promocionRespository = new PromocionMemoryRepository();
@@ -462,7 +462,7 @@ namespace ControllerLayerTest
 
             depo.AgregarPromocionADeposito(promo);
 
-            Assert.AreEqual(promo.PromocionId, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.PromocionId == promo.PromocionId).PromocionId);
+            Assert.AreEqual(promo.PromocionId, depo.mejorPromocionHoy().PromocionId);
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -480,7 +480,7 @@ namespace ControllerLayerTest
             depo.AgregarPromocionADeposito(promo);
             depo.AgregarPromocionADeposito(promo);
 
-            Assert.AreEqual(promo.PromocionId, depo.listaPromocionesQueAplicanADeposito.FirstOrDefault(x => x.PromocionId == promo.PromocionId).PromocionId);
+         
         }
 
         [TestMethod]
