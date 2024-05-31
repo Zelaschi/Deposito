@@ -1,6 +1,8 @@
 ﻿using Domain;
 using BusinessLogic;
 using Repository;
+using Repository.Context;
+using Repository.SQL;
 
 namespace BusinessLogicTest
 {
@@ -8,17 +10,28 @@ namespace BusinessLogicTest
     public class PromocionLogicTest
     {
         private PromocionLogic? _promocionLogic;
-        private IRepository<Promocion>? _promocionRepository;
+        private PromocionRepository? _promocionRepository;
+        private readonly DepositoContextFactory _contextFactory = new DepositoContextEnMemoria();
+        private DepositoContext _context; 
         private Promocion promo;
 
         [TestInitialize]
         public void setUp()
         {
-            _promocionRepository = new PromocionMemoryRepository();
+            _context = _contextFactory.CrearContext();
+            _promocionRepository = new PromocionRepository(_context);
             _promocionLogic = new PromocionLogic(_promocionRepository);
+          
 
-            promo = new Promocion(0, "Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
+            promo = new Promocion("Promo",20,DateTime.Now, DateTime.Now.AddDays(10));
         }
+
+        [TestCleanup]
+        public void borrarDB()
+        {
+            _context.Database.EnsureDeleted();
+        }
+
         [TestMethod]
         public void AgregarPromocionTest() {
             Promocion retorno = _promocionLogic.AgregarPromocion(promo);
@@ -81,7 +94,7 @@ namespace BusinessLogicTest
             DateTime fechaInicioActualizada = DateTime.Now;
             DateTime fechaFinActualizada = DateTime.Now.AddDays(16);
 
-            Promocion promoActualizada = new Promocion(promo.PromocionId, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
+            Promocion promoActualizada = new Promocion(1, etiquetaActualizada, porcentajeActualizado, fechaInicioActualizada, fechaFinActualizada);
 
             Promocion promoActualizdaRetorno = _promocionLogic.ActualizarInfoPromocion(promoActualizada);
 

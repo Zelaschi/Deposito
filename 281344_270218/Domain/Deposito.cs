@@ -6,7 +6,7 @@
         public IList<Reserva> Reservas { get; set; }
 
         public int DepositoId { get; set; }
-        public static int UltimoID { get; set; } = 0;
+
         private string _area;
         public string? Area
         {
@@ -54,10 +54,10 @@
 
         public Deposito(string area, string tamanio, bool climatizacion)
         {
+            DepositoId = 0;
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
-            DepositoId = ++UltimoID;
         }
 
         

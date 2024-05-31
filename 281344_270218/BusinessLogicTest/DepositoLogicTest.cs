@@ -1,7 +1,8 @@
 ﻿using Domain;
 using Repository;
 using BusinessLogic;
-
+using Repository.Context;
+using Repository.SQL;
 
 namespace BusinessLogicTest
 {
@@ -9,7 +10,10 @@ namespace BusinessLogicTest
     public class DepositoLogicTest
     {
         private DepositoLogic? _depositoLogic;
-        private IRepository<Deposito>? _depositoRepository;
+        private DepositoRepository _depositoRepository;
+        private readonly DepositoContextFactory _contextFactory = new DepositoContextEnMemoria();
+        private DepositoContext _context;
+
         private Deposito? deposito1;
         private Deposito? deposito2;
 
@@ -18,7 +22,8 @@ namespace BusinessLogicTest
 
         public void setup ()
         {
-            _depositoRepository = new DepositoMemoryRepository();
+            _context = _contextFactory.CrearContext();
+            _depositoRepository = new DepositoRepository(_context);
             _depositoLogic = new DepositoLogic(_depositoRepository);
 
             var area1 = "A";
@@ -35,7 +40,7 @@ namespace BusinessLogicTest
         [TestCleanup]
         public void clear() 
         {
-            Deposito.UltimoID = 0;
+            _context.Database.EnsureDeleted();
         }
 
         [TestMethod]

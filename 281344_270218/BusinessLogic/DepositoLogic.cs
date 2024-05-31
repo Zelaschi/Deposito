@@ -1,17 +1,18 @@
 ﻿
 using Repository;
 using Domain;
-
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Repository.SQL;
 
 namespace BusinessLogic
 {
     public class DepositoLogic
     {
-        public readonly IRepository<Deposito> _repository;
+        public readonly DepositoRepository _repository;
 
-        public DepositoLogic(IRepository<Deposito> DepositoRepository)
+        public DepositoLogic(DepositoRepository repositorio)
         {
-            _repository = DepositoRepository;
+            _repository = repositorio;
         }
 
         public Deposito AddDeposito(Deposito deposito) 

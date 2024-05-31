@@ -5,7 +5,6 @@
         public IList<DepositoPromocion> DepositoPromocions { get; set; }
         public IList<Reserva> Reservas { get; set; }
 
-        public static int contadorPromo = 0;
         public int PromocionId { get; set; }
         private string _etiqueta;
         public string Etiqueta {
@@ -46,8 +45,7 @@
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            PromocionId = contadorPromo;
-            contadorPromo++;
+            PromocionId = 0;
             Etiqueta = etiqueta;
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;

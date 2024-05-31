@@ -1,13 +1,14 @@
 ﻿using Repository;
 using Domain;
+using Repository.SQL;
 
 namespace BusinessLogic
 {
     public class PromocionLogic
     {
-        private readonly IRepository<Promocion> _repository;
+        private readonly PromocionRepository _repository;
 
-        public PromocionLogic(IRepository<Promocion> promocionRepository)
+        public PromocionLogic(PromocionRepository promocionRepository)
         {
             _repository = promocionRepository;
         }
