@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using System.Runtime.Intrinsics.Arm;
+
+namespace Domain
 {
     public class Deposito
     {
@@ -49,7 +51,7 @@
         }
         public bool Climatizacion { get; set; }
 
-        private List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
+        //private List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
 
         public Deposito(string area, string tamanio, bool climatizacion)
@@ -58,32 +60,61 @@
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
+            DepositoPromocions = new List<DepositoPromocion>();
         }
 
-        
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
         {
-            if (listaPromocionesQueAplicanADeposito.Contains(promoParametro))
+            if (DepositoPromocions.Any(dp => dp.PromocionId == promoParametro.PromocionId))
             {
                 throw new InvalidOperationException("El elemento ya existe en la lista.");
             }
 
-            listaPromocionesQueAplicanADeposito.Add(promoParametro);
+            DepositoPromocions.Add(new DepositoPromocion { DepositoId = this.DepositoId, Promocion = promoParametro });
             return promoParametro;
         }
-        public Promocion? mejorPromocionHoy() {
+
+        public Promocion? mejorPromocionHoy()
+        {
             int mejorDescuento = 0;
             Promocion mejorPromocion = null;
 
-            foreach (var promocion in listaPromocionesQueAplicanADeposito) 
+            foreach (var depositoPromocion in DepositoPromocions)
             {
-                if (promocion.PorcentajeDescuento > mejorDescuento) {
+                var promocion = depositoPromocion.Promocion;
+                if (promocion.PorcentajeDescuento > mejorDescuento)
+                {
                     mejorDescuento = promocion.PorcentajeDescuento;
                     mejorPromocion = promocion;
                 }
             }
             return mejorPromocion;
         }
+
+        //public Promocion AgregarPromocionADeposito(Promocion promoParametro)
+        //{
+        //    if (listaPromocionesQueAplicanADeposito.Contains(promoParametro))
+        //    {
+        //        throw new InvalidOperationException("El elemento ya existe en la lista.");
+        //    }
+
+        //    listaPromocionesQueAplicanADeposito.Add(promoParametro);
+        //    return promoParametro;
+        //}
+
+        //public Promocion? mejorPromocionHoy() {
+        //    int mejorDescuento = 0;
+        //    Promocion mejorPromocion = null;
+
+        //    foreach (var promocion in listaPromocionesQueAplicanADeposito) 
+        //    {
+        //        if (promocion.PorcentajeDescuento > mejorDescuento) {
+        //            mejorDescuento = promocion.PorcentajeDescuento;
+        //            mejorPromocion = promocion;
+        //        }
+        //    }
+        //    return mejorPromocion;
+        //}
 
 
     }

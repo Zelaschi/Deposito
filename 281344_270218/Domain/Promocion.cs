@@ -52,6 +52,7 @@
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;
             FechaFin = fechaFin;
+            DepositoPromocions = new List<DepositoPromocion>();
         }
         public Promocion(int id, string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
         {
@@ -63,6 +64,7 @@
             PorcentajeDescuento = porcentajeDescuento;
             FechaInicio = fechaInicio;
             FechaFin = fechaFin;
+            DepositoPromocions = new List<DepositoPromocion>();
         }
     }
 }
