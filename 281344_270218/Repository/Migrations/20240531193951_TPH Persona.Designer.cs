@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240527192612_1toN Reserva")]
-    partial class _1toNReserva
+    [Migration("20240531193951_TPH Persona")]
+    partial class TPHPersona
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,21 @@ namespace Repository.Migrations
                     b.HasKey("DepositoId");
 
                     b.ToTable("Depositos");
+                });
+
+            modelBuilder.Entity("Domain.DepositoPromocion", b =>
+                {
+                    b.Property<int>("PromocionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepositoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PromocionId", "DepositoId");
+
+                    b.HasIndex("DepositoId");
+
+                    b.ToTable("DepositoPromocions");
                 });
 
             modelBuilder.Entity("Domain.Persona", b =>
@@ -164,6 +179,25 @@ namespace Repository.Migrations
                     b.HasDiscriminator().HasValue("Cliente");
                 });
 
+            modelBuilder.Entity("Domain.DepositoPromocion", b =>
+                {
+                    b.HasOne("Domain.Deposito", "Deposito")
+                        .WithMany("DepositoPromocions")
+                        .HasForeignKey("DepositoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Promocion", "Promocion")
+                        .WithMany("DepositoPromocions")
+                        .HasForeignKey("PromocionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deposito");
+
+                    b.Navigation("Promocion");
+                });
+
             modelBuilder.Entity("Domain.Reserva", b =>
                 {
                     b.HasOne("Domain.Cliente", "Cliente")
@@ -191,11 +225,15 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Deposito", b =>
                 {
+                    b.Navigation("DepositoPromocions");
+
                     b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("Domain.Promocion", b =>
                 {
+                    b.Navigation("DepositoPromocions");
+
                     b.Navigation("Reservas");
                 });
 

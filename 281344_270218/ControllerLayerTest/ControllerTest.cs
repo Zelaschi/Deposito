@@ -716,6 +716,7 @@ namespace ControllerLayerTest
             aDTOPromocion.IdPromocion = 0;
             _controller.RegistrarPromocion(aDTOPromocion);
             _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarCliente(aDTOCliente);
             _controller.AgregarPromocionADeposito(aDTOPromocion, aDTODeposito);
             _controller.RegistrarReserva(aDTOReserva);
             _controller.ElminarPromocion(aDTOPromocion);

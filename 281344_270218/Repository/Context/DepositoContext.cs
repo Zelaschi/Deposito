@@ -4,12 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 public class DepositoContext : DbContext
 {
-    public DbSet<Cliente> Clientes { get; set; }
+    public DbSet<Persona> Personas { get; set; }
     public DbSet<Deposito> Depositos { get; set; }
     public DbSet<Promocion> Promociones { get; set; }
     public DbSet<Reserva> Reservas { get; set; }
     public DbSet<DepositoPromocion> DepositoPromocions {get;set;}
 
+    public DepositoContext() 
+    {
+    }
     public DepositoContext(DbContextOptions<DepositoContext> options) : base(options) {
         if (!Database.IsInMemory()) 
         {
@@ -19,12 +22,9 @@ public class DepositoContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        //Fijarse que la base de datos este creada en DBeaver
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDBTest;User Id=sa;Password=Passw1rd;");
-        }
+    {       
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDBTest;User Id=sa;Password=Passw1rd;");
+       
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

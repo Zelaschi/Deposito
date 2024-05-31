@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Linq;
 
 namespace Repository.SQL
 {
@@ -13,26 +14,26 @@ namespace Repository.SQL
 
         public Cliente Add(Cliente cliente)
         {
-            _repositorio.Clientes.Add(cliente);
+            _repositorio.Personas.Add(cliente);
             _repositorio.SaveChanges();
-            return _repositorio.Clientes.FirstOrDefault(c => c.Mail == cliente.Mail);
+            return _repositorio.Personas.OfType<Cliente>().FirstOrDefault(c => c.Mail == cliente.Mail);
         }
 
         public void Delete(int id)
         {
-            Cliente clienteABorrar = _repositorio.Clientes.FirstOrDefault(c => c.PersonaId == id);
-            _repositorio.Clientes.Remove(clienteABorrar);
+            Cliente clienteABorrar = _repositorio.Personas.OfType<Cliente>().FirstOrDefault(c => c.PersonaId == id);
+            _repositorio.Personas.Remove(clienteABorrar);
             _repositorio.SaveChanges();
         }
 
         public Cliente? Find(Func<Cliente, bool> filter)
         {
-            return _repositorio.Clientes.FirstOrDefault(filter);
+            return _repositorio.Personas.OfType<Cliente>().FirstOrDefault(filter);
         }
 
         public IList<Cliente> FindAll()
         {
-            return _repositorio.Clientes.ToList();
+            return _repositorio.Personas.OfType<Cliente>().ToList();
         }
 
         public Cliente? Update(Cliente clienteActualizado)

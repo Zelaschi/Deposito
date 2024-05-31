@@ -92,7 +92,7 @@ namespace Domain
         }
         public Persona(string nombreyApellido, string mail, string password)
         {
-            PersonaId = contadorID;
+            PersonaId = 0;
             contadorID++;
             NombreYApellido = nombreyApellido;
             Mail = mail;

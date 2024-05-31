@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class _1toNReserva : Migration
+    public partial class TPHPersona : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,30 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DepositoPromocions",
+                columns: table => new
+                {
+                    DepositoId = table.Column<int>(type: "int", nullable: false),
+                    PromocionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepositoPromocions", x => new { x.PromocionId, x.DepositoId });
+                    table.ForeignKey(
+                        name: "FK_DepositoPromocions_Depositos_DepositoId",
+                        column: x => x.DepositoId,
+                        principalTable: "Depositos",
+                        principalColumn: "DepositoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DepositoPromocions_Promociones_PromocionId",
+                        column: x => x.PromocionId,
+                        principalTable: "Promociones",
+                        principalColumn: "PromocionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reservas",
                 columns: table => new
                 {
@@ -95,6 +119,11 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_DepositoPromocions_DepositoId",
+                table: "DepositoPromocions",
+                column: "DepositoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservas_ClienteId",
                 table: "Reservas",
                 column: "ClienteId");
@@ -112,6 +141,9 @@ namespace Repository.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DepositoPromocions");
+
             migrationBuilder.DropTable(
                 name: "Reservas");
 

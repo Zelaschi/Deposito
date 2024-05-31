@@ -12,7 +12,6 @@ namespace Repository.Context
         public DepositoContext CrearContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DepositoContext>();
-            optionsBuilder.UseInMemoryDatabase("TestDB");
             return new DepositoContext(optionsBuilder.Options);
 
         }

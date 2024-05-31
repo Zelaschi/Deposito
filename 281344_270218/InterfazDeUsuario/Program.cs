@@ -4,6 +4,7 @@ using Repository;
 using BusinessLogic;
 using Domain;
 using ControllerLayer;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,12 @@ builder.Services.AddSingleton<AdministradorLogic>();
 builder.Services.AddSingleton<ReservaLogic>();
 builder.Services.AddSingleton<Controller>();
 builder.Services.AddSingleton<DTOSesion>();
+
+builder.Services.AddDbContextFactory<DepositoContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        providerOptions => providerOptions.EnableRetryOnFailure())
+    );
 
 
 var app = builder.Build();

@@ -35,8 +35,8 @@ namespace BusinessLogicTest
             var mailTest2 = "pedroazambuja@gmail.com";
             var passwordTest2 = "Password1!";
 
-            cliente1 = new Cliente(idCliente1, nombreYApellidoTest1, mailTest1, passwordTest1);
-            cliente2 = new Cliente(idCliente2, nombreYApellidoTest2, mailTest2, passwordTest2);
+            cliente1 = new Cliente(0, nombreYApellidoTest1, mailTest1, passwordTest1);
+            cliente2 = new Cliente(0, nombreYApellidoTest2, mailTest2, passwordTest2);
         }
         [TestCleanup]
         public void borrarDB()
@@ -131,7 +131,7 @@ namespace BusinessLogicTest
             _clienteLogic.AgregarCliente(cliente2);
             string nombreActualizado = "NombreActualizado";
             string passwordActualizada = "NewPasswd1!";
-            Cliente clienteActualizado = new Cliente(2, nombreActualizado, cliente2.Mail, passwordActualizada);
+            Cliente clienteActualizado = new Cliente(1, nombreActualizado, cliente2.Mail, passwordActualizada);
 
             Cliente clienteActualizadoRetrono = _clienteLogic.ActualizarInfoCliente(clienteActualizado);
 
