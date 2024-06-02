@@ -76,8 +76,12 @@ namespace DomainTest
         {
             Deposito depositoTest = new Deposito("A", "Grande", true);
             Promocion promo1Test = new Promocion("etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(10));
+            promo1Test.PromocionId = 1;
             Promocion promo2Test = new Promocion("etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(10));
+            promo2Test.PromocionId = 2;
             Promocion promo3Test = new Promocion("etiqueta", 70, DateTime.Today, DateTime.Today.AddDays(10));
+            promo3Test.PromocionId = 3;
+
 
             depositoTest.AgregarPromocionADeposito(promo1Test);
             depositoTest.AgregarPromocionADeposito(promo2Test);
@@ -92,8 +96,11 @@ namespace DomainTest
         {
             Deposito depositoTest = new Deposito("A", "Grande", true);
             Promocion promo1Test = new Promocion("etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(10));
+            promo1Test.PromocionId = 1;
             Promocion promo2Test = new Promocion("etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(10));
+            promo2Test.PromocionId = 2;
             Promocion promo3Test = new Promocion("etiqueta", 70, DateTime.Today, DateTime.Today.AddDays(10));
+            promo3Test.PromocionId = 3;
 
             depositoTest.AgregarPromocionADeposito(promo1Test);
             depositoTest.AgregarPromocionADeposito(promo2Test);
