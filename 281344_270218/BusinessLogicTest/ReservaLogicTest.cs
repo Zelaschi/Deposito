@@ -1,6 +1,9 @@
 ﻿using Domain;
 using BusinessLogic;
 using Repository;
+using Repository.SQL;
+using Repository.Context;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 namespace BusinessLogicTest
@@ -9,31 +12,35 @@ namespace BusinessLogicTest
     public class ReservaLogicTest
     {
         private ReservaLogic? _reservaLogic;
-        private IRepository<Reserva> _reservaRepository;
+        private ReservaRepository _reservaRepository;
+        private readonly DepositoContextFactory _contextFactory = new DepositoContextEnMemoria();
+        private DepositoContext _context;
+
+
         private Reserva? reserva;
         private int idReserva = 1;
         private Deposito? deposito;
         private Cliente? cliente;
-        private int idCliente = 1;
 
 
         [TestInitialize]
 
         public void setUp()
         {
-            _reservaRepository = new ReservaMemoryRepository();
+            _context = _contextFactory.CrearContext();
+            _reservaRepository = new ReservaRepository(_context);
             _reservaLogic = new ReservaLogic(_reservaRepository);
 
             
             deposito = new Deposito("A", "Pequenio", true);
-            cliente = new Cliente(idCliente, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
+            cliente = new Cliente(0, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
             reserva = new Reserva( DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
         }
 
         [TestCleanup]
         public void limpieza()
         {
-            Reserva.UltimoID = 0;
+            _context.Database.EnsureDeleted();
         }
 
         [TestMethod]

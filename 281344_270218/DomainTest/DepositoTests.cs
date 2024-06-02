@@ -14,7 +14,7 @@ namespace DomainTest
         [TestCleanup]
         public void limpieza()
         {
-            Deposito.UltimoID = 0;
+            //Deposito.UltimoID = 0;
         }
 
         [TestMethod]

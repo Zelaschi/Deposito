@@ -1,15 +1,16 @@
 ﻿using Repository;
 using Domain;
+using Repository.SQL;
 
 namespace BusinessLogic
 {
     public class ReservaLogic
     {
-        private readonly IRepository<Reserva> _repository;
+        private readonly ReservaRepository _repository;
 
-        public ReservaLogic(IRepository<Reserva> reservaRepository)
+        public ReservaLogic(ReservaRepository repositorio)
         {
-            _repository = reservaRepository;
+            _repository = repositorio;
         }
 
         public Reserva AgregarReserva(Reserva reserva)

@@ -2,7 +2,6 @@
 {
     public class Reserva
     {
-        public static int UltimoID { get; set; } = 0;
         public int ReservaId { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
@@ -44,7 +43,7 @@
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            ReservaId = ++UltimoID;
+            ReservaId = 0;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
             DepositoId = deposito.DepositoId;
@@ -112,7 +111,7 @@
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
-            ReservaId = ++UltimoID;
+            ReservaId = 0;
             FechaDesde = fechaDesde;
             FechaHasta = fechaHasta;
             DepositoId = deposito.DepositoId;
