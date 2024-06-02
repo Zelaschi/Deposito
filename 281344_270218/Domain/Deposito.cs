@@ -51,7 +51,6 @@ namespace Domain
         }
         public bool Climatizacion { get; set; }
 
-        //private List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
 
         public Deposito(string area, string tamanio, bool climatizacion)
@@ -90,31 +89,6 @@ namespace Domain
             }
             return mejorPromocion;
         }
-
-        //public Promocion AgregarPromocionADeposito(Promocion promoParametro)
-        //{
-        //    if (listaPromocionesQueAplicanADeposito.Contains(promoParametro))
-        //    {
-        //        throw new InvalidOperationException("El elemento ya existe en la lista.");
-        //    }
-
-        //    listaPromocionesQueAplicanADeposito.Add(promoParametro);
-        //    return promoParametro;
-        //}
-
-        //public Promocion? mejorPromocionHoy() {
-        //    int mejorDescuento = 0;
-        //    Promocion mejorPromocion = null;
-
-        //    foreach (var promocion in listaPromocionesQueAplicanADeposito) 
-        //    {
-        //        if (promocion.PorcentajeDescuento > mejorDescuento) {
-        //            mejorDescuento = promocion.PorcentajeDescuento;
-        //            mejorPromocion = promocion;
-        //        }
-        //    }
-        //    return mejorPromocion;
-        //}
 
 
     }
