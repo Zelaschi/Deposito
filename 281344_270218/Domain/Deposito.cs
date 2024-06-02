@@ -65,12 +65,12 @@ namespace Domain
 
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
         {
-            if (DepositoPromocions.Any(dp => dp.PromocionId == promoParametro.PromocionId))
+            if (DepositoPromocions.FirstOrDefault(dp => dp.PromocionId == promoParametro.PromocionId) !=null)
             {
                 throw new InvalidOperationException("El elemento ya existe en la lista.");
             }
 
-            DepositoPromocions.Add(new DepositoPromocion { DepositoId = this.DepositoId, Promocion = promoParametro });
+            DepositoPromocions.Add(new DepositoPromocion { Deposito = this, DepositoId = this.DepositoId, Promocion = promoParametro , PromocionId = promoParametro.PromocionId});
             return promoParametro;
         }
 

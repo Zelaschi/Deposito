@@ -3,7 +3,7 @@ namespace ControllerLayer
 {
     public class DTOPromocion
     {
-        public int IdPromocion { get; set; }
+        public int PromocionId { get; set; }
         public string Etiqueta { get; set; }
         public int PorcentajeDescuento { get; set; }
         public DateTime FechaInicio { get; set; }
@@ -11,7 +11,7 @@ namespace ControllerLayer
         
         public DTOPromocion (int aId, string aEtiqueta, int aPorcentajeDescuento, DateTime aFechaInicio, DateTime aFechaFin)
         {
-            IdPromocion = aId;
+            PromocionId = aId;
             Etiqueta = aEtiqueta;
             PorcentajeDescuento = aPorcentajeDescuento;
             FechaInicio = aFechaInicio;

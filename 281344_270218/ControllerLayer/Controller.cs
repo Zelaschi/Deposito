@@ -134,7 +134,7 @@ namespace ControllerLayer
         {
             try
             {
-                Promocion aPromocion = _promocionLogic.buscarPromocionPorId(aDTOPromocion.IdPromocion);
+                Promocion aPromocion = _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId);
                 Deposito aDeposito = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
                 aDeposito.AgregarPromocionADeposito(aPromocion);
             }
@@ -191,12 +191,13 @@ namespace ControllerLayer
         }
 
 
-        public void RegistrarPromocion(DTOPromocion aDTOPromocion)
+        public int RegistrarPromocion(DTOPromocion aDTOPromocion)
         {
             try
             {
                 Promocion aPromocion = new Promocion(aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
                 _promocionLogic.AgregarPromocion(aPromocion);
+                return aPromocion.PromocionId;
             }
             catch (ArgumentException e)
             {
@@ -216,7 +217,7 @@ namespace ControllerLayer
             return listaDTOPromociones;
         }
         private void validarQuePromocionNoEsteEnUso(DTOPromocion DTOPromocionParametro) {
-            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
             IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
 
             foreach (var reserva in Reservas)
@@ -228,7 +229,7 @@ namespace ControllerLayer
         }
         public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
         {
-            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
             validarQuePromocionNoEsteEnUso(DTOPromocionParametro);
 
             _promocionLogic.EliminarPromocion(promocionEncontradaPorId.PromocionId);
@@ -237,16 +238,23 @@ namespace ControllerLayer
 
         public DTOPromocion BuscarPromocionPorId(int IdParametro)
         {
-            var promoEncontrada = _promocionLogic.buscarPromocionPorId(IdParametro);
-            
-            if (promoEncontrada == null)
+            try
             {
+                var promoEncontrada = _promocionLogic.buscarPromocionPorId(IdParametro);
+
+                if (promoEncontrada == null)
+                {
+                    throw new Exception("Promocion no encontrada!");
+                }
+
+                var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.PromocionId, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
+
+                return DTOPromocionRetorno;
+            }
+            catch (NullReferenceException ) {
                 throw new Exception("Promocion no encontrada!");
             }
-
-            var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.PromocionId, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
-
-            return DTOPromocionRetorno;
+            
             
         }
 
@@ -254,7 +262,7 @@ namespace ControllerLayer
         {
             try
             {
-                Promocion promocion = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.IdPromocion);
+                Promocion promocion = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
 
                 promocion.Etiqueta = DTOPromocionParametro.Etiqueta;
                 promocion.FechaInicio = DTOPromocionParametro.FechaInicio;
