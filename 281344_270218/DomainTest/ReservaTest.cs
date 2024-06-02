@@ -75,9 +75,9 @@ namespace DomainTest
         public void calculoDePreciOReservaGrandeConRefrigeracionDe3DiasConVariasPromocionesQueAplicanElMismoDiaQueApliqueLaMejorTest() 
         {
             Deposito depositoTest = new Deposito("A", "Grande", true);
-            Promocion promo1Test = new Promocion("etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(10));
-            Promocion promo2Test = new Promocion("etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(10));
-            Promocion promo3Test = new Promocion("etiqueta", 70, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo1Test = new Promocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo2Test = new Promocion(0, "etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo3Test = new Promocion(0, "etiqueta", 70, DateTime.Today, DateTime.Today.AddDays(10));
 
             depositoTest.AgregarPromocionADeposito(promo1Test);
             depositoTest.AgregarPromocionADeposito(promo2Test);

@@ -120,5 +120,15 @@ namespace BusinessLogicTest
             Assert.AreEqual(promo.PromocionId, promocionEncontrada.PromocionId);
         }
 
+        [TestMethod]
+        public void IncrementarIdCuandoSeCreaDepositoTest()
+        {
+            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
+            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
+
+            Assert.AreEqual(1, depositoRetorno1.DepositoId);
+            Assert.AreEqual(2, depositoRetorno2.DepositoId);
+        }
+
     }
 }
