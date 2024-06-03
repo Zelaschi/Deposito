@@ -90,6 +90,7 @@ namespace Domain
 
         public Deposito(string area, string tamanio, bool climatizacion)
         {
+            Nombre = "undefinded";
             DepositoId = 0;
             Area = area;
             Tamanio = tamanio;

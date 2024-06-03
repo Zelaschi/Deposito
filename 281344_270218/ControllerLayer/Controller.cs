@@ -362,31 +362,19 @@ namespace ControllerLayer
         {
             try
             {
-                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
-
-                if (aCliente.Password != Pwd)
+                Administrador aAdmin = _administradorLogic.ObtenerAdministrador();
+                if (Mail == aAdmin.Mail && aAdmin.Password == Pwd)
                 {
-                    throw new Exception("Wrong password");
-                }
-
-                return true;
-            }
-            catch (NullReferenceException)
-            {
-                try
-                {
-                    Administrador aAdmin = _administradorLogic.ObtenerAdministrador();
-                    if (aAdmin.Password != Pwd)
-                    {
-                        throw new Exception("Wrong password");
-                    }
                     return true;
                 }
-                catch (InvalidOperationException e)
-                {
-                    throw new Exception(e.Message);
+                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+                if (Mail == aCliente.Mail && Pwd == aCliente.Password) {
+                    return true;
                 }
-
+                return false;
+            }
+            catch (NullReferenceException)
+            { 
                 throw new Exception("Cliente no encontrado!");
 
             }

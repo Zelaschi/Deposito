@@ -34,7 +34,7 @@ namespace BusinessLogicTest
             
             deposito = new Deposito("A", "Pequenio", true);
             cliente = new Cliente(0, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
-            reserva = new Reserva( DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+            reserva = new Reserva( DateTime.Today, DateTime.Today.AddDays(1), deposito, cliente);
         }
 
         [TestCleanup]
