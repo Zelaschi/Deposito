@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Intrinsics.Arm;
+using System.Text.RegularExpressions;
 
 namespace Domain
 {
@@ -50,8 +51,23 @@ namespace Domain
             }
         }
         public bool Climatizacion { get; set; }
-        public string Nombre { get; set; }
-
+        public string _nombre { get; set; } 
+        public string Nombre
+        {
+            get { return _nombre; }
+            set
+            {
+                string patronSoloLetras = "^[a-zA-Z]+$";
+                if (Regex.IsMatch(value, patronSoloLetras))
+                {
+                    _nombre = value;
+                }
+                else
+                {
+                    throw new ArgumentException("El nombre del deposito solo admite letras.");
+                }
+            }
+        }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion)
         {
             DepositoId = 0;
