@@ -42,6 +42,11 @@ namespace DomainTest
         {
             Deposito deposito = new Deposito("Nombre1", "A", "Grande", true);
         }
-        
+        [TestMethod]
+        public void definirDepositoConFechasDeDisponibilidadOkTest()
+        {
+            Deposito deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
+        }
+
     }
 }
