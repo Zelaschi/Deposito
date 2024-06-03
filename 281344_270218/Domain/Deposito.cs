@@ -50,7 +50,17 @@ namespace Domain
             }
         }
         public bool Climatizacion { get; set; }
+        public string Nombre { get; set; }
 
+        public Deposito(string nombre, string area, string tamanio, bool climatizacion)
+        {
+            DepositoId = 0;
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            DepositoPromocions = new List<DepositoPromocion>();
+            Nombre = nombre;
+        }
 
 
         public Deposito(string area, string tamanio, bool climatizacion)

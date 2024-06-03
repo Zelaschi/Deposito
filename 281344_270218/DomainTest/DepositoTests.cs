@@ -30,8 +30,9 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void definirDepositoConNombreOk() {
-            Deposito deposito = new Deposito("Nombre","A", "Grande", true);
+        public void definirDepositoConNombreOkTest()
+        {
+            Deposito deposito = new Deposito("Nombre", "A", "Grande", true);
         }
     }
 }
