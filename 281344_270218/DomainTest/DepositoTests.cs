@@ -34,5 +34,13 @@ namespace DomainTest
         {
             Deposito deposito = new Deposito("Nombre", "A", "Grande", true);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+
+        public void definirDepositoConNombreConNumeroDeErrorTest()
+        {
+            Deposito deposito = new Deposito("Nombre1", "A", "Grande", true);
+        }
     }
 }
