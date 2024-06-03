@@ -9,7 +9,7 @@ namespace DomainTest
 
         [TestInitialize]
         public void TestInitialize(){
-            deposito = new Deposito("A", "Grande", true);
+            deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
         }
         
 
@@ -32,7 +32,7 @@ namespace DomainTest
         [TestMethod]
         public void definirDepositoConNombreOkTest()
         {
-            Deposito deposito = new Deposito("Nombre", "A", "Grande", true);
+            Deposito deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace DomainTest
 
         public void definirDepositoConNombreConNumeroDeErrorTest()
         {
-            Deposito deposito = new Deposito("Nombre1", "A", "Grande", true);
+            Deposito deposito = new Deposito("Nombre1", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
         }
         [TestMethod]
         public void definirDepositoConFechasDeDisponibilidadOkTest()

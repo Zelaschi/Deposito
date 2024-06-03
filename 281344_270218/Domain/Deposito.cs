@@ -68,7 +68,9 @@ namespace Domain
                 }
             }
         }
-        public Deposito(string nombre, string area, string tamanio, bool climatizacion)
+
+        private IList<Tuple<DateTime, DateTime>> fechasNoDisponible { get; set; }
+        public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
             DepositoId = 0;
             Area = area;
@@ -76,6 +78,11 @@ namespace Domain
             Climatizacion = climatizacion;
             DepositoPromocions = new List<DepositoPromocion>();
             Nombre = nombre;
+            fechasNoDisponible = new List<Tuple<DateTime, DateTime>>
+            {
+                Tuple.Create(DateTime.MinValue, disponibleDesde),
+                Tuple.Create(disponibleHasta, DateTime.MaxValue)
+            };
         }
 
 
