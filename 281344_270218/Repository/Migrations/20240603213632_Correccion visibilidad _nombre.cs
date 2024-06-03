@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class TPHPersona : Migration
+    public partial class Correccionvisibilidad_nombre : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace Repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tamanio = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Climatizacion = table.Column<bool>(type: "bit", nullable: false)
+                    Climatizacion = table.Column<bool>(type: "bit", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

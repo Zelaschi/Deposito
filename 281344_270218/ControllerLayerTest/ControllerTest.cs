@@ -70,7 +70,6 @@ namespace ControllerLayerTest
         public void limpieza()
         {
             _context.Database.EnsureDeleted();
-            Persona.contadorID = 1;
         }
         [TestMethod]
         public void CrearControllerOkTest() 

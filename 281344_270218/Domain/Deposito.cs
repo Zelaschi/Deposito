@@ -53,7 +53,7 @@ namespace Domain
             }
         }
         public bool Climatizacion { get; set; }
-        public string _nombre { get; set; } 
+        private string _nombre { get; set; } 
         public string Nombre
         {
             get { return _nombre; }

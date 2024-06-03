@@ -119,7 +119,7 @@ namespace ControllerLayer
         {
             try
             {
-                Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+                Deposito aDeposito = new Deposito(aDTODeposito.Nombre, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion, aDTODeposito.DisponibleDesde, aDTODeposito.DisponibleHasta);
                 _depositoLogic.AddDeposito(aDeposito);
                 return aDeposito.DepositoId;
             }

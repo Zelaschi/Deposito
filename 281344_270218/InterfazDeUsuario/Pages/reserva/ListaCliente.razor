@@ -53,7 +53,15 @@
 
     protected override void OnInitialized()
     {
-        DTOCliente clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
-        reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
+        try
+        {
+            DTOCliente clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
+            reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("esto no deberia pasar nunca");
+        }
+
     }
 }

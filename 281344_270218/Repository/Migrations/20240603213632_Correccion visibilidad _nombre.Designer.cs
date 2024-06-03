@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240603194645_NewFeatures deposito")]
-    partial class NewFeaturesdeposito
+    [Migration("20240603213632_Correccion visibilidad _nombre")]
+    partial class Correccionvisibilidad_nombre
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,10 +43,6 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tamanio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

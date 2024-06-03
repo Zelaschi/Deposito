@@ -55,6 +55,10 @@ else
                 <label for="title">Repetir contraseña</label>
                 <input type="text" class="form-control" id="Contrasenia2" @bind="unaContrasenia2" />
             </div>
+            @if (!datosCorrectos)
+            {
+                <p class="text-danger">@errorMessage</p>
+            }
             <button type="button" class="btn btn-primary m-2" @onclick="RegistrarAdministrador">Registrar Administrador</button>
         </form>
     </main>
@@ -84,7 +88,7 @@ else
         catch (Exception e)
         {
             datosCorrectos = false;
-            mensajeError = e.Message;
+            errorMessage = e.Message;
         }
     }
 

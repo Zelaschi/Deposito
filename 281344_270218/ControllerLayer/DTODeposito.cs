@@ -5,18 +5,40 @@ namespace ControllerLayer
 {
     public class DTODeposito
     {
-        public int Id { get; set; }
+        public string Nombre;
+
+        public int Id { get; set; } = 0;
         public string Area { get; set; }
         public string Tamanio { get; set; }
         public bool Climatizacion { get; set; }
+        public DateTime DisponibleDesde { get; set; }
+        public DateTime DisponibleHasta { get; set; }
         public List<Promocion> listaPromocionesQueAplicanADeposito = new List<Promocion>();
 
-        public DTODeposito(int id, string area, string tamanio, bool climatizacion)
+        public DTODeposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
+        {
+            Id = 0;
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            Nombre = nombre;
+            DisponibleDesde = disponibleDesde;
+            DisponibleHasta = disponibleHasta;
+        }
+        public DTODeposito( int id, string area, string tamanio, bool climatizacion)
         {
             Id = id;
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
+        }
+        public DTODeposito(string nombre, int id, string area, string tamanio, bool climatizacion)
+        {
+            Id = id;
+            Area = area;
+            Tamanio = tamanio;
+            Climatizacion = climatizacion;
+            Nombre = nombre;
         }
     }
 }

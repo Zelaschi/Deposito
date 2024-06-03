@@ -82,6 +82,7 @@ public class DepositoContext : DbContext
             entity.Property(d => d.Area).IsRequired();
             entity.Property(d => d.Tamanio).IsRequired();
             entity.Property(d => d.Climatizacion).IsRequired();
+            entity.Property(d => d.Nombre).IsRequired();
         });
         modelBuilder.Entity<DepositoPromocion>(entity =>
         {
