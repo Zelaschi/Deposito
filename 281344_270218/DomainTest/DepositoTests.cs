@@ -52,7 +52,12 @@ namespace DomainTest
         {
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
         }
-        
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void agregarFechasNoDisponibleFueraDeRangoDefinido()
+        {
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(-2), DateTime.Now.AddDays(5));
+        }
 
     }
 }

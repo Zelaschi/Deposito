@@ -95,8 +95,10 @@ namespace Domain
             Climatizacion = climatizacion;
             DepositoPromocions = new List<DepositoPromocion>();
         }
+        
 
         public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta) {
+
             fechasNoDisponible.Add(Tuple.Create(fechaDesde, fechaHasta));
         }
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
