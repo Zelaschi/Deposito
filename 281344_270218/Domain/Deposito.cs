@@ -95,6 +95,7 @@ namespace Domain
             Tamanio = tamanio;
             Climatizacion = climatizacion;
             DepositoPromocions = new List<DepositoPromocion>();
+            fechasNoDisponible = new List<Tuple<DateTime, DateTime>>();
         }
         public void validarDisponibilidad(DateTime fechaDesde, DateTime fechaHasta) {
             foreach (var par in fechasNoDisponible)
