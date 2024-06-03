@@ -48,10 +48,11 @@ namespace DomainTest
             Deposito deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
         }
         [TestMethod]
-        public void agregarFechaNoDisponibleTest()
+        public void agregarFechasNoDisponibleTest()
         {
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
         }
+        
 
     }
 }

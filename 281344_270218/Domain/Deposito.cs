@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics.Arm;
+﻿using System.Data;
+using System.Runtime.Intrinsics.Arm;
 using System.Text.RegularExpressions;
 
 namespace Domain
@@ -95,6 +96,9 @@ namespace Domain
             DepositoPromocions = new List<DepositoPromocion>();
         }
 
+        public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta) {
+            fechasNoDisponible.Add(Tuple.Create(fechaDesde, fechaHasta));
+        }
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
         {
             if (DepositoPromocions.FirstOrDefault(dp => dp.PromocionId == promoParametro.PromocionId) !=null)
