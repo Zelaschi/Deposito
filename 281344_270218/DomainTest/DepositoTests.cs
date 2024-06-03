@@ -64,7 +64,6 @@ namespace DomainTest
         {
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(7), DateTime.Now.AddDays(20));
-
         }
 
     }
