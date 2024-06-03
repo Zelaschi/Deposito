@@ -52,15 +52,18 @@
             ClienteId = cliente.PersonaId;
             Cliente = cliente;
         }
+        private int precioDiaDepositoPequenio = 50;
+        private int precioDiaDepositoMediano = 75;
+        private int precioDiaDepositoGrande = 100;
         private int precioPorDia(string tamanio) {
             switch (tamanio)
             {
                 case "Pequenio":
-                    return 50;
+                    return precioDiaDepositoPequenio;
                 case "Mediano":
-                    return 75;
+                    return precioDiaDepositoMediano;
                 case "Grande":
-                    return 100;
+                    return precioDiaDepositoGrande;
             }
             return 0;
         }

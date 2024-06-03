@@ -97,7 +97,7 @@ namespace Domain
             DepositoPromocions = new List<DepositoPromocion>();
             fechasNoDisponible = new List<Tuple<DateTime, DateTime>>();
         }
-        public void validarDisponibilidad(DateTime fechaDesde, DateTime fechaHasta) {
+        private void validarDisponibilidad(DateTime fechaDesde, DateTime fechaHasta) {
             foreach (var par in fechasNoDisponible)
             {
                 if ((fechaDesde >= par.Item1 && fechaDesde <= par.Item2 )||(fechaHasta >= par.Item1 && fechaHasta <= par.Item2))
