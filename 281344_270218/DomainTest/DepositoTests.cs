@@ -54,9 +54,17 @@ namespace DomainTest
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void agregarFechasNoDisponibleFueraDeRangoDefinido()
+        public void agregarFechasNoDisponibleFueraDeRangoDefinidoTest()
         {
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(-2), DateTime.Now.AddDays(5));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void agregarFechasNoDisponibleAgregarEnFechaYaReservadaTest()
+        {
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(7), DateTime.Now.AddDays(20));
+
         }
 
     }

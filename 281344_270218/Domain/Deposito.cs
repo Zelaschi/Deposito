@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Runtime.Intrinsics.Arm;
+using System.Runtime.Serialization.Formatters;
 using System.Text.RegularExpressions;
 
 namespace Domain
@@ -69,7 +70,7 @@ namespace Domain
                 }
             }
         }
-
+        //inicio, fin
         private IList<Tuple<DateTime, DateTime>> fechasNoDisponible { get; set; }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
@@ -95,10 +96,18 @@ namespace Domain
             Climatizacion = climatizacion;
             DepositoPromocions = new List<DepositoPromocion>();
         }
-        
+        public void validarDisponibilidad(DateTime fechaDesde, DateTime fechaHasta) {
+            foreach (var par in fechasNoDisponible)
+            {
+                if ((fechaDesde >= par.Item1 && fechaDesde <= par.Item2 )||(fechaHasta >= par.Item1 && fechaHasta <= par.Item2))
+                {
+                    throw new InvalidOperationException("El deposito no se encuentra disponible en la fecha ingresada");
+                }
+            }
+        }
 
         public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta) {
-
+            validarDisponibilidad(fechaDesde, fechaHasta);
             fechasNoDisponible.Add(Tuple.Create(fechaDesde, fechaHasta));
         }
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
