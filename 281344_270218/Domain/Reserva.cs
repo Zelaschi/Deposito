@@ -31,6 +31,8 @@
         public Cliente Cliente { get; set; }
         public int? PromocionId { get; set; }
         public Promocion? PromocionAplicada { get; set; }
+        public int? PagoId { get; set; }
+        public Pago? Pago { get; set; }
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -108,6 +110,7 @@
             ClienteId = cliente.PersonaId;
             Cliente = cliente;
             Precio = CalculoPrecioDeReserva();
+            Pago = new Pago();
         }
         //EF
         public Reserva() { }

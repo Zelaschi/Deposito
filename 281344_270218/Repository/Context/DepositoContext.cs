@@ -9,6 +9,7 @@ public class DepositoContext : DbContext
     public DbSet<Promocion> Promociones { get; set; }
     public DbSet<Reserva> Reservas { get; set; }
     public DbSet<DepositoPromocion> DepositoPromocions {get;set;}
+    public DbSet<Pago> Pagos { get; set; }
 
     public DepositoContext() 
     {
@@ -72,6 +73,11 @@ public class DepositoContext : DbContext
             entity.HasOne(r => r.PromocionAplicada)
                   .WithMany(p => p.Reservas)
                   .HasForeignKey(r => r.PromocionId)
+                  .IsRequired(false);
+
+            entity.HasOne(r => r.Pago)
+                  .WithOne(p => p.Reserva)
+                  .HasForeignKey<Pago>(p => p.ReservaId)
                   .IsRequired(false);
 
         });
