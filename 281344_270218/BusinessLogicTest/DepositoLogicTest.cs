@@ -16,7 +16,8 @@ namespace BusinessLogicTest
 
         private Deposito? deposito1;
         private Deposito? deposito2;
-
+        private Deposito? deposito3;
+        private Deposito? deposito4;
 
         [TestInitialize]
 
@@ -34,8 +35,20 @@ namespace BusinessLogicTest
             var tamanio2 = "Mediano";
             bool climatizacion2 = true;
 
+            var area3 = "D";
+            var tamanio3 = "Grande";
+            bool climatizacion3 = true;
+            string nombre3 = "DepositoPruebaTres";
+
+            var area4 = "E";
+            var tamanio4 = "Grande";
+            bool climatizacion4 = true;
+            string nombre4 = "DepositoPruebaCuatro";
+
             deposito1 = new Deposito( area1, tamanio1, climatizacion1);
             deposito2 = new Deposito( area2, tamanio2, climatizacion2);
+            deposito3 = new Deposito(nombre3, area3, tamanio3, climatizacion3, DateTime.Today, DateTime.Today.AddDays(3));
+            deposito4 = new Deposito(nombre4, area4, tamanio4, climatizacion4, DateTime.Today, DateTime.Today.AddDays(3));
         }
         [TestCleanup]
         public void clear() 
@@ -47,45 +60,48 @@ namespace BusinessLogicTest
 
         public void AgregarDepositoTest()
         {
-            Deposito depositoRetorno = _depositoLogic.AddDeposito(deposito1);
+            Deposito depositoRetorno = _depositoLogic.AddDeposito(deposito3);
             Assert.AreEqual(1, depositoRetorno.DepositoId);
-            Assert.AreEqual(deposito1.Tamanio, depositoRetorno.Tamanio);
-            Assert.AreEqual(deposito1.Area, depositoRetorno.Area);
-            Assert.AreEqual(deposito1.Climatizacion, depositoRetorno.Climatizacion);
+            Assert.AreEqual(deposito3.Tamanio, depositoRetorno.Tamanio);
+            Assert.AreEqual(deposito3.Area, depositoRetorno.Area);
+            Assert.AreEqual(deposito3.Climatizacion, depositoRetorno.Climatizacion);
+            Assert.AreEqual(deposito3.Nombre, depositoRetorno.Nombre);
+
+
         }
 
         [TestMethod]
 
         public void AgregarDosDepositosTest()
         {
-            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
-            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
+            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito3);
+            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito4);
 
-            Assert.AreEqual(deposito1.DepositoId, depositoRetorno1.DepositoId);
-            Assert.AreEqual(deposito2.DepositoId, depositoRetorno2.DepositoId);
+            Assert.AreEqual(deposito3.DepositoId, depositoRetorno1.DepositoId);
+            Assert.AreEqual(deposito4.DepositoId, depositoRetorno2.DepositoId);
         }
 
         [TestMethod]
 
         public void ListarTodosLosDepositosTest()
         {
-            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
-            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
+            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito3);
+            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito4);
 
             IList<Deposito> depositos = _depositoLogic.GetAll();
 
-            Assert.AreEqual(deposito1.DepositoId, depositos.FirstOrDefault(x => x.DepositoId == 1).DepositoId);
-            Assert.AreEqual(deposito2.DepositoId, depositos.FirstOrDefault(x => x.DepositoId == 2).DepositoId);
+            Assert.AreEqual(deposito3.DepositoId, depositos.FirstOrDefault(x => x.DepositoId == 1).DepositoId);
+            Assert.AreEqual(deposito4.DepositoId, depositos.FirstOrDefault(x => x.DepositoId == 2).DepositoId);
         }
 
         [TestMethod]
 
         public void EncontrarDepositoPorIdTest()
         {
-            _depositoLogic.AddDeposito(deposito1);
-            Deposito depositoPeroPorFindId = _depositoLogic.buscarDepositoPorId(deposito1.DepositoId);
+            _depositoLogic.AddDeposito(deposito3);
+            Deposito depositoPeroPorFindId = _depositoLogic.buscarDepositoPorId(deposito3.DepositoId);
 
-            Assert.AreEqual(deposito1.DepositoId, depositoPeroPorFindId.DepositoId);
+            Assert.AreEqual(deposito3.DepositoId, depositoPeroPorFindId.DepositoId);
         }
 
         [TestMethod]
@@ -101,9 +117,9 @@ namespace BusinessLogicTest
 
         public void EliminarDepositoTest()
         {
-            _depositoLogic.AddDeposito(deposito1);
-            _depositoLogic.EliminarDeposito(deposito1.DepositoId);
-            var depositoEliminado = _depositoLogic.buscarDepositoPorId(deposito1.DepositoId);
+            _depositoLogic.AddDeposito(deposito3);
+            _depositoLogic.EliminarDeposito(deposito3.DepositoId);
+            var depositoEliminado = _depositoLogic.buscarDepositoPorId(deposito3.DepositoId);
 
             Assert.IsNull(depositoEliminado);
         }
@@ -113,9 +129,9 @@ namespace BusinessLogicTest
             
             Promocion promo = new Promocion("Promo Test", 20, DateTime.Now, DateTime.Now.AddDays(10));
 
-            deposito1.AgregarPromocionADeposito(promo);
+            deposito3.AgregarPromocionADeposito(promo);
             
-            Promocion promocionEncontrada = deposito1.mejorPromocionHoy();
+            Promocion promocionEncontrada = deposito3.mejorPromocionHoy();
 
             Assert.AreEqual(promo.PromocionId, promocionEncontrada.PromocionId);
         }
@@ -123,8 +139,8 @@ namespace BusinessLogicTest
         [TestMethod]
         public void IncrementarIdCuandoSeCreaDepositoTest()
         {
-            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito1);
-            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito2);
+            Deposito depositoRetorno1 = _depositoLogic.AddDeposito(deposito3);
+            Deposito depositoRetorno2 = _depositoLogic.AddDeposito(deposito4);
 
             Assert.AreEqual(1, depositoRetorno1.DepositoId);
             Assert.AreEqual(2, depositoRetorno2.DepositoId);
