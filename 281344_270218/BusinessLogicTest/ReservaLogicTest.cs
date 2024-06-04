@@ -120,5 +120,19 @@ namespace BusinessLogicTest
             
             Assert.IsNull(reservaNull);
         }
+
+        [TestMethod]
+        public void EliminarPagoDeReservaTest()
+        {
+            
+            _reservaLogic.AgregarReserva(reserva);
+            _reservaLogic.RechazarReserva(reserva);
+
+            
+            var reservaActualizada = _reservaRepository.Find(r => r.ReservaId == reserva.ReservaId);
+            Assert.IsNotNull(reservaActualizada);
+            Assert.AreEqual("Rechazada", reservaActualizada.Estado);
+            Assert.IsNull(reservaActualizada.Pago);
+        }
     }
 }
