@@ -60,7 +60,7 @@ namespace ControllerLayerTest
 
             _controller = new Controller(_administradorLogic, _clienteLogic, _depositoLogic, _promocionLogic, _reservaLogic);
 
-            aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
+            aDTOCliente = new DTOCliente(nombreYApellidoTest, "mail@mail.com", pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);

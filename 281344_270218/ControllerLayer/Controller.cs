@@ -372,7 +372,7 @@ namespace ControllerLayer
                 if (Mail == aCliente.Mail && Pwd == aCliente.Password) {
                     return true;
                 }
-                return false;
+                throw new Exception("Password incorrecta!");
             }
             catch (NullReferenceException)
             { 
