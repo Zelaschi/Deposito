@@ -62,7 +62,7 @@ namespace ControllerLayerTest
             aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
-            aDTODeposito = new DTODeposito("nombre", "A", "Grande", true, DateTime.Today, DateTime.Today.AddDays(16));
+            aDTODeposito = new DTODeposito("DepositoNombre", "A", "Grande", true, DateTime.Today, DateTime.Today.AddDays(16));
 
             aDTOReserva = new DTOReserva(1, DateTime.Today, DateTime.Today.AddDays(15), aDTODeposito, aDTOCliente, 100);
         }
@@ -762,8 +762,10 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         public void DepositosDisponiblesParaResrvaPorFechaTest() {
-            _controller.RegistrarDeposito(aDTODeposito);
-            Assert.IsTrue(_controller.DepositosDisponiblesParaReservaPorFecha(DateTime.Today.AddDays(1), DateTime.Today.AddDays(5)););
+            int nuevoId = _controller.RegistrarDeposito(aDTODeposito);
+            aDTODeposito.Id = nuevoId;
+            IList<DTODeposito> depositos = _controller.DepositosDisponiblesParaReservaPorFecha(DateTime.Today.AddDays(1), DateTime.Today.AddDays(5));
+            Assert.AreEqual(aDTODeposito.Id, depositos.FirstOrDefault().Id);
         } 
 
 

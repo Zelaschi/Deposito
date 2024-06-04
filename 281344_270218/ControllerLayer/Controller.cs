@@ -384,6 +384,19 @@ namespace ControllerLayer
         {
             return ObtenerAdministrador().Mail.Equals(mail);
         }
-       
+        public IList<DTODeposito> DepositosDisponiblesParaReservaPorFecha(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            List<DTODeposito> retorno = new List<DTODeposito>();
+            IList<Deposito> depositos = _depositoLogic.GetAll();
+            foreach (var deposito in depositos)
+            {
+                if (deposito.validarDisponibilidadBool(fechaDesde, fechaHasta))
+                {
+                    DTODeposito dtodeposito = new DTODeposito(deposito.Nombre,deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion) ;
+                    retorno.Add(dtodeposito);
+                }
+            }
+            return retorno;
+        }
     }
 }
