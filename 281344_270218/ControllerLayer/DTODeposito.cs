@@ -5,7 +5,7 @@ namespace ControllerLayer
 {
     public class DTODeposito
     {
-        public string Nombre;
+        public string Nombre = "undefined";
 
         public int Id { get; set; } = 0;
         public string Area { get; set; }
