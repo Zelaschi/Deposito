@@ -72,8 +72,15 @@ namespace Domain
         }
         //inicio, fin
         private IList<Tuple<DateTime, DateTime>> fechasNoDisponible { get; set; }
+        private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            return fechaDesde.CompareTo(fechaHasta) < 0;
+        }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(disponibleDesde, disponibleHasta)) {
+                throw new ArgumentException("Disponible desde debe ser mayor a disponible hasta");
+            }
             DepositoId = 0;
             Area = area;
             Tamanio = tamanio;
