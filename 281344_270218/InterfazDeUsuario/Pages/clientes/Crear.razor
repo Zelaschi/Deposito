@@ -20,17 +20,18 @@
         <input type="text" class="form-control" id="Mail" @bind="unMail" />
     </div>
     <div class="form-group">
-        <label for="title">Contrasenia</label>
+        <label for="title">Contraseña</label>
         <input type="text" class="form-control" id="Contraseña" @bind="unaContrasenia" />
     </div>
+    @if (!datosCorrectos)
+    {
+        <p class="text-danger">@mensajeError</p>
+    }
 
     <button type="button" class="btn btn-primary" @onclick="GuardarCambios">Guardar cambios</button>
 </form>
 
-@if (!datosCorrectos)
-{
-    <p class="text-danger">@mensajeError</p>
-}
+
 
 @code {
     private DTOCliente cliente;

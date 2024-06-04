@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class TPHPersona : Migration
+    public partial class Pagos : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace Repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tamanio = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Climatizacion = table.Column<bool>(type: "bit", nullable: false)
+                    Climatizacion = table.Column<bool>(type: "bit", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +95,8 @@ namespace Repository.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JustificacionRechazo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    PromocionId = table.Column<int>(type: "int", nullable: true)
+                    PromocionId = table.Column<int>(type: "int", nullable: true),
+                    PagoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,10 +120,35 @@ namespace Repository.Migrations
                         principalColumn: "PromocionId");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Pagos",
+                columns: table => new
+                {
+                    PagoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReservaId = table.Column<int>(type: "int", nullable: false),
+                    EstadoPago = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pagos", x => x.PagoId);
+                    table.ForeignKey(
+                        name: "FK_Pagos_Reservas_ReservaId",
+                        column: x => x.ReservaId,
+                        principalTable: "Reservas",
+                        principalColumn: "ReservaId");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DepositoPromocions_DepositoId",
                 table: "DepositoPromocions",
                 column: "DepositoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pagos_ReservaId",
+                table: "Pagos",
+                column: "ReservaId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservas_ClienteId",
@@ -143,6 +170,9 @@ namespace Repository.Migrations
         {
             migrationBuilder.DropTable(
                 name: "DepositoPromocions");
+
+            migrationBuilder.DropTable(
+                name: "Pagos");
 
             migrationBuilder.DropTable(
                 name: "Reservas");

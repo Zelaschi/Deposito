@@ -39,21 +39,7 @@
             return fechaDesde.CompareTo(fechaHasta) <= 0;
         }
 
-        public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio, Cliente cliente)
-        {
-            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
-            {
-                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
-            }
-            ReservaId = 0;
-            FechaDesde = fechaDesde;
-            FechaHasta = fechaHasta;
-            DepositoId = deposito.DepositoId;
-            Deposito = deposito;
-            Precio = CalculoPrecioDeReserva();
-            ClienteId = cliente.PersonaId;
-            Cliente = cliente;
-        }
+        
         private int precioDiaDepositoPequenio = 50;
         private int precioDiaDepositoMediano = 75;
         private int precioDiaDepositoGrande = 100;

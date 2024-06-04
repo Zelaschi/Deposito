@@ -53,7 +53,7 @@ namespace Domain
             }
         }
         public bool Climatizacion { get; set; }
-        public string _nombre { get; set; } 
+        private string _nombre { get; set; } 
         public string Nombre
         {
             get { return _nombre; }
@@ -99,6 +99,7 @@ namespace Domain
 
         public Deposito(string area, string tamanio, bool climatizacion)
         {
+            Nombre = "undefinded";
             DepositoId = 0;
             Area = area;
             Tamanio = tamanio;
@@ -114,6 +115,17 @@ namespace Domain
                     throw new InvalidOperationException("El deposito no se encuentra disponible en la fecha ingresada");
                 }
             }
+        }
+        public bool validarDisponibilidadBool(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            foreach (var par in fechasNoDisponible)
+            {
+                if ((fechaDesde >= par.Item1 && fechaDesde <= par.Item2) || (fechaHasta >= par.Item1 && fechaHasta <= par.Item2))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta) {

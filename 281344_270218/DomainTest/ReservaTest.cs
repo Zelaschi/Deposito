@@ -18,7 +18,7 @@ namespace DomainTest
         [TestMethod]
         public void TestReservaDebeInicializarseConValoresCorrectos()
         {
-            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, cliente);
 
             Assert.AreEqual(DateTime.Today, reserva.FechaDesde);
             Assert.AreEqual(DateTime.Today.AddDays(1), reserva.FechaHasta);
@@ -30,7 +30,7 @@ namespace DomainTest
         [TestMethod]
         public void ReservaNoDebePermitirFechasInconsistentes()
         {
-            Assert.ThrowsException<ArgumentException>(() => new Reserva(DateTime.Today.AddDays(1), DateTime.Today, deposito, 100, cliente), "Ingrese un periodo de fechas valido");
+            Assert.ThrowsException<ArgumentException>(() => new Reserva(DateTime.Today.AddDays(1), DateTime.Today, deposito, cliente), "Ingrese un periodo de fechas valido");
         }
 
         [TestMethod]
@@ -115,7 +115,7 @@ namespace DomainTest
         [ExpectedException(typeof(ArgumentException))]
         public void justificacionReservaRechazadaMayora300caracteresTest() 
         {
-            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+            Reserva reserva = new Reserva(DateTime.Today, DateTime.Today.AddDays(1), deposito, cliente);
             string justificacionMayorA300 = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec p";
             reserva.JustificacionRechazo = justificacionMayorA300;
         }

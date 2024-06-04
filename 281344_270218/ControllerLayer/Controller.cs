@@ -119,7 +119,7 @@ namespace ControllerLayer
         {
             try
             {
-                Deposito aDeposito = new Deposito(aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion);
+                Deposito aDeposito = new Deposito(aDTODeposito.Nombre, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion, aDTODeposito.DisponibleDesde, aDTODeposito.DisponibleHasta);
                 _depositoLogic.AddDeposito(aDeposito);
                 return aDeposito.DepositoId;
             }
@@ -345,6 +345,7 @@ namespace ControllerLayer
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                     DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
                     DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                    reservaAuxiliar.Estado = reserva.Estado;
                     DTOReservas.Add(reservaAuxiliar);
                 }
             }
@@ -362,39 +363,40 @@ namespace ControllerLayer
         {
             try
             {
-                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
-
-                if (aCliente.Password != Pwd)
+                Administrador aAdmin = _administradorLogic.ObtenerAdministrador();
+                if (Mail == aAdmin.Mail && aAdmin.Password == Pwd)
                 {
-                    throw new Exception("Wrong password");
-                }
-
-                return true;
-            }
-            catch (NullReferenceException)
-            {
-                try
-                {
-                    Administrador aAdmin = _administradorLogic.ObtenerAdministrador();
-                    if (aAdmin.Password != Pwd)
-                    {
-                        throw new Exception("Wrong password");
-                    }
                     return true;
                 }
-                catch (InvalidOperationException e)
-                {
-                    throw new Exception(e.Message);
+                Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+                if (Mail == aCliente.Mail && Pwd == aCliente.Password) {
+                    return true;
                 }
-
+                return false;
+            }
+            catch (NullReferenceException)
+            { 
                 throw new Exception("Cliente no encontrado!");
 
             }
         }
-
         public bool esAdministrador(string mail) 
         {
             return ObtenerAdministrador().Mail.Equals(mail);
+        }
+        public IList<DTODeposito> DepositosDisponiblesParaReservaPorFecha(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            List<DTODeposito> retorno = new List<DTODeposito>();
+            IList<Deposito> depositos = _depositoLogic.GetAll();
+            foreach (var deposito in depositos)
+            {
+                if (deposito.validarDisponibilidadBool(fechaDesde, fechaHasta))
+                {
+                    DTODeposito dtodeposito = new DTODeposito(deposito.Nombre,deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion) ;
+                    retorno.Add(dtodeposito);
+                }
+            }
+            return retorno;
         }
     }
 }
