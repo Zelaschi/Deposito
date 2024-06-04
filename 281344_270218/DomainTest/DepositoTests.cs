@@ -9,7 +9,7 @@ namespace DomainTest
 
         [TestInitialize]
         public void TestInitialize(){
-            deposito = new Deposito("A", "Grande", true);
+            deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
         }
         
 
@@ -28,5 +28,49 @@ namespace DomainTest
         {
             Deposito deposito = new Deposito("Z", "Gigante", true);
         }
+
+        [TestMethod]
+        public void definirDepositoConNombreOkTest()
+        {
+            Deposito deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+
+        public void definirDepositoConNombreConNumeroDeErrorTest()
+        {
+            Deposito deposito = new Deposito("Nombre1", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
+        }
+        [TestMethod]
+        public void definirDepositoConFechasDeDisponibilidadOkTest()
+        {
+            Deposito deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
+        }
+        [TestMethod]
+        public void agregarFechasNoDisponibleTest()
+        {
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void agregarFechasNoDisponibleFueraDeRangoDefinidoTest()
+        {
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(-2), DateTime.Now.AddDays(5));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void agregarFechasNoDisponibleAgregarEnFechaYaReservadaTest()
+        {
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
+            deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(7), DateTime.Now.AddDays(20));
+        }
+
+        [TestMethod]
+        public void DepositoNoDebePermitirFechasInconsistentes()
+        {
+            Assert.ThrowsException<ArgumentException>(() => new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(3), DateTime.Today), "Ingrese un periodo de fechas valido");
+        }
+
     }
 }

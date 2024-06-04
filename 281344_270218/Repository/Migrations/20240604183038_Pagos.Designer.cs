@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240531193951_TPH Persona")]
-    partial class TPHPersona
+    [Migration("20240604183038_Pagos")]
+    partial class Pagos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,10 @@ namespace Repository.Migrations
                     b.Property<bool>("Climatizacion")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Tamanio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -60,6 +64,29 @@ namespace Repository.Migrations
                     b.HasIndex("DepositoId");
 
                     b.ToTable("DepositoPromocions");
+                });
+
+            modelBuilder.Entity("Domain.Pago", b =>
+                {
+                    b.Property<int>("PagoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PagoId"), 1L, 1);
+
+                    b.Property<string>("EstadoPago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReservaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PagoId");
+
+                    b.HasIndex("ReservaId")
+                        .IsUnique();
+
+                    b.ToTable("Pagos");
                 });
 
             modelBuilder.Entity("Domain.Persona", b =>
@@ -148,6 +175,9 @@ namespace Repository.Migrations
                     b.Property<string>("JustificacionRechazo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PagoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Precio")
                         .HasColumnType("int");
 
@@ -198,6 +228,15 @@ namespace Repository.Migrations
                     b.Navigation("Promocion");
                 });
 
+            modelBuilder.Entity("Domain.Pago", b =>
+                {
+                    b.HasOne("Domain.Reserva", "Reserva")
+                        .WithOne("Pago")
+                        .HasForeignKey("Domain.Pago", "ReservaId");
+
+                    b.Navigation("Reserva");
+                });
+
             modelBuilder.Entity("Domain.Reserva", b =>
                 {
                     b.HasOne("Domain.Cliente", "Cliente")
@@ -235,6 +274,11 @@ namespace Repository.Migrations
                     b.Navigation("DepositoPromocions");
 
                     b.Navigation("Reservas");
+                });
+
+            modelBuilder.Entity("Domain.Reserva", b =>
+                {
+                    b.Navigation("Pago");
                 });
 
             modelBuilder.Entity("Domain.Cliente", b =>

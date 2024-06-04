@@ -45,5 +45,15 @@ namespace Repository.SQL
             }
             return Find(r => r.ReservaId == reservaActualizada.ReservaId);
         }
+        public void DesasociarPago(Reserva reserva)
+        {
+            if (reserva.Pago != null)
+            {
+                _repositorio.Pagos.Remove(reserva.Pago);
+                reserva.Pago = null;
+                _repositorio.SaveChanges();
+            }
+        }
+
     }
 }

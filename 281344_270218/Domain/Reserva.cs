@@ -31,36 +31,27 @@
         public Cliente Cliente { get; set; }
         public int? PromocionId { get; set; }
         public Promocion? PromocionAplicada { get; set; }
+        public int? PagoId { get; set; }
+        public Pago? Pago { get; set; }
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
             return fechaDesde.CompareTo(fechaHasta) <= 0;
         }
 
-        public Reserva(DateTime fechaDesde, DateTime fechaHasta, Deposito deposito, int precio, Cliente cliente)
-        {
-            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
-            {
-                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
-            }
-            ReservaId = 0;
-            FechaDesde = fechaDesde;
-            FechaHasta = fechaHasta;
-            DepositoId = deposito.DepositoId;
-            Deposito = deposito;
-            Precio = CalculoPrecioDeReserva();
-            ClienteId = cliente.PersonaId;
-            Cliente = cliente;
-        }
+        
+        private int precioDiaDepositoPequenio = 50;
+        private int precioDiaDepositoMediano = 75;
+        private int precioDiaDepositoGrande = 100;
         private int precioPorDia(string tamanio) {
             switch (tamanio)
             {
                 case "Pequenio":
-                    return 50;
+                    return precioDiaDepositoPequenio;
                 case "Mediano":
-                    return 75;
+                    return precioDiaDepositoMediano;
                 case "Grande":
-                    return 100;
+                    return precioDiaDepositoGrande;
             }
             return 0;
         }
@@ -119,6 +110,7 @@
             ClienteId = cliente.PersonaId;
             Cliente = cliente;
             Precio = CalculoPrecioDeReserva();
+            Pago = new Pago();
         }
         //EF
         public Reserva() { }

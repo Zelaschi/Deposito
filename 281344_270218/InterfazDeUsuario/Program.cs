@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Repository;
+using Repository.SQL;
 using BusinessLogic;
 using Domain;
 using ControllerLayer;
@@ -12,26 +13,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-
-builder.Services.AddSingleton<IRepository<Cliente>, ClienteMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Deposito>, DepositoMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Promocion>, PromocionMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Administrador>, AdministradorMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Reserva>, ReservaMemoryRepository>();
-
-builder.Services.AddSingleton<ClienteLogic>();
-builder.Services.AddSingleton<DepositoLogic>();
-builder.Services.AddSingleton<PromocionLogic>();
-builder.Services.AddSingleton<AdministradorLogic>();
-builder.Services.AddSingleton<ReservaLogic>();
-builder.Services.AddSingleton<Controller>();
-builder.Services.AddSingleton<DTOSesion>();
-
 builder.Services.AddDbContextFactory<DepositoContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         providerOptions => providerOptions.EnableRetryOnFailure())
     );
+
+builder.Services.AddScoped< ClienteRepository>();
+builder.Services.AddScoped< DepositoRepository>();
+builder.Services.AddScoped< PromocionRepository>();
+builder.Services.AddScoped<AdministradorRepository>();
+builder.Services.AddScoped<ReservaRepository>();
+
+builder.Services.AddScoped<ClienteLogic>();
+builder.Services.AddScoped<DepositoLogic>();
+builder.Services.AddScoped<PromocionLogic>();
+builder.Services.AddScoped<AdministradorLogic>();
+builder.Services.AddScoped<ReservaLogic>();
+builder.Services.AddScoped<Controller>();
+
+builder.Services.AddSingleton<DTOSesion>();
+
 
 
 var app = builder.Build();

@@ -21,6 +21,7 @@ namespace BusinessLogicTest
         private int idReserva = 1;
         private Deposito? deposito;
         private Cliente? cliente;
+        private Deposito? deposito1;
 
 
         [TestInitialize]
@@ -31,10 +32,10 @@ namespace BusinessLogicTest
             _reservaRepository = new ReservaRepository(_context);
             _reservaLogic = new ReservaLogic(_reservaRepository);
 
-            
+            deposito1 = new Deposito("DepositoPrueba", "A", "Pequenio", true, DateTime.Today, DateTime.Today.AddDays(3));
             deposito = new Deposito("A", "Pequenio", true);
             cliente = new Cliente(0, "Juan Perez", "juanperez@hotmail.com", "Pasword1!");
-            reserva = new Reserva( DateTime.Today, DateTime.Today.AddDays(1), deposito, 100, cliente);
+            reserva = new Reserva( DateTime.Today, DateTime.Today.AddDays(1), deposito1, cliente);
         }
 
         [TestCleanup]
@@ -105,7 +106,7 @@ namespace BusinessLogicTest
             DateTime fechaHastaActualizada = DateTime.Today.AddDays(20);
             string estadoActualizado = "Aceptada";
 
-            Reserva reservaActualizda = new Reserva(reserva.FechaDesde, fechaHastaActualizada, deposito, cliente);
+            Reserva reservaActualizda = new Reserva(reserva.FechaDesde, fechaHastaActualizada, deposito1, cliente);
             reservaActualizda.ReservaId = reserva.ReservaId;
             reservaActualizda.Estado = estadoActualizado;
 
@@ -119,6 +120,20 @@ namespace BusinessLogicTest
             Reserva reservaNull = _reservaLogic.ActualizarReserva(reserva);
             
             Assert.IsNull(reservaNull);
+        }
+
+        [TestMethod]
+        public void EliminarPagoDeReservaTest()
+        {
+            
+            _reservaLogic.AgregarReserva(reserva);
+            _reservaLogic.RechazarReserva(reserva);
+
+            
+            var reservaActualizada = _reservaRepository.Find(r => r.ReservaId == reserva.ReservaId);
+            Assert.IsNotNull(reservaActualizada);
+            Assert.AreEqual("Rechazada", reservaActualizada.Estado);
+            Assert.IsNull(reservaActualizada.Pago);
         }
     }
 }

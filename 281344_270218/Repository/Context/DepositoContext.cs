@@ -9,6 +9,7 @@ public class DepositoContext : DbContext
     public DbSet<Promocion> Promociones { get; set; }
     public DbSet<Reserva> Reservas { get; set; }
     public DbSet<DepositoPromocion> DepositoPromocions {get;set;}
+    public DbSet<Pago> Pagos { get; set; }
 
     public DepositoContext() 
     {
@@ -74,6 +75,11 @@ public class DepositoContext : DbContext
                   .HasForeignKey(r => r.PromocionId)
                   .IsRequired(false);
 
+            entity.HasOne(r => r.Pago)
+                  .WithOne(p => p.Reserva)
+                  .HasForeignKey<Pago>(p => p.ReservaId)
+                  .IsRequired(false);
+
         });
 
         modelBuilder.Entity<Deposito>(entity =>
@@ -82,6 +88,7 @@ public class DepositoContext : DbContext
             entity.Property(d => d.Area).IsRequired();
             entity.Property(d => d.Tamanio).IsRequired();
             entity.Property(d => d.Climatizacion).IsRequired();
+            entity.Property(d => d.Nombre).IsRequired();
         });
         modelBuilder.Entity<DepositoPromocion>(entity =>
         {

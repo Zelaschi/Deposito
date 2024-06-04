@@ -6,7 +6,6 @@ namespace Domain
 {
     public abstract class Persona
     {
-        public static int contadorID = 1;
         public int PersonaId { get; set; }
 
         private bool noVacioONull(string value) {
@@ -93,7 +92,6 @@ namespace Domain
         public Persona(string nombreyApellido, string mail, string password)
         {
             PersonaId = 0;
-            contadorID++;
             NombreYApellido = nombreyApellido;
             Mail = mail;
             Password = password;
