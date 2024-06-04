@@ -380,10 +380,10 @@ namespace ControllerLayer
 
             }
         }
-
         public bool esAdministrador(string mail) 
         {
             return ObtenerAdministrador().Mail.Equals(mail);
         }
+       
     }
 }

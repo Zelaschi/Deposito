@@ -107,6 +107,17 @@ namespace Domain
                 }
             }
         }
+        public bool validarDisponibilidadBool(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            foreach (var par in fechasNoDisponible)
+            {
+                if ((fechaDesde >= par.Item1 && fechaDesde <= par.Item2) || (fechaHasta >= par.Item1 && fechaHasta <= par.Item2))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta) {
             validarDisponibilidad(fechaDesde, fechaHasta);
