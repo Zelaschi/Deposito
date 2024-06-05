@@ -82,16 +82,3 @@
     }
 }
 
-
-    @* private List<Deposito> _listaDepositos = new List<Deposito>();
-
-    protected override void OnInitialized()
-    {
-        _listaDepositos = DepositoLogic.GetAll().ToList();
-    }
-
-    private void BorrarDeposito(int id)
-    {
-        DepositoLogic.EliminarDeposito(id);
-        _listaDepositos = DepositoLogic.GetAll().ToList();
-    } *@
