@@ -14,7 +14,7 @@
     Lista Reservas
 </h1>
 <h1>
-    <a href="/cliente/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+    <a href="/cliente/reserva/seleccionar-fechas" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
 </h1>
 
 
@@ -34,8 +34,8 @@
         {
             <tr>
                 <td>@reserva.Id</td>
-                <td>@reserva.FechaDesde</td>
-                <td>@reserva.FechaHasta</td>
+                <td>@reserva.FechaDesde.ToString("MM/dd/yyyy")</td>
+                <td>@reserva.FechaHasta.ToString("MM/dd/yyyy")</td>
                 <td>@reserva.Deposito.Id</td>
                 <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>

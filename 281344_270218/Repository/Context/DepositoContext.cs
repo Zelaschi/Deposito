@@ -10,6 +10,7 @@ public class DepositoContext : DbContext
     public DbSet<Reserva> Reservas { get; set; }
     public DbSet<DepositoPromocion> DepositoPromocions {get;set;}
     public DbSet<Pago> Pagos { get; set; }
+    public DbSet<FechasNoDisponible> FechasNoDisponibles { get; set; }
 
     public DepositoContext() 
     {
@@ -78,9 +79,11 @@ public class DepositoContext : DbContext
             entity.HasOne(r => r.Pago)
                   .WithOne(p => p.Reserva)
                   .HasForeignKey<Pago>(p => p.ReservaId)
-                  .IsRequired(false);
+                  .IsRequired(false)
+                  .OnDelete(DeleteBehavior.Cascade);
 
         });
+        modelBuilder.Entity<Pago>().HasKey(p => p.PagoId);
 
         modelBuilder.Entity<Deposito>(entity =>
         {
@@ -89,6 +92,9 @@ public class DepositoContext : DbContext
             entity.Property(d => d.Tamanio).IsRequired();
             entity.Property(d => d.Climatizacion).IsRequired();
             entity.Property(d => d.Nombre).IsRequired();
+            entity.HasMany(d => d.fechasNoDisponibles) // Nombre de la propiedad de navegación en la clase Deposito
+                .WithOne(f => f.Deposito)            // Propiedad de navegación en la clase FechasNoDisponible
+                .HasForeignKey(f => f.DepositoId);
         });
         modelBuilder.Entity<DepositoPromocion>(entity =>
         {
@@ -102,6 +108,10 @@ public class DepositoContext : DbContext
                 .WithMany(p => p.DepositoPromocions)
                 .HasForeignKey(dp => dp.PromocionId);
         });
+        modelBuilder.Entity<FechasNoDisponible>()
+            .HasOne<Deposito>(d => d.Deposito)
+            .WithMany(f => f.fechasNoDisponibles)
+            .HasForeignKey(d => d.DepositoId);
     }
 
 

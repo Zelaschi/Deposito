@@ -53,7 +53,7 @@ namespace Domain
             }
         }
         public bool Climatizacion { get; set; }
-        private string _nombre { get; set; } 
+        private string _nombre { get; set; }
         public string Nombre
         {
             get { return _nombre; }
@@ -71,26 +71,23 @@ namespace Domain
             }
         }
         //inicio, fin
-        private IList<Tuple<DateTime, DateTime>> fechasNoDisponible { get; set; }
+        public List<FechasNoDisponible> fechasNoDisponibles { get; set; }
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
             return fechaDesde.CompareTo(fechaHasta) < 0;
         }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
-            if (!ValidarFechaInicioSeaAnteriorAFechaFin(disponibleDesde, disponibleHasta)) {
-                throw new ArgumentException("Disponible desde debe ser mayor a disponible hasta");
-            }
             DepositoId = 0;
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
             DepositoPromocions = new List<DepositoPromocion>();
             Nombre = nombre;
-            fechasNoDisponible = new List<Tuple<DateTime, DateTime>>
+            fechasNoDisponibles = new List<FechasNoDisponible>
             {
-                Tuple.Create(DateTime.MinValue, disponibleDesde),
-                Tuple.Create(disponibleHasta, DateTime.MaxValue)
+                new FechasNoDisponible(DateTime.MinValue, disponibleDesde),
+                new FechasNoDisponible(disponibleHasta, DateTime.MaxValue)
             };
         }
 
@@ -103,12 +100,14 @@ namespace Domain
             Tamanio = tamanio;
             Climatizacion = climatizacion;
             DepositoPromocions = new List<DepositoPromocion>();
-            fechasNoDisponible = new List<Tuple<DateTime, DateTime>>();
+            fechasNoDisponibles = new List<FechasNoDisponible>();
         }
-        private void validarDisponibilidad(DateTime fechaDesde, DateTime fechaHasta) {
-            foreach (var par in fechasNoDisponible)
+        private void validarDisponibilidad(DateTime fechaDesde, DateTime fechaHasta)
+        {
+
+            foreach (var par in fechasNoDisponibles)
             {
-                if ((fechaDesde >= par.Item1 && fechaDesde <= par.Item2 )||(fechaHasta >= par.Item1 && fechaHasta <= par.Item2))
+                if ((fechaDesde >= par.FechaDesde && fechaDesde <= par.FechaHasta) || (fechaHasta >= par.FechaDesde && fechaHasta <= par.FechaHasta))
                 {
                     throw new InvalidOperationException("El deposito no se encuentra disponible en la fecha ingresada");
                 }
@@ -116,9 +115,13 @@ namespace Domain
         }
         public bool validarDisponibilidadBool(DateTime fechaDesde, DateTime fechaHasta)
         {
-            foreach (var par in fechasNoDisponible)
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
             {
-                if ((fechaDesde >= par.Item1 && fechaDesde <= par.Item2) || (fechaHasta >= par.Item1 && fechaHasta <= par.Item2))
+                throw new ArgumentException("Disponible desde debe ser mayor a disponible hasta");
+            }
+            foreach (var par in fechasNoDisponibles)
+            {
+                if ((fechaDesde >= par.FechaDesde && fechaDesde <= par.FechaHasta) || (fechaHasta >= par.FechaDesde && fechaHasta <= par.FechaHasta))
                 {
                     return false;
                 }
@@ -126,18 +129,23 @@ namespace Domain
             return true;
         }
 
-        public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta) {
+        public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
+            {
+                throw new ArgumentException("Disponible desde debe ser mayor a disponible hasta");
+            }
             validarDisponibilidad(fechaDesde, fechaHasta);
-            fechasNoDisponible.Add(Tuple.Create(fechaDesde, fechaHasta));
+            fechasNoDisponibles.Add(new FechasNoDisponible(fechaDesde, fechaHasta));
         }
         public Promocion AgregarPromocionADeposito(Promocion promoParametro)
         {
-            if (DepositoPromocions.FirstOrDefault(dp => dp.PromocionId == promoParametro.PromocionId) !=null)
+            if (DepositoPromocions.FirstOrDefault(dp => dp.PromocionId == promoParametro.PromocionId) != null)
             {
                 throw new InvalidOperationException("El elemento ya existe en la lista.");
             }
 
-            DepositoPromocions.Add(new DepositoPromocion { Deposito = this, DepositoId = this.DepositoId, Promocion = promoParametro , PromocionId = promoParametro.PromocionId});
+            DepositoPromocions.Add(new DepositoPromocion { Deposito = this, DepositoId = this.DepositoId, Promocion = promoParametro, PromocionId = promoParametro.PromocionId });
             return promoParametro;
         }
 

@@ -60,7 +60,7 @@ namespace ControllerLayerTest
 
             _controller = new Controller(_administradorLogic, _clienteLogic, _depositoLogic, _promocionLogic, _reservaLogic);
 
-            aDTOCliente = new DTOCliente(nombreYApellidoTest, emailTest, pwdTest);
+            aDTOCliente = new DTOCliente(nombreYApellidoTest, "mail@mail.com", pwdTest);
             aDTOAdministrador = new DTOAdministrador(nombreYApellidoTest, emailTest, pwdTest);
             aDTOPromocion = new DTOPromocion(0, "etiqueta", 20, DateTime.Today, DateTime.Today.AddDays(1));
             aDTODeposito = new DTODeposito(1, "A", "Grande", true);
@@ -551,7 +551,7 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOPromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).Etiqueta);
             Assert.AreEqual(aDTOPromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).PorcentajeDescuento);
             Assert.AreEqual(aDTOPromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaInicio);
-            Assert.AreEqual(aDTOPromocion.FechaFIn, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaFin);
+            Assert.AreEqual(aDTOPromocion.FechaFin, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaFin);
         }
 
         [TestMethod]
@@ -574,7 +574,7 @@ namespace ControllerLayerTest
             DateTime fechaFinMenor = DateTime.Today;
 
             aDTOPromocion.FechaInicio = fechaInicioMayor;
-            aDTOPromocion.FechaFIn = fechaFinMenor;
+            aDTOPromocion.FechaFin = fechaFinMenor;
 
             _controller.RegistrarPromocion(aDTOPromocion);
         }
@@ -636,7 +636,7 @@ namespace ControllerLayerTest
 
             aDTOPromocion.Etiqueta = "nuevaEtiqueta";
             aDTOPromocion.FechaInicio = DateTime.Today.AddDays(10);
-            aDTOPromocion.FechaFIn = DateTime.Today.AddDays(11);
+            aDTOPromocion.FechaFin = DateTime.Today.AddDays(11);
             aDTOPromocion.PorcentajeDescuento = 40;
             aDTOPromocion.PromocionId = 1;
 
@@ -693,15 +693,45 @@ namespace ControllerLayerTest
         public void AceptarReservaTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
-            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarDeposito(aDTODeposito2);
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
             _controller.RegistrarReserva(aDTOReserva);
-
             _controller.AceptarReserva(aDTOReserva);
 
             DTOReserva DTOReservaEncontrado = _controller.BuscarReservaPorId(aDTOReserva.Id);
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
+        [TestMethod]
+        public void AceptarReservaQueAgregueFechasNoDisponiblesADeposito() {
+            _controller.RegistrarCliente(aDTOCliente);
+            int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
+            aDTODeposito2.Id = nuevoIdDep;
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
+            _controller.RegistrarReserva(aDTOReserva);
+
+            _controller.AceptarReserva(aDTOReserva);
+            Deposito deposito = _depositoLogic.buscarDepositoPorId(aDTODeposito2.Id);
+            Assert.IsFalse(deposito.validarDisponibilidadBool(aDTOReserva.FechaDesde, aDTOReserva.FechaHasta));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void IntentarAceptarReservaConFechasNoDisponibles()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
+            aDTODeposito2.Id = nuevoIdDep;
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.RegistrarReserva(aDTOReserva);
+
+            _controller.AceptarReserva(aDTOReserva);
+            _controller.AceptarReserva(aDTOReserva);
+            Deposito deposito = _depositoLogic.buscarDepositoPorId(aDTODeposito2.Id);
+            Assert.IsFalse(deposito.validarDisponibilidadBool(aDTOReserva.FechaDesde, aDTOReserva.FechaHasta));
+        }
+
+
         [TestMethod]
         public void RechazarReservaTest()
         {

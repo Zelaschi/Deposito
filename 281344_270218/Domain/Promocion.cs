@@ -39,7 +39,7 @@
 
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaInicio, DateTime fechaFin)
         {
-            return fechaInicio.CompareTo(fechaFin) <= 0;
+            return fechaInicio < fechaFin ;
         }
 
         public Promocion(string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)

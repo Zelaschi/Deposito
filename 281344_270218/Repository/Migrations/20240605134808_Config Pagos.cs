@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class Pagos : Migration
+    public partial class ConfigPagos : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,6 +59,27 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FechasNoDisponibles",
+                columns: table => new
+                {
+                    FechasNoDisponibleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepositoId = table.Column<int>(type: "int", nullable: false),
+                    FechaDesde = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaHasta = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FechasNoDisponibles", x => x.FechasNoDisponibleId);
+                    table.ForeignKey(
+                        name: "FK_FechasNoDisponibles_Depositos_DepositoId",
+                        column: x => x.DepositoId,
+                        principalTable: "Depositos",
+                        principalColumn: "DepositoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DepositoPromocions",
                 columns: table => new
                 {
@@ -95,8 +116,7 @@ namespace Repository.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JustificacionRechazo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    PromocionId = table.Column<int>(type: "int", nullable: true),
-                    PagoId = table.Column<int>(type: "int", nullable: true)
+                    PromocionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -136,12 +156,18 @@ namespace Repository.Migrations
                         name: "FK_Pagos_Reservas_ReservaId",
                         column: x => x.ReservaId,
                         principalTable: "Reservas",
-                        principalColumn: "ReservaId");
+                        principalColumn: "ReservaId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepositoPromocions_DepositoId",
                 table: "DepositoPromocions",
+                column: "DepositoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FechasNoDisponibles_DepositoId",
+                table: "FechasNoDisponibles",
                 column: "DepositoId");
 
             migrationBuilder.CreateIndex(
@@ -170,6 +196,9 @@ namespace Repository.Migrations
         {
             migrationBuilder.DropTable(
                 name: "DepositoPromocions");
+
+            migrationBuilder.DropTable(
+                name: "FechasNoDisponibles");
 
             migrationBuilder.DropTable(
                 name: "Pagos");
