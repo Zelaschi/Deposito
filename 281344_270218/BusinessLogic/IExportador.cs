@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Domain;
+using Repository.SQL;
 
 namespace BusinessLogic
 {
-    internal class Class1
+    public interface IExportador 
     {
+        void Exportar(List<Reserva> reservas, string filename);
     }
 }
