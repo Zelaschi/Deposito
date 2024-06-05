@@ -63,6 +63,15 @@
                 </td>
             </tr>
         }
+        <div class="form-group m-2">
+            <label for="title">Generar Reporte de reservas</label>
+            <br />
+            <select class="form-select" name="formato" id="Formato" @bind="unFormato">
+                <option selected>Seleccione un formato</option>
+                <option value="TXT">TXT</option>
+                <option value="CSV">CSV</option>
+            </select>
+        </div>
     </tbody>
 </table>
 
@@ -74,6 +83,7 @@
     private string unaJustificacion;
     private bool datosCorrectos = true;
     private string mensajeError;
+    private string unFormato;
 
     protected override void OnInitialized()
     {
