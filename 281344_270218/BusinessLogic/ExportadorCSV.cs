@@ -9,9 +9,9 @@ namespace BusinessLogic
 {
     public class ExportadorCSV : IExportador
     {
-        public void Exportar(List<Reserva> reservas, string filename)
+        public void Exportar(List<Reserva> reservas)
         {
-            using (StreamWriter writer = new StreamWriter(filename))
+            using (StreamWriter writer = new StreamWriter("../reporte.csv"))
             {
                 writer.WriteLine("DEPOSITO,RESERVA,PAGO");
                 foreach (var reserva in reservas)

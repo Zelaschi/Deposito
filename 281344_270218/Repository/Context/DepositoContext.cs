@@ -23,9 +23,9 @@ public class DepositoContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {       
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDBTest;User Id=sa;Password=Passw1rd;");
-       
+    {
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDB;User Id=sa;Password=Passw1rd;TrustServerCertificate=true;");
+
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
