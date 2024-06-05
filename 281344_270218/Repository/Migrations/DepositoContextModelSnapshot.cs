@@ -197,9 +197,6 @@ namespace Repository.Migrations
                     b.Property<string>("JustificacionRechazo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PagoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Precio")
                         .HasColumnType("int");
 

@@ -195,7 +195,7 @@ namespace ControllerLayer
         {
             try
             {
-                Promocion aPromocion = new Promocion(aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFIn);
+                Promocion aPromocion = new Promocion(aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFin);
                 _promocionLogic.AgregarPromocion(aPromocion);
                 return aPromocion.PromocionId;
             }
@@ -266,7 +266,7 @@ namespace ControllerLayer
 
                 promocion.Etiqueta = DTOPromocionParametro.Etiqueta;
                 promocion.FechaInicio = DTOPromocionParametro.FechaInicio;
-                promocion.FechaFin = DTOPromocionParametro.FechaFIn;
+                promocion.FechaFin = DTOPromocionParametro.FechaFin;
                 promocion.PorcentajeDescuento = DTOPromocionParametro.PorcentajeDescuento;
             }
             catch (ArgumentException e)
@@ -282,6 +282,8 @@ namespace ControllerLayer
                 Deposito depositoEncontrado = _depositoLogic.buscarDepositoPorId(DTOReservaParametro.Deposito.Id);
                 Cliente clienteEncontrado = _clienteLogic.buscarClientePorMail(DTOReservaParametro.Cliente.Mail);
                 Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
+                Promocion promocionParaReserva = depositoEncontrado.mejorPromocionHoy();
+                reservaAAgregar.PromocionAplicada = promocionParaReserva;
 
                 _reservaLogic.AgregarReserva(reservaAAgregar);
                 return reservaAAgregar.ReservaId;

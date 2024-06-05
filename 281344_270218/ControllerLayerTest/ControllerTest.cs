@@ -551,7 +551,7 @@ namespace ControllerLayerTest
             Assert.AreEqual(aDTOPromocion.Etiqueta, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).Etiqueta);
             Assert.AreEqual(aDTOPromocion.PorcentajeDescuento, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).PorcentajeDescuento);
             Assert.AreEqual(aDTOPromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaInicio);
-            Assert.AreEqual(aDTOPromocion.FechaFIn, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaFin);
+            Assert.AreEqual(aDTOPromocion.FechaFin, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaFin);
         }
 
         [TestMethod]
@@ -574,7 +574,7 @@ namespace ControllerLayerTest
             DateTime fechaFinMenor = DateTime.Today;
 
             aDTOPromocion.FechaInicio = fechaInicioMayor;
-            aDTOPromocion.FechaFIn = fechaFinMenor;
+            aDTOPromocion.FechaFin = fechaFinMenor;
 
             _controller.RegistrarPromocion(aDTOPromocion);
         }
@@ -636,7 +636,7 @@ namespace ControllerLayerTest
 
             aDTOPromocion.Etiqueta = "nuevaEtiqueta";
             aDTOPromocion.FechaInicio = DateTime.Today.AddDays(10);
-            aDTOPromocion.FechaFIn = DateTime.Today.AddDays(11);
+            aDTOPromocion.FechaFin = DateTime.Today.AddDays(11);
             aDTOPromocion.PorcentajeDescuento = 40;
             aDTOPromocion.PromocionId = 1;
 
