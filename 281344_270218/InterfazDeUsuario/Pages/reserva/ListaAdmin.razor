@@ -14,7 +14,7 @@
     Lista Reservas
 </h1>
 <h1>
-    <a href="/admin/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+    <a href="/admin/reserva/seleccionar-fechas" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
 </h1>
 
 
@@ -36,26 +36,42 @@
         {
             <tr>
                 <td>@reserva.Id</td>
-                <td>@reserva.FechaDesde</td>
-                <td>@reserva.FechaHasta</td>
-                <td>@reserva.Deposito.Id</td>
+                <td>@reserva.FechaDesde.ToString("MM/dd/yyyy")</td>
+                <td>@reserva.FechaHasta.ToString("MM/dd/yyyy")</td>
+                <td>@reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
                 <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>
                 <td>@reserva.Cliente.NombreYApellido</td>
                 <td>
-                    @if (reserva.Estado == "Pendiente")
+                    @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
                     {
-                        <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
-                        <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
-                        <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
-                        @if (!datosCorrectos)
+                        <p>Pago pendiente</p>
+                    }
+                    else
+                    {
+                        @if (reserva.Estado == "Pendiente")
                         {
-                            <p class="text-danger">@mensajeError</p>
+                            <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
+                            <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
+                            <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
+                            @if (!datosCorrectos)
+                            {
+                                <p class="text-danger">@mensajeError</p>
+                            }
                         }
                     }
                 </td>
             </tr>
         }
+        <div class="form-group m-2">
+            <label for="title">Generar Reporte de reservas</label>
+            <br />
+            <select class="form-select" name="formato" id="Formato" @bind="unFormato">
+                <option selected>Seleccione un formato</option>
+                <option value="TXT">TXT</option>
+                <option value="CSV">CSV</option>
+            </select>
+        </div>
     </tbody>
 </table>
 
@@ -67,6 +83,7 @@
     private string unaJustificacion;
     private bool datosCorrectos = true;
     private string mensajeError;
+    private string unFormato;
 
     protected override void OnInitialized()
     {
@@ -83,11 +100,17 @@
 
     private void AceptarReserva(DTOReserva reserva)
     {
-        reserva.Estado = "Aprobada";
-        Controller.AceptarReserva(reserva);
-        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
-
-
+        try
+        {
+            Controller.AceptarReserva(reserva);
+            reserva.Estado = "Aprobada";
+            reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
     }
     private void MostrarJustificacion(DTOReserva reserva)
     {

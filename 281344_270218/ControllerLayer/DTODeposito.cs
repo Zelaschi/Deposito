@@ -31,6 +31,8 @@ namespace ControllerLayer
             Area = area;
             Tamanio = tamanio;
             Climatizacion = climatizacion;
+            DisponibleDesde = DateTime.Today;
+            DisponibleHasta = DateTime.Today.AddDays(1);
         }
         public DTODeposito(string nombre, int id, string area, string tamanio, bool climatizacion)
         {
@@ -39,6 +41,8 @@ namespace ControllerLayer
             Tamanio = tamanio;
             Climatizacion = climatizacion;
             Nombre = nombre;
+            DisponibleDesde = DateTime.Today;
+            DisponibleHasta = DateTime.Today.AddDays(1);
         }
     }
 }

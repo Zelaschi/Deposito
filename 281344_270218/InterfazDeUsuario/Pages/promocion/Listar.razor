@@ -29,8 +29,8 @@
                 <td>@promocion.PromocionId </td>
                 <td>@promocion.Etiqueta</td>
                 <td>@promocion.PorcentajeDescuento</td>
-                <td>@promocion.FechaInicio</td>
-                <td>@promocion.FechaFIn</td>
+                <td>@promocion.FechaInicio.ToString("MM/dd/yyyy")</td>
+                <td>@promocion.FechaFin.ToString("MM/dd/yyyy")</td>
                 <td>
                     <a class="btn btn-success btn-sm" href="admin/promocion/@promocion.PromocionId/editar">Editar</a>
                     <button class="btn btn-danger btn-sm" @onclick="(() => BorrarPromocion(promocion))">Eliminar</button>

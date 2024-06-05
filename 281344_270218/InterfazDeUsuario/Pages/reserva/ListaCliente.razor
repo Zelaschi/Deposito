@@ -14,7 +14,7 @@
     Lista Reservas
 </h1>
 <h1>
-    <a href="/cliente/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+    <a href="/cliente/reserva/seleccionar-fechas" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
 </h1>
 
 
@@ -27,6 +27,7 @@
             <th>Deposito</th>
             <th>Precio</th>
             <th>Estado</th>
+            <th>Pago </th>
         </tr>
     </thead>
     <tbody>
@@ -34,11 +35,18 @@
         {
             <tr>
                 <td>@reserva.Id</td>
-                <td>@reserva.FechaDesde</td>
-                <td>@reserva.FechaHasta</td>
-                <td>@reserva.Deposito.Id</td>
+                <td>@reserva.FechaDesde.ToString("MM/dd/yyyy")</td>
+                <td>@reserva.FechaHasta.ToString("MM/dd/yyyy")</td>
+                <td>@reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
                 <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>
+                <td>@reserva.Pago.EstadoPago
+                    <br/>
+                    @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
+                    {
+                        <button class="btn btn-success btn-sm" @onclick="(() => PagarReserva(reserva))">Pagar</button>
+                    }
+                </td>
             </tr>
         }
     </tbody>
@@ -50,18 +58,24 @@
     private List<DTOReserva> reservasDeCliente ;
     private bool reservaRechazada = false;
     private string unaJustificacion;
+    DTOCliente clienteActual;
 
     protected override void OnInitialized()
     {
         try
         {
-            DTOCliente clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
+            clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
             reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
         }
         catch (Exception e)
         {
             Console.WriteLine("esto no deberia pasar nunca");
-        }
-        
+        }   
+    }
+    private void PagarReserva(DTOReserva reserva)
+    {
+        Controller.PagarReserva(reserva);
+        reserva.Pago.EstadoPago = "Reservado";
+        reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
     }
 }
