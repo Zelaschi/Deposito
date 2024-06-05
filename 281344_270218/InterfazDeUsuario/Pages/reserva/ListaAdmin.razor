@@ -85,8 +85,8 @@
     {
         try
         {
-            reserva.Estado = "Aprobada";
             Controller.AceptarReserva(reserva);
+            reserva.Estado = "Aprobada";
             reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
         }
         catch (Exception e)

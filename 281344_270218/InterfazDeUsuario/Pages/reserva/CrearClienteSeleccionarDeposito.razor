@@ -1,38 +1,28 @@
-﻿@page "/admin/reserva/mostrar-depositos/{fechaDesde}/{fechaHasta}"
+﻿@page "/cliente/reserva/mostrar-depositos/{fechaDesde}/{fechaHasta}"
 
 <PageTitle>Mostrar Depositos</PageTitle>
-  @using BusinessLogic
+  
+@using BusinessLogic
 @using Domain
 @using ControllerLayer
 
+@inject DTOSesion DtoSesion
 @inject Controller Controller
 @inject NavigationManager NavigationManager
-<p><a href="/admin/reserva/seleccionar-fechas">Volver</a></p>
+<p><a href="/cliente/reserva/seleccionar-fechas">Volver</a></p>
 <h1>Depositos Disponibles</h1>
 <form>
-    @if (depositosDisponibles !=null )
-        {
+    @if (depositosDisponibles.Count >0 )
+    {
         <div class="form-group m-2">
-        
-                <label for="Deposito">Depositos Disponibles</label>
-                <select class="form-control" @bind="_idDepositoSeleccionado">
-                    <option disabled selected value="">Seleccionar Deposito</option>
-                        @foreach (var deposito in depositosDisponibles)
-                        {
-                            <option value="@deposito.Id">@deposito.Id</option>
-                        }
-                </select>
-            
-            
-        </div>
-        <div class="form-group m-2">
-            <label for="Cliente">Seleccionar cliente</label>
-            <select class="form-control" @bind="_mailClienteSeleccionado">
-                <option disabled selected value="">Seleccionar Cliente</option>
-                    @foreach (var cliente in clientesDisponibles)
-                    {
-                        <option value="@cliente.Mail">@cliente.NombreYApellido</option>
-                    }
+
+            <label for="Deposito">Depositos Disponibles</label>
+            <select class="form-control" @bind="_idDepositoSeleccionado">
+                <option disabled selected value="">Seleccionar Deposito</option>
+                @foreach (var deposito in depositosDisponibles)
+                {
+                    <option value="@deposito.Id">@deposito.Id</option>
+                }
             </select>
         </div>
 
@@ -59,7 +49,6 @@
     private DateTime unaFechaDesde;
     private DateTime unaFechaHasta;
     private List<DTODeposito> depositosDisponibles;
-    private List<DTOCliente> clientesDisponibles;
     private int _idDepositoSeleccionado;
     private string _mailClienteSeleccionado;
     private bool datosCorrectos = true;
@@ -75,14 +64,13 @@
                 unaFechaHasta = DateTime.Parse(fechaHasta);
             }
             depositosDisponibles = Controller.DepositosDisponiblesParaReservaPorFecha(unaFechaDesde, unaFechaHasta).ToList();
-            clientesDisponibles = Controller.listarTodosLosClientes().ToList();
         }
         catch (Exception e)
         {
             datosCorrectos = false;
             mensajeError = e.Message;
         }
-        
+
     }
 
     private void GuardarCambios()
@@ -90,11 +78,11 @@
         try
         {
             unDeposito = Controller.BuscarDepositoPorId(_idDepositoSeleccionado);
-            unCliente = Controller.buscarClientePorMail(_mailClienteSeleccionado);
+            unCliente = Controller.buscarClientePorMail(DtoSesion.SesionMail);
             reserva = new DTOReserva(0, unaFechaDesde, unaFechaHasta, unDeposito, unCliente, 1);
             int idReservaReal = Controller.RegistrarReserva(reserva);
             reserva.Id = idReservaReal;
-            NavigationManager.NavigateTo("/admin/reserva");
+            NavigationManager.NavigateTo("/cliente/reserva");
         }
         catch (Exception e)
         {

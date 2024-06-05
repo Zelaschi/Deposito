@@ -135,6 +135,10 @@ namespace Domain
 
         public void agregarFechaNoDisponible(DateTime fechaDesde, DateTime fechaHasta)
         {
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaDesde, fechaHasta))
+            {
+                throw new ArgumentException("Disponible desde debe ser mayor a disponible hasta");
+            }
             validarDisponibilidad(fechaDesde, fechaHasta);
             fechasNoDisponibles.Add(new FechasNoDisponible(fechaDesde, fechaHasta));
         }

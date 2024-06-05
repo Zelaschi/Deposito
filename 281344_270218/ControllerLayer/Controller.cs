@@ -325,8 +325,17 @@ namespace ControllerLayer
 
         public void AceptarReserva(DTOReserva DTOReservaParametro)
         {
-            Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
-            _reservaLogic.AceptarReserva(ReservaEncontrada);
+            try
+            {
+                Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+                DateTime FechaHasta = ReservaEncontrada.FechaHasta;
+                DateTime FechaDesde = ReservaEncontrada.FechaDesde;
+                ReservaEncontrada.Deposito.agregarFechaNoDisponible(FechaDesde, FechaHasta);
+                _reservaLogic.AceptarReserva(ReservaEncontrada);
+            }
+            catch (InvalidOperationException e) {
+                throw new Exception(e.Message);
+            }
         }
         public void RechazarReserva(DTOReserva DTOReservaParametro)
         {

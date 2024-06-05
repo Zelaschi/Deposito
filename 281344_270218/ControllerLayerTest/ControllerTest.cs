@@ -693,9 +693,9 @@ namespace ControllerLayerTest
         public void AceptarReservaTest()
         {
             _controller.RegistrarCliente(aDTOCliente);
-            _controller.RegistrarDeposito(aDTODeposito);
+            _controller.RegistrarDeposito(aDTODeposito2);
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
             _controller.RegistrarReserva(aDTOReserva);
-
             _controller.AceptarReserva(aDTOReserva);
 
             DTOReserva DTOReservaEncontrado = _controller.BuscarReservaPorId(aDTOReserva.Id);
@@ -707,6 +707,7 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
             aDTODeposito2.Id = nuevoIdDep;
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
             _controller.RegistrarReserva(aDTOReserva);
 
             _controller.AceptarReserva(aDTOReserva);
@@ -720,6 +721,7 @@ namespace ControllerLayerTest
             _controller.RegistrarCliente(aDTOCliente);
             int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
             aDTODeposito2.Id = nuevoIdDep;
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
             _controller.RegistrarReserva(aDTOReserva);
             _controller.RegistrarReserva(aDTOReserva);
 
