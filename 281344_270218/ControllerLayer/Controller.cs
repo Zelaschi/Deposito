@@ -306,7 +306,9 @@ namespace ControllerLayer
             DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.DepositoId, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
 
             DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.ReservaId, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
-            reservaRetorno.Pago = new DTOPago(reservaEncontrada.Pago.PagoId, reservaEncontrada.Pago.EstadoPago);
+            if (!reservaEncontrada.Estado.Equals("Rechazada")) {
+                reservaRetorno.Pago = new DTOPago(reservaEncontrada.Pago.PagoId, reservaEncontrada.Pago.EstadoPago);
+            }
             reservaRetorno.Estado = reservaEncontrada.Estado;
 
             return reservaRetorno; 

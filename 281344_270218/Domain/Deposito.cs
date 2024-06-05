@@ -73,10 +73,13 @@ namespace Domain
         public List<FechasNoDisponible> fechasNoDisponibles { get; set; }
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
-            return fechaDesde.CompareTo(fechaHasta) < 0;
+             return fechaDesde < fechaHasta;
         }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin( disponibleDesde,  disponibleHasta)) {
+                throw new ArgumentException("La fecha de disponible desde debe ser anterior a disponible hasta.");
+            }
             DepositoId = 0;
             Area = area;
             Tamanio = tamanio;
