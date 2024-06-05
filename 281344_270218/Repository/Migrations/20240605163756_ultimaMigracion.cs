@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class ConfigPagos : Migration
+    public partial class ultimaMigracion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
