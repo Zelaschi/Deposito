@@ -109,6 +109,7 @@ else
             if (Controller.LogIn(email, password))
             {
                 DtoSesion.SesionMail = email;
+                DtoSesion.logIn = true;
                 if (Controller.esAdministrador(email))
                 {
                     DtoSesion.esAdministrador = true;    
