@@ -703,6 +703,34 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
         [TestMethod]
+        public void AceptarReservaQueAgregueFechasNoDisponiblesADeposito() {
+            _controller.RegistrarCliente(aDTOCliente);
+            int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
+            aDTODeposito2.Id = nuevoIdDep;
+            _controller.RegistrarReserva(aDTOReserva);
+
+            _controller.AceptarReserva(aDTOReserva);
+            Deposito deposito = _depositoLogic.buscarDepositoPorId(aDTODeposito2.Id);
+            Assert.IsFalse(deposito.validarDisponibilidadBool(aDTOReserva.FechaDesde, aDTOReserva.FechaHasta));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void IntentarAceptarReservaConFechasNoDisponibles()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
+            aDTODeposito2.Id = nuevoIdDep;
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.RegistrarReserva(aDTOReserva);
+
+            _controller.AceptarReserva(aDTOReserva);
+            _controller.AceptarReserva(aDTOReserva);
+            Deposito deposito = _depositoLogic.buscarDepositoPorId(aDTODeposito2.Id);
+            Assert.IsFalse(deposito.validarDisponibilidadBool(aDTOReserva.FechaDesde, aDTOReserva.FechaHasta));
+        }
+
+
+        [TestMethod]
         public void RechazarReservaTest()
         {
             _controller.RegistrarCliente(aDTOCliente);

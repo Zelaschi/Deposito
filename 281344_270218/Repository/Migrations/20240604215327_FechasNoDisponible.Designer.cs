@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240604183038_Pagos")]
-    partial class Pagos
+    [Migration("20240604215327_FechasNoDisponible")]
+    partial class FechasNoDisponible
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,30 @@ namespace Repository.Migrations
                     b.HasIndex("DepositoId");
 
                     b.ToTable("DepositoPromocions");
+                });
+
+            modelBuilder.Entity("Domain.FechasNoDisponible", b =>
+                {
+                    b.Property<int>("FechasNoDisponibleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FechasNoDisponibleId"), 1L, 1);
+
+                    b.Property<int>("DepositoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaDesde")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaHasta")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("FechasNoDisponibleId");
+
+                    b.HasIndex("DepositoId");
+
+                    b.ToTable("FechasNoDisponibles");
                 });
 
             modelBuilder.Entity("Domain.Pago", b =>
@@ -228,11 +252,23 @@ namespace Repository.Migrations
                     b.Navigation("Promocion");
                 });
 
+            modelBuilder.Entity("Domain.FechasNoDisponible", b =>
+                {
+                    b.HasOne("Domain.Deposito", "Deposito")
+                        .WithMany("fechasNoDisponibles")
+                        .HasForeignKey("DepositoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deposito");
+                });
+
             modelBuilder.Entity("Domain.Pago", b =>
                 {
                     b.HasOne("Domain.Reserva", "Reserva")
                         .WithOne("Pago")
-                        .HasForeignKey("Domain.Pago", "ReservaId");
+                        .HasForeignKey("Domain.Pago", "ReservaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Reserva");
                 });
@@ -267,6 +303,8 @@ namespace Repository.Migrations
                     b.Navigation("DepositoPromocions");
 
                     b.Navigation("Reservas");
+
+                    b.Navigation("fechasNoDisponibles");
                 });
 
             modelBuilder.Entity("Domain.Promocion", b =>

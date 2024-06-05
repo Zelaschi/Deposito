@@ -386,17 +386,24 @@ namespace ControllerLayer
         }
         public IList<DTODeposito> DepositosDisponiblesParaReservaPorFecha(DateTime fechaDesde, DateTime fechaHasta)
         {
-            List<DTODeposito> retorno = new List<DTODeposito>();
-            IList<Deposito> depositos = _depositoLogic.GetAll();
-            foreach (var deposito in depositos)
+            try
             {
-                if (deposito.validarDisponibilidadBool(fechaDesde, fechaHasta))
+                List<DTODeposito> retorno = new List<DTODeposito>();
+                IList<Deposito> depositos = _depositoLogic.GetAll();
+                foreach (var deposito in depositos)
                 {
-                    DTODeposito dtodeposito = new DTODeposito(deposito.Nombre,deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion) ;
-                    retorno.Add(dtodeposito);
+                    if (deposito.validarDisponibilidadBool(fechaDesde, fechaHasta))
+                    {
+                        DTODeposito dtodeposito = new DTODeposito(deposito.Nombre, deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
+                        retorno.Add(dtodeposito);
+                    }
                 }
+                return retorno;
             }
-            return retorno;
+            catch (ArgumentException e) {
+                throw new Exception(e.Message);
+            }
+            
         }
     }
 }

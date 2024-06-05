@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository.SQL
 {
@@ -15,7 +16,7 @@ namespace Repository.SQL
         {
             _repositorio.Depositos.Add(deposito);
             _repositorio.SaveChanges(); 
-            return _repositorio.Depositos.FirstOrDefault(d => d.DepositoId == deposito.DepositoId);
+            return _repositorio.Depositos.Include(d => d.fechasNoDisponibles).FirstOrDefault(d => d.DepositoId == deposito.DepositoId);
         }
 
         public void Delete(int id)
@@ -27,12 +28,12 @@ namespace Repository.SQL
 
         public Deposito? Find(Func<Deposito, bool> filter)
         {
-            return _repositorio.Depositos.FirstOrDefault(filter);
+            return _repositorio.Depositos.Include(d => d.fechasNoDisponibles).FirstOrDefault(filter);
         }
 
         public IList<Deposito> FindAll()
         {
-            return _repositorio.Depositos.ToList();
+            return _repositorio.Depositos.Include(d => d.fechasNoDisponibles).ToList();
         }
 
         public Deposito? Update(Deposito updatedEntity)

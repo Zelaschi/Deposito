@@ -11,16 +11,16 @@
 
 <h1>Crear Reserva</h1>
 <form>
-    <div class="form-group m-2">
-        <label for="fechaDesde">Fecha Desde:</label>
-        <input type="date" class="form-control" id="fechaDesde" @bind="unaFechaDesde"  />
-    </div>
-    <div class="form-group m-2">
-        <label for="fechaHasta">Fecha Hasta:</label>
-        <input type="date" placeholder="today" class="form-control" id="fechaHasta" @bind="unaFechaHasta"  />
+    <div class="form-group">
+        <label for="fechaDesde">Fecha Desde</label>
+        <input type="datetime" class="form-control" id="fechaDesde" @bind="unaFechaDesde" />
     </div>
     <div class="form-group">
-        <label for="Deposito">Depositos Disponibles</label>
+        <label for="fechaHasta">Fecha Hasta</label>
+        <input type="datetime" class="form-control" id="fechaHasta" @bind="unaFechaHasta" />
+    </div>
+    <div class="form-group">
+        <label for="Deposito">Seleccionar deposito</label>
         <select class="form-control" @bind="@_idDepositoSeleccionado" >
             <option diable selected value="">Seleccionar Deposito</option>
             @foreach(var deposito in depositosDisponibles)
@@ -50,30 +50,10 @@
 
 @code {
     private DTOReserva reserva;
-    private DateTime _unaFechaDesde;
-    private DateTime unaFechaDesde
-    {
-        get { return _unaFechaDesde; }
-        set
-        {
-            MostrarDepositosDisponibles();
-            _unaFechaDesde = value;
-        }
-    }
-    private DateTime _unaFechaHasta;
-    private DateTime unaFechaHasta
-    {
-        get { return _unaFechaHasta; }
-        set
-        {
-            MostrarDepositosDisponibles();
-            _unaFechaHasta = value;
-        }
-    }
+    private DateTime unaFechaDesde;
+    private DateTime unaFechaHasta;
     private DTODeposito unDeposito;
     private DTOCliente unCliente;
-    private int precio;
-    private DTOCliente cliente;
     private List<DTODeposito> depositosDisponibles;
     private List<DTOCliente> clientesDisponibles;
     private int _idDepositoSeleccionado;
@@ -83,13 +63,8 @@
 
     protected override void OnInitialized()
     {
+        depositosDisponibles = Controller.listarTodosLosDepositos().ToList();
         clientesDisponibles = Controller.listarTodosLosClientes().ToList();
-        unaFechaDesde = DateTime.Today;
-        unaFechaHasta = DateTime.Today;
-    }
-    private void MostrarDepositosDisponibles()
-    {
-        depositosDisponibles = Controller.DepositosDisponiblesParaReservaPorFecha(unaFechaDesde,unaFechaHasta).ToList();
     }
 
     private void GuardarCambios()

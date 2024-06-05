@@ -14,7 +14,7 @@
     Lista Reservas
 </h1>
 <h1>
-    <a href="/admin/reserva/crear" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+    <a href="/admin/reserva/seleccionar-fechas" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
 </h1>
 
 
@@ -83,11 +83,17 @@
 
     private void AceptarReserva(DTOReserva reserva)
     {
-        reserva.Estado = "Aprobada";
-        Controller.AceptarReserva(reserva);
-        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
-
-
+        try
+        {
+            reserva.Estado = "Aprobada";
+            Controller.AceptarReserva(reserva);
+            reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        }
+        catch (Exception e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
+        }
     }
     private void MostrarJustificacion(DTOReserva reserva)
     {
