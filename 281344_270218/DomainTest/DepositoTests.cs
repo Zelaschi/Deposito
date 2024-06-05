@@ -65,12 +65,10 @@ namespace DomainTest
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(5), DateTime.Now.AddDays(15));
             deposito.agregarFechaNoDisponible(DateTime.Now.AddDays(7), DateTime.Now.AddDays(20));
         }
-
         [TestMethod]
         public void DepositoNoDebePermitirFechasInconsistentes()
         {
             Assert.ThrowsException<ArgumentException>(() => new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(3), DateTime.Today), "Ingrese un periodo de fechas valido");
         }
-
     }
 }

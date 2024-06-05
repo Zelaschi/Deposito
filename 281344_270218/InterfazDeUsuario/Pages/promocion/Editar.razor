@@ -36,7 +36,7 @@
 @code {
     [Parameter]
 
-    public int IdPromocion { get; set; }
+    public int PromocionId { get; set; }
 
     private DTOPromocion promocionActual;
     private string unaEtiqueta;
@@ -48,20 +48,34 @@
 
     protected override void OnInitialized()
     {
-        promocionActual = Controller.BuscarPromocionPorId(IdPromocion);
+        promocionActual = Controller.BuscarPromocionPorId(PromocionId);
+        unaEtiqueta = promocionActual.Etiqueta;
+        unPorcentajeDescuento = promocionActual.PorcentajeDescuento;
+        unaFechaInicio = promocionActual.FechaInicio;
+        unaFechaFin = promocionActual.FechaFin;
     }
 
     private void GuardarCambios()
     {
         try
         {
+            if (unaEtiqueta == null)
+            {
+                throw new Exception("Ingrese Etiqueta");
+
+            }
             promocionActual.Etiqueta = unaEtiqueta;
             promocionActual.PorcentajeDescuento = unPorcentajeDescuento;
             promocionActual.FechaInicio = unaFechaInicio;
-            promocionActual.FechaFIn = unaFechaFin;
+            promocionActual.FechaFin = unaFechaFin;
 
             Controller.ActualizarPromocion(promocionActual);
             NavigationManager.NavigateTo("/admin/promocion");
+        }
+        catch (ArgumentException e)
+        {
+            datosCorrectos = false;
+            mensajeError = e.Message;
         }
         catch(Exception e)
         {

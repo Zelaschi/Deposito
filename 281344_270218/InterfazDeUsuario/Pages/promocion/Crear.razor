@@ -39,8 +39,8 @@
     private DTOPromocion promocion;
     private string unaEtiqueta;
     private int unPorcentajeDescuento;
-    private DateTime unaFechaInicio;
-    private DateTime unaFechaFin;
+    private DateTime unaFechaInicio = DateTime.Today;
+    private DateTime unaFechaFin = DateTime.Today;
     private bool datosCorrectos = true;
     private string mensajeError;
 
@@ -48,6 +48,11 @@
     {
         try
         {
+            if (unaEtiqueta == null )
+            {
+                throw new Exception("Ingrese Etiqueta");
+
+            }
             promocion = new(1, unaEtiqueta, unPorcentajeDescuento, unaFechaInicio, unaFechaFin);
             Controller.RegistrarPromocion(promocion);
             NavigationManager.NavigateTo("/admin/promocion");

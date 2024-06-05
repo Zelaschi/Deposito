@@ -1,6 +1,7 @@
 ﻿
 
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository.SQL
 {
@@ -16,7 +17,7 @@ namespace Repository.SQL
         {
             _repositorio.Reservas.Add(reserva);
             _repositorio.SaveChanges();
-            return _repositorio.Reservas.FirstOrDefault(r => r.ReservaId == reserva.ReservaId);
+            return _repositorio.Reservas.Include(d => d.Deposito).Include(c => c.Cliente).Include(p => p.Pago).Include(pr => pr.PromocionAplicada).FirstOrDefault(r => r.ReservaId == reserva.ReservaId);
         }
 
         public void Delete(int id)
@@ -28,12 +29,12 @@ namespace Repository.SQL
 
         public Reserva? Find(Func<Reserva, bool> filter)
         {
-            return _repositorio.Reservas.FirstOrDefault(filter);
+            return _repositorio.Reservas.Include(d => d.Deposito).Include(c => c.Cliente).Include(p => p.Pago).Include(pr => pr.PromocionAplicada).FirstOrDefault(filter);
         }
 
         public IList<Reserva> FindAll()
         {
-            return _repositorio.Reservas.ToList();
+            return _repositorio.Reservas.Include(d => d.Deposito).Include(c => c.Cliente).Include(p => p.Pago).Include(pr => pr.PromocionAplicada).ToList();
         }
 
         public Reserva? Update(Reserva reservaActualizada)

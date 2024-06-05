@@ -1,0 +1,29 @@
+﻿@page "/admin/reserva/seleccionar-fechas"
+
+<PageTitle>Seleccionar Fechas</PageTitle>
+
+@inject NavigationManager NavigationManager
+
+<h1>Seleccionar Fechas para Reserva</h1>
+<form>
+    <div class="form-group m-2">
+        <label for="fechaDesde">Fecha Desde:</label>
+        <input type="date" class="form-control" id="fechaDesde" @bind="unaFechaDesde" />
+    </div>
+    <div class="form-group m-2">
+        <label for="fechaHasta">Fecha Hasta:</label>
+        <input type="date" class="form-control" id="fechaHasta" @bind="unaFechaHasta" />
+    </div>
+    <button type="button" class="btn btn-primary m-2" @onclick="MostrarDepositos">Mostrar depósitos disponibles</button>
+</form>
+
+@code {
+    private DateTime unaFechaDesde = DateTime.Today;
+    private DateTime unaFechaHasta = DateTime.Today;
+
+    private void MostrarDepositos()
+    {
+        var url = $"/admin/reserva/mostrar-depositos/{unaFechaDesde.ToString("yyyy-MM-dd")}/{unaFechaHasta.ToString("yyyy-MM-dd")}";
+        NavigationManager.NavigateTo(url);
+    }
+}

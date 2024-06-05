@@ -11,7 +11,7 @@ namespace Domain
         public int PagoId { get; set; }
         public int ReservaId { get; set; }
         public Reserva Reserva { get; set; }
-        public string EstadoPago { get; set; } = "Reservado";
+        public string EstadoPago { get; set; } = "Pendiente";
         public Pago() { }
     }
 }

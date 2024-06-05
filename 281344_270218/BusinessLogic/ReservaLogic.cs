@@ -38,11 +38,14 @@ namespace BusinessLogic
         }
         public void AceptarReserva(Reserva reservaParametro) 
         {
-            reservaParametro.Pago.EstadoPago = "Capturado";
             reservaParametro.Estado = "Aceptada";
+            reservaParametro.Pago.EstadoPago = "Capturado";
             _repository.Update(reservaParametro);
         }
-        
+        public void PagarReserva(Reserva reservaParametro) {
+            reservaParametro.Pago.EstadoPago = "Reservado";
+            _repository.Update(reservaParametro);
+        }
         public void RechazarReserva(Reserva reservaParametro)
         {
             _repository.DesasociarPago(reservaParametro);
