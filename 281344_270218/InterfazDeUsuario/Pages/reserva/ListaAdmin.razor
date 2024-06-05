@@ -38,19 +38,26 @@
                 <td>@reserva.Id</td>
                 <td>@reserva.FechaDesde.ToString("MM/dd/yyyy")</td>
                 <td>@reserva.FechaHasta.ToString("MM/dd/yyyy")</td>
-                <td>@reserva.Deposito.Id</td>
+                <td>@reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
                 <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>
                 <td>@reserva.Cliente.NombreYApellido</td>
                 <td>
-                    @if (reserva.Estado == "Pendiente")
+                    @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
                     {
-                        <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
-                        <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
-                        <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
-                        @if (!datosCorrectos)
+                        <p>Pago pendiente</p>
+                    }
+                    else
+                    {
+                        @if (reserva.Estado == "Pendiente")
                         {
-                            <p class="text-danger">@mensajeError</p>
+                            <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
+                            <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
+                            <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
+                            @if (!datosCorrectos)
+                            {
+                                <p class="text-danger">@mensajeError</p>
+                            }
                         }
                     }
                 </td>

@@ -83,7 +83,10 @@ public class DepositoContext : DbContext
                   .OnDelete(DeleteBehavior.Cascade);
 
         });
-        modelBuilder.Entity<Pago>().HasKey(p => p.PagoId);
+        modelBuilder.Entity<Pago>(entity =>
+        {
+            entity.HasKey(p => p.PagoId);
+        });
 
         modelBuilder.Entity<Deposito>(entity =>
         {

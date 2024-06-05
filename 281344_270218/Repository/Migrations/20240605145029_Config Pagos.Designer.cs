@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240605134808_Config Pagos")]
+    [Migration("20240605145029_Config Pagos")]
     partial class ConfigPagos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,6 +198,9 @@ namespace Repository.Migrations
 
                     b.Property<string>("JustificacionRechazo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PagoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Precio")
                         .HasColumnType("int");

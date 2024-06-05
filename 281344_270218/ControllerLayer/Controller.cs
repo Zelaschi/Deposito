@@ -306,6 +306,7 @@ namespace ControllerLayer
             DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.DepositoId, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
 
             DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.ReservaId, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
+            reservaRetorno.Pago = new DTOPago(reservaEncontrada.Pago.PagoId, reservaEncontrada.Pago.EstadoPago);
             reservaRetorno.Estado = reservaEncontrada.Estado;
 
             return reservaRetorno; 
@@ -317,12 +318,24 @@ namespace ControllerLayer
             foreach (var reserva in Reservas)
             {
                 DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
                 DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
                 reservaAuxiliar.Estado = reserva.Estado;
                 DTOReservas.Add(reservaAuxiliar);
             }
             return DTOReservas;
+        }
+        public void PagarReserva(DTOReserva DTOReservaParametro) {
+            try
+            {
+                Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+                _reservaLogic.PagarReserva(ReservaEncontrada);
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public void AceptarReserva(DTOReserva DTOReservaParametro)
@@ -354,8 +367,9 @@ namespace ControllerLayer
                 if (reserva.Cliente.Mail.Equals(aDTOCliente.Mail))
                 {
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
                     DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                    reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
                     reservaAuxiliar.Estado = reserva.Estado;
                     DTOReservas.Add(reservaAuxiliar);
                 }
@@ -380,6 +394,11 @@ namespace ControllerLayer
                     return true;
                 }
                 Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
+                if (aCliente == null)
+                {
+                     throw new Exception("Cliente no encontrado!");
+
+                }
                 if (Mail == aCliente.Mail && Pwd == aCliente.Password) {
                     return true;
                 }

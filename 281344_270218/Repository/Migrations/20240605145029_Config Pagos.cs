@@ -116,7 +116,8 @@ namespace Repository.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JustificacionRechazo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    PromocionId = table.Column<int>(type: "int", nullable: true)
+                    PromocionId = table.Column<int>(type: "int", nullable: true),
+                    PagoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
