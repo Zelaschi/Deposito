@@ -77,8 +77,9 @@ namespace Domain
         }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
-            if (!ValidarFechaInicioSeaAnteriorAFechaFin( disponibleDesde,  disponibleHasta)) {
-                throw new ArgumentException("La fecha de disponible desde debe ser anterior a disponible hasta.");
+            if (!ValidarFechaInicioSeaAnteriorAFechaFin(disponibleDesde, disponibleHasta))
+            {
+                throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
             DepositoId = 0;
             Area = area;
