@@ -70,7 +70,6 @@ namespace Domain
                 }
             }
         }
-        //inicio, fin
         public List<FechasNoDisponible> fechasNoDisponibles { get; set; }
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
