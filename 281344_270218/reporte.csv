@@ -1,0 +1,2 @@
+DEPOSITO,RESERVA,PAGO
+ID: 2, Nombre: depo, Area: C, Tamanio: Grande, Climatizacion: True,ID: 1, Desde: 7/6/2024 0:00:00, Hasta: 12/6/2024 0:00:00, Precio: 180, Estado: Aceptada, Estado del pago: Capturado

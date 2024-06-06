@@ -10,9 +10,15 @@ namespace BusinessLogic
 {
     public class ExportadorTXT : IExportador
     {
-        public void Exportar(List<Reserva> reservas)
+        public void Exportar(IList<Reserva> reservas)
         {
-            using (StreamWriter writer = new StreamWriter("../reporte.txt"))
+            //string path = Path.Combine(AppContext.BaseDirectory, "Reportes", "reporte.csv");
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string reportesPath = Path.Combine(desktopPath, "Reportes");
+            Directory.CreateDirectory(reportesPath);
+            //Directory.CreateDirectory(Path.GetDirectoryName(path));
+            string path = Path.Combine(reportesPath, "reporte.txt");
+            using (StreamWriter writer = new StreamWriter(path))
             {
                 writer.WriteLine("DEPOSITO\tRESERVA\tPAGO");
                 foreach (var reserva in reservas)

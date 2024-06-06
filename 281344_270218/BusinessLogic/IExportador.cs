@@ -6,6 +6,6 @@ namespace BusinessLogic
 {
     public interface IExportador 
     {
-        void Exportar(List<Reserva> reservas);
+        void Exportar(IList<Reserva> reservas);
     }
 }
