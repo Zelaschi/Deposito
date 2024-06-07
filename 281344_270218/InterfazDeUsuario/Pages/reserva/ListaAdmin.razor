@@ -150,6 +150,11 @@
 
     private void GenerarReporte()
     {
+        datosCorrectos = true;
+        reporteGenerado = false;
+        mensajeError = string.Empty;
+        mensajeReporteGenerado = string.Empty;
+
         if (string.IsNullOrEmpty(unFormato) || unFormato == "Seleccione un formato")
         {
             mensajeError = "Seleccione un formato para el reporte";
