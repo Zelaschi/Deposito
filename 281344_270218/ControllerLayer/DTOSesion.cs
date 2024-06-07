@@ -4,7 +4,8 @@ namespace ControllerLayer
 {
     public class DTOSesion
     {
-        public string SesionMail { get; set; } = "hola";
+        public bool logIn { get; set; }
+        public string SesionMail { get; set; }
         public bool esAdministrador { get; set; } = false;
     }
 }

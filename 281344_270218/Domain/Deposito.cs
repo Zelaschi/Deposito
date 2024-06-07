@@ -73,7 +73,7 @@ namespace Domain
         public List<FechasNoDisponible> fechasNoDisponibles { get; set; }
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
-            return fechaDesde.CompareTo(fechaHasta) < 0;
+             return fechaDesde < fechaHasta;
         }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
