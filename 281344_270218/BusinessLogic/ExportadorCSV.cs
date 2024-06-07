@@ -11,11 +11,14 @@ namespace BusinessLogic
     {
         public void Exportar(IList<Reserva> reservas)
         {
-            //string path = Path.Combine(AppContext.BaseDirectory, "Reportes", "reporte.csv");
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string reportesPath = Path.Combine(desktopPath, "Reportes");
+            //Ruta escritorio
+            //string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //string reportesPath = Path.Combine(desktopPath, "Reportes");
+            //Directory.CreateDirectory(reportesPath);
+            //string path = Path.Combine(reportesPath, "reporte.csv");
+            string currentDirectory = AppContext.BaseDirectory;
+            string reportesPath = Path.Combine(currentDirectory, "..", "..", "..", "..", "..", "Reportes");
             Directory.CreateDirectory(reportesPath);
-            //Directory.CreateDirectory(Path.GetDirectoryName(path));
             string path = Path.Combine(reportesPath, "reporte.csv");
             using (StreamWriter writer = new StreamWriter(path))
             {
