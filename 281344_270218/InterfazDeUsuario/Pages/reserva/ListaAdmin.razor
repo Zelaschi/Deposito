@@ -2,8 +2,7 @@
 
 <PageTitle>Crear Reserva</PageTitle>
 
-@using BusinessLogic
-@using Domain
+
 @using ControllerLayer
 
 @inject Controller Controller
@@ -36,8 +35,8 @@
         {
             <tr>
                 <td>@reserva.Id</td>
-                <td>@reserva.FechaDesde.ToString("dd/MM/yyyy")</td>
-                <td>@reserva.FechaHasta.ToString("dd/MM/yyyy")</td>
+                <td>@reserva.FechaDesde.ToString("MM/dd/yyyy")</td>
+                <td>@reserva.FechaHasta.ToString("MM/dd/yyyy")</td>
                 <td>@reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
                 <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>

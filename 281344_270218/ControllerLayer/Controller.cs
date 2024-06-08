@@ -322,7 +322,10 @@ namespace ControllerLayer
                 DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                 DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
                 DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                if(reserva.Pago !=  null)
+                {
+                    reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                }
                 reservaAuxiliar.Estado = reserva.Estado;
                 DTOReservas.Add(reservaAuxiliar);
             }
@@ -371,7 +374,10 @@ namespace ControllerLayer
                     DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
                     DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
                     DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                    reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                    if (reserva.Pago != null)
+                    {
+                        reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                    }
                     reservaAuxiliar.Estado = reserva.Estado;
                     DTOReservas.Add(reservaAuxiliar);
                 }
