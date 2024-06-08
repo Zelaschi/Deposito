@@ -1,6 +1,6 @@
 ﻿using Domain;
 
-namespace DomainTest
+namespace Tests.DomainTests
 {
     [TestClass]
     public class DepositoTests

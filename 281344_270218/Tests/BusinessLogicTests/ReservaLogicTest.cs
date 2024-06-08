@@ -6,7 +6,7 @@ using Repository.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 
 
-namespace BusinessLogicTest
+namespace Tests.BusinessLogicTests
 {
     [TestClass]
     public class ReservaLogicTest

@@ -1,6 +1,6 @@
 ﻿using Domain;
 
-namespace DomainTest
+namespace Tests.DomainTests
 {
     public class ClienteTest
     {

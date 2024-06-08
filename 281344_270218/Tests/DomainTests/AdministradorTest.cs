@@ -1,6 +1,6 @@
 using Domain;
 using Newtonsoft.Json.Bson;
-namespace DomainTest
+namespace Tests.DomainTests
 {
     [TestClass]
     public class AdministradorTest
@@ -8,7 +8,8 @@ namespace DomainTest
         private Administrador admin;
 
         [TestInitialize]
-        public void crearAdministradorConParametros() {
+        public void crearAdministradorConParametros()
+        {
             var idTest = 0;
             var nombreYApellidoTest = "Pedro Azambuja";
             var mailTest = "pedroazambuja@gmail.com";
@@ -17,7 +18,8 @@ namespace DomainTest
             admin = new Administrador(idTest, nombreYApellidoTest, mailTest, passwordTest);
         }
         [TestMethod]
-        public void getParametros() {
+        public void getParametros()
+        {
             var idEsperado = 0;
             var nombreYApellidoEsperado = "Pedro Azambuja";
             var mailEsperado = "pedroazambuja@gmail.com";
@@ -25,11 +27,12 @@ namespace DomainTest
 
             Assert.AreEqual(admin.PersonaId, idEsperado);
             Assert.AreEqual(admin.NombreYApellido, nombreYApellidoEsperado);
-            Assert.AreEqual(admin.Mail,mailEsperado);
+            Assert.AreEqual(admin.Mail, mailEsperado);
             Assert.AreEqual(admin.Password, passwordEsperada);
         }
-       [TestMethod]
-        public void testFormatoEmailIncorrecto() {
+        [TestMethod]
+        public void testFormatoEmailIncorrecto()
+        {
             var mailsInvalidos = new List<string> {
                 "invalido@example", // Falta el dominio .com, .org, etc.
                 "invalido@ejemplo com", // Falta el punto entre el nombre del dominio y el dominio

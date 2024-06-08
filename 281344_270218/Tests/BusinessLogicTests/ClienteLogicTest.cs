@@ -4,7 +4,7 @@ using Repository;
 using Repository.Context;
 using Repository.SQL;
 
-namespace BusinessLogicTest
+namespace Tests.BusinessLogicTests
 {
     [TestClass]
     public class ClienteLogicTest

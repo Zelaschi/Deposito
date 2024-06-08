@@ -8,7 +8,7 @@ using Repository.SQL;
 using System.Data;
 
 
-namespace ControllerLayerTest
+namespace Tests.ControllerLayerTests
 {
     [TestClass]
     public class ControllerTest
@@ -43,7 +43,8 @@ namespace ControllerLayerTest
         private DTOReserva aDTOReserva;
 
         [TestInitialize]
-        public void setUp() {
+        public void setUp()
+        {
             _context = _contextFactory.CrearContext();
 
             _clienteRepository = new ClienteRepository(_context);
@@ -130,7 +131,8 @@ namespace ControllerLayerTest
             _controller.LogIn(aDTOCliente.Mail, aDTOCliente.Password);
         }
         [TestMethod]
-        public void EsAdministradorTest() {
+        public void EsAdministradorTest()
+        {
             _controller.RegistrarAdministrador(aDTOAdministrador);
             bool esAdmin = _controller.esAdministrador(aDTOAdministrador.Mail);
             Assert.IsTrue(esAdmin);
@@ -149,7 +151,8 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClienteConMailInvalidoTest() {
+        public void RegistrarClienteConMailInvalidoTest()
+        {
             aDTOCliente.Mail = "mailinvalido";
 
             _controller.RegistrarCliente(aDTOCliente);
@@ -158,7 +161,8 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarClientePasswordIncorrectaTest() {
+        public void RegistrarClientePasswordIncorrectaTest()
+        {
             aDTOCliente.Password = "password";
 
             _controller.RegistrarCliente(aDTOCliente);
@@ -284,7 +288,8 @@ namespace ControllerLayerTest
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void AgregarClienteConMismoMailQueElAdministradorDeErrorTest() {
+        public void AgregarClienteConMismoMailQueElAdministradorDeErrorTest()
+        {
             _controller.RegistrarAdministrador(aDTOAdministrador);
             aDTOCliente.Mail = aDTOAdministrador.Mail;
             _controller.RegistrarCliente(aDTOCliente);
@@ -418,7 +423,8 @@ namespace ControllerLayerTest
 
         //DEPOSITO
         [TestMethod]
-        public void RegistrarDepositoTest() {
+        public void RegistrarDepositoTest()
+        {
             _controller.RegistrarDeposito(aDTODeposito);
 
             Assert.AreEqual(aDTODeposito.Id, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).DepositoId);
@@ -645,7 +651,8 @@ namespace ControllerLayerTest
 
         //RESERVA
         [TestMethod]
-        public void RegistrarReservaDTOTest() {
+        public void RegistrarReservaDTOTest()
+        {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
             _controller.RegistrarReserva(aDTOReserva);
@@ -660,7 +667,8 @@ namespace ControllerLayerTest
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void RegistrarReservaConDatosIncorrectosTest() {
+        public void RegistrarReservaConDatosIncorrectosTest()
+        {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
             DTOReserva DTOReservaIncorrectaTest = new DTOReserva(1, DateTime.Today.AddDays(15), DateTime.Today.AddDays(10), aDTODeposito, aDTOCliente, 1);
@@ -674,7 +682,8 @@ namespace ControllerLayerTest
             _controller.BuscarReservaPorId(1);
         }
         [TestMethod]
-        public void listarTodasLasReservasTest() {
+        public void listarTodasLasReservasTest()
+        {
             _controller.RegistrarCliente(aDTOCliente);
             _controller.RegistrarDeposito(aDTODeposito);
 
@@ -703,7 +712,8 @@ namespace ControllerLayerTest
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
         }
         [TestMethod]
-        public void AceptarReservaQueAgregueFechasNoDisponiblesADeposito() {
+        public void AceptarReservaQueAgregueFechasNoDisponiblesADeposito()
+        {
             _controller.RegistrarCliente(aDTOCliente);
             int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
             aDTODeposito2.Id = nuevoIdDep;
@@ -796,12 +806,13 @@ namespace ControllerLayerTest
             Assert.AreEqual(esAdmin, sesion.EsAdministrador);
         }
         [TestMethod]
-        public void DepositosDisponiblesParaResrvaPorFechaTest() {
+        public void DepositosDisponiblesParaResrvaPorFechaTest()
+        {
             int nuevoId = _controller.RegistrarDeposito(aDTODeposito2);
             aDTODeposito.Id = nuevoId;
             IList<DTODeposito> depositos = _controller.DepositosDisponiblesParaReservaPorFecha(DateTime.Today.AddDays(1), DateTime.Today.AddDays(5));
             Assert.AreEqual(aDTODeposito.Id, depositos.FirstOrDefault().Id);
-        } 
+        }
 
 
 
