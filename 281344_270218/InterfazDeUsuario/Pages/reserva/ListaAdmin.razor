@@ -72,6 +72,15 @@
                 <option value="CSV">CSV</option>
             </select>
         </div>
+        <button type="button" class="btn btn-primary m-2" @onclick="GenerarReporte">Generar Reporte</button>
+        @if (reporteGenerado)
+        {
+            <p class="text-success">@mensajeReporteGenerado</p>
+        }
+        @if (!string.IsNullOrEmpty(mensajeError))
+        {
+            <p class="text-danger">@mensajeError</p>
+        }
     </tbody>
 </table>
 
@@ -84,6 +93,8 @@
     private bool datosCorrectos = true;
     private string mensajeError;
     private string unFormato;
+    private bool reporteGenerado = false;
+    private string mensajeReporteGenerado;
 
     protected override void OnInitialized()
     {
@@ -135,5 +146,33 @@
             mensajeError = e.Message;
         }
 
+    }
+
+    private void GenerarReporte()
+    {
+        datosCorrectos = true;
+        reporteGenerado = false;
+        mensajeError = string.Empty;
+        mensajeReporteGenerado = string.Empty;
+
+        if (string.IsNullOrEmpty(unFormato) || unFormato == "Seleccione un formato")
+        {
+            mensajeError = "Seleccione un formato para el reporte";
+            datosCorrectos = false;
+        }
+        else
+        {
+            try
+            {
+                Controller.GenerarReporteReservas(unFormato);
+                reporteGenerado = true;
+                mensajeReporteGenerado = "Reporte generado correctamente, lo puede ver en la carpeta Reportes";
+            }
+            catch (Exception e)
+            {
+                datosCorrectos = false;
+                mensajeError = e.Message;
+            }
+        }
     }
 }

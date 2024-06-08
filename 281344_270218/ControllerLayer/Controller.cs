@@ -437,5 +437,23 @@ namespace ControllerLayer
             }
             
         }
+
+        public void GenerarReporteReservas(string formato)
+        {
+            IList<Reserva> reservas = _reservaLogic.ListarTodasLasReservas();
+            IExportador exportador;
+            switch(formato.ToUpper())
+            {
+                case "TXT":
+                    exportador = new ExportadorTXT();
+                    break;
+                case "CSV":
+                    exportador = new ExportadorCSV();
+                    break;
+                default:
+                    throw new Exception("Fromato no disponible");
+            }
+            exportador.Exportar(reservas);
+        }
     }
 }
