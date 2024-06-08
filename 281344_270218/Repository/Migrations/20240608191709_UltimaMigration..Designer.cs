@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Repository.Migrations
 {
     [DbContext(typeof(DepositoContext))]
-    [Migration("20240605163756_ultimaMigracion")]
-    partial class ultimaMigracion
+    [Migration("20240608191709_UltimaMigration.")]
+    partial class UltimaMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

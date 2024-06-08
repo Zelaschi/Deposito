@@ -25,7 +25,7 @@ public class DepositoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {       
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDB;User Id=sa;Password=Passw1rd;TrustServerCertificate=true;");
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=DepositoDB;User Id=sa;Password=Passw1rd;");
        
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -111,6 +111,7 @@ public class DepositoContext : DbContext
                 .WithMany(p => p.DepositoPromocions)
                 .HasForeignKey(dp => dp.PromocionId);
         });
+
         modelBuilder.Entity<FechasNoDisponible>()
             .HasOne<Deposito>(d => d.Deposito)
             .WithMany(f => f.fechasNoDisponibles)

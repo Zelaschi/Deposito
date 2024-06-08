@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class ultimaMigracion : Migration
+    public partial class UltimaMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
