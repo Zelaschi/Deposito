@@ -7,7 +7,7 @@ namespace Repository.SQL
 {
     public class ReservaRepository : IRepository<Reserva>
     {
-        private DepositoContext _repositorio;
+        private readonly DepositoContext _repositorio;
         public ReservaRepository(DepositoContext repositorio)
         {
             _repositorio = repositorio;

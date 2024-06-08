@@ -109,13 +109,13 @@ else
             if (Controller.LogIn(email, password))
             {
                 DtoSesion.SesionMail = email;
-                DtoSesion.logIn = true;
+                DtoSesion.LogIn = true;
                 if (Controller.esAdministrador(email))
                 {
-                    DtoSesion.esAdministrador = true;    
+                    DtoSesion.EsAdministrador = true;    
                 }
 
-                if (DtoSesion.esAdministrador)
+                if (DtoSesion.EsAdministrador)
                 {
                     NavigationManager.NavigateTo($"/admin");
 

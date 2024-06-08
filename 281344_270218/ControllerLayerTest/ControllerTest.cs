@@ -139,7 +139,7 @@ namespace ControllerLayerTest
         [TestMethod]
         public void RegistrarClienteTest()
         {
-            DTOCliente clienteTest = new DTOCliente("nombree", "mailvalido@gmail.com", "Password1!");
+            DTOCliente clienteTest = new("nombree", "mailvalido@gmail.com", "Password1!");
             _controller.RegistrarCliente(clienteTest);
 
             Assert.AreEqual(clienteTest.Mail, _clienteLogic.buscarClientePorMail(clienteTest.Mail).Mail);
@@ -790,10 +790,10 @@ namespace ControllerLayerTest
 
             var sesion = new DTOSesion();
             sesion.SesionMail = mail;
-            sesion.esAdministrador = esAdmin;
+            sesion.EsAdministrador = esAdmin;
 
             Assert.AreEqual(mail, sesion.SesionMail);
-            Assert.AreEqual(esAdmin, sesion.esAdministrador);
+            Assert.AreEqual(esAdmin, sesion.EsAdministrador);
         }
         [TestMethod]
         public void DepositosDisponiblesParaResrvaPorFechaTest() {

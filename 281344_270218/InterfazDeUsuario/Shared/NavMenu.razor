@@ -21,9 +21,9 @@
     });
 
 </script>
-@if (DtoSesion.logIn)
+@if (DtoSesion.LogIn)
 {
-    @if (DtoSesion.esAdministrador)
+    @if (DtoSesion.EsAdministrador)
     {
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
             <nav class="flex-column">
@@ -91,7 +91,7 @@ else
     }
     private void CerrarSesion()
     {
-        DtoSesion.esAdministrador = false;
+        DtoSesion.EsAdministrador = false;
         DtoSesion.SesionMail = "";
     }
 }

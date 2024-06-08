@@ -13,7 +13,7 @@ namespace Domain
         public int DepositoId { get; set; }
 
         private string _area;
-        public string? Area
+        public string Area
         {
             get
             {
@@ -33,7 +33,7 @@ namespace Domain
             }
         }
         private string _tamanio;
-        public string? Tamanio
+        public string Tamanio
         {
             get
             {

@@ -8,12 +8,12 @@ namespace Domain
     {
         public int PersonaId { get; set; }
 
-        private bool noVacioONull(string value) {
+        private bool NoVacioONull(string value) {
             return value is null || value.Length == 0;
         }
 
         private string _nombreYApellido;
-        public string? NombreYApellido
+        public string NombreYApellido
         {
             get
             {
@@ -21,7 +21,7 @@ namespace Domain
             }
             set
             {
-                if (noVacioONull(value))
+                if (NoVacioONull(value))
                 {
                     throw new CampoNoPuedeSerVacioNiNull("NombreYApellido no puede ser vacio ni null");
                 }
@@ -35,13 +35,13 @@ namespace Domain
         }
 
         private string _mail;
-        public string? Mail
+        public string Mail
         {
             get { return _mail; }
             set
             {
                 string patronMailCorrecto = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-                if (noVacioONull(value))
+                if (NoVacioONull(value))
                 {
                     throw new CampoNoPuedeSerVacioNiNull("NombreYApellido no puede ser vacio ni null");
 
@@ -58,14 +58,14 @@ namespace Domain
         }
 
         private string _password;
-        public string? Password
+        public string Password
         {
             get { return _password; }
             set
             {
                 string patronContraseniaCorrecta = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-                if (noVacioONull(value))
+                if (NoVacioONull(value))
                 {
                     throw new CampoNoPuedeSerVacioNiNull("Password no puede ser vacio ni null");
                 }
