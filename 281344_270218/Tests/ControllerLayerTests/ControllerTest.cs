@@ -110,6 +110,19 @@ namespace Tests.ControllerLayerTests
         }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
+        public void LoginConClienteNoRegistradoTireExcepcionTest()
+        {
+            _controller.RegistrarAdministrador(aDTOAdministrador);
+            _controller.LogIn(aDTOCliente.Mail, "Password1!");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoginConAdminNoRegistradoTireExcepcionTest()
+        {
+            _controller.LogIn(aDTOCliente.Mail, "Password1!");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void LoginConPasswordIncorrectaAdminTireExcepcionTest()
         {
             _controller.RegistrarAdministrador(aDTOAdministrador);
@@ -278,6 +291,12 @@ namespace Tests.ControllerLayerTests
             var DTOClienteRetorno = _controller.buscarClientePorMail(aDTOCliente.Mail);
 
             Assert.AreEqual(aDTOCliente.Mail, DTOClienteRetorno.Mail);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void BuscarClientePorMailDeErrorAlNoEncontrar() {
+            _controller.buscarClientePorMail("mail");
         }
 
         [ExpectedException(typeof(Exception))]
@@ -474,6 +493,8 @@ namespace Tests.ControllerLayerTests
 
             Assert.AreEqual(promo.PromocionId, depo.mejorPromocionHoy().PromocionId);
         }
+
+
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void AgregarPromocionDosVecesADepositoTest()
@@ -648,6 +669,18 @@ namespace Tests.ControllerLayerTests
 
             _controller.ActualizarPromocion(aDTOPromocion);
         }
+        [ExpectedException(typeof(NullReferenceException))]
+        [TestMethod]
+        public void ActualizarPromocionNoDefinida() {
+            aDTOPromocion.Etiqueta = "nuevaEtiqueta";
+            aDTOPromocion.FechaInicio = DateTime.Today.AddDays(10);
+            aDTOPromocion.FechaFin = DateTime.Today.AddDays(11);
+            aDTOPromocion.PorcentajeDescuento = 40;
+            aDTOPromocion.PromocionId = 1;
+
+            _controller.ActualizarPromocion(aDTOPromocion);
+        }
+
 
         //RESERVA
         [TestMethod]
@@ -710,6 +743,19 @@ namespace Tests.ControllerLayerTests
             DTOReserva DTOReservaEncontrado = _controller.BuscarReservaPorId(aDTOReserva.Id);
 
             Assert.AreEqual(DTOReservaEncontrado.Estado, "Aceptada");
+        }
+        [TestMethod]
+        public void PagarReservaTest()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            _controller.RegistrarDeposito(aDTODeposito2);
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(1);
+            _controller.RegistrarReserva(aDTOReserva);
+            _controller.PagarReserva(aDTOReserva);
+
+            DTOReserva DTOReservaEncontrado = _controller.BuscarReservaPorId(aDTOReserva.Id);
+
+            Assert.AreEqual(DTOReservaEncontrado.Pago.EstadoPago, "Reservado");
         }
         [TestMethod]
         public void AceptarReservaQueAgregueFechasNoDisponiblesADeposito()
@@ -801,9 +847,11 @@ namespace Tests.ControllerLayerTests
             var sesion = new DTOSesion();
             sesion.SesionMail = mail;
             sesion.EsAdministrador = esAdmin;
+            sesion.LogIn = true;
 
             Assert.AreEqual(mail, sesion.SesionMail);
             Assert.AreEqual(esAdmin, sesion.EsAdministrador);
+            Assert.IsTrue(sesion.LogIn);
         }
         [TestMethod]
         public void DepositosDisponiblesParaResrvaPorFechaTest()
@@ -813,6 +861,7 @@ namespace Tests.ControllerLayerTests
             IList<DTODeposito> depositos = _controller.DepositosDisponiblesParaReservaPorFecha(DateTime.Today.AddDays(1), DateTime.Today.AddDays(5));
             Assert.AreEqual(aDTODeposito.Id, depositos.FirstOrDefault().Id);
         }
+
 
 
 

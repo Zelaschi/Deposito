@@ -52,8 +52,9 @@
                     return precioDiaDepositoMediano;
                 case "Grande":
                     return precioDiaDepositoGrande;
+                default:
+                    return 0;
             }
-            return 0;
         }
         private double descuentoDependiendoCantidadDeDias(int diferenciaDeDias) 
         {

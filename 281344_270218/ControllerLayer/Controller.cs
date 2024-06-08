@@ -242,11 +242,6 @@ namespace ControllerLayer
             {
                 var promoEncontrada = _promocionLogic.buscarPromocionPorId(IdParametro);
 
-                if (promoEncontrada == null)
-                {
-                    throw new Exception("Promocion no encontrada!");
-                }
-
                 var DTOPromocionRetorno = new DTOPromocion(promoEncontrada.PromocionId, promoEncontrada.Etiqueta, promoEncontrada.PorcentajeDescuento, promoEncontrada.FechaInicio, promoEncontrada.FechaFin);
 
                 return DTOPromocionRetorno;
@@ -254,7 +249,6 @@ namespace ControllerLayer
             catch (NullReferenceException ) {
                 throw new Exception("Promocion no encontrada!");
             }
-            
             
         }
 
@@ -403,7 +397,7 @@ namespace ControllerLayer
                 Cliente aCliente = _clienteLogic.buscarClientePorMail(Mail);
                 if (aCliente == null)
                 {
-                     throw new Exception("Cliente no encontrado!");
+                    throw new Exception("Cliente no encontrado!");
 
                 }
                 if (Mail == aCliente.Mail && Pwd == aCliente.Password) {
@@ -412,9 +406,12 @@ namespace ControllerLayer
                 throw new Exception("Password incorrecta!");
             }
             catch (NullReferenceException)
-            { 
+            {
                 throw new Exception("Cliente no encontrado!");
 
+            }
+            catch (InvalidOperationException e) {
+                throw new Exception(e.Message);
             }
         }
         public bool esAdministrador(string mail) 
