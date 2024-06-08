@@ -22,6 +22,13 @@ namespace DomainTest
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
+        public void DefinirPromocionConParametroDisponibleDesdeAnteriorALaFechaActualDeErrorTest()
+        {
+            new Promocion("promocion abril", 20, DateTime.Now.AddDays(-1), DateTime.Now.AddDays(10));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void Etiqueta21CaracteresTest()
         {
             string etiqueta21Caracteres = "Este es un string sencillo de 21 caracteres";

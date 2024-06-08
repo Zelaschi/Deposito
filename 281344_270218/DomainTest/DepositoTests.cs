@@ -8,10 +8,10 @@ namespace DomainTest
         private Deposito deposito;
 
         [TestInitialize]
-        public void TestInitialize(){
+        public void TestInitialize() {
             deposito = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
         }
-        
+
 
         [TestMethod]
         public void DepositoInicializadoConValoresCorrectos()
@@ -71,5 +71,11 @@ namespace DomainTest
         {
             new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(3), DateTime.Today);
         }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DefinirDepositoConParametroDisponibleDesdeAnteriorALaFechaActualDeErrorTest() {
+            new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(-1), DateTime.Today);
+        }
+
     }
 }
