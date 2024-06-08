@@ -40,11 +40,15 @@
                 <td>@reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
                 <td>@reserva.PrecioReserva</td>
                 <td>@reserva.Estado</td>
-                <td>@reserva.Pago.EstadoPago
-                    <br/>
-                    @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
+                <td>
+                    @if (reserva.Pago != null)
                     {
-                        <button class="btn btn-success btn-sm" @onclick="(() => PagarReserva(reserva))">Pagar</button>
+                        @reserva.Pago.EstadoPago
+                        <br />
+                        @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
+                        {
+                            <button class="btn btn-success btn-sm" @onclick="(() => PagarReserva(reserva))">Pagar</button>
+                        }
                     }
                 </td>
             </tr>
