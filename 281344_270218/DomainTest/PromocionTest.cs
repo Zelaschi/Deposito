@@ -22,7 +22,7 @@ namespace DomainTest
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void DefinirPromocionConParametroDisponibleDesdeAnteriorALaFechaActualDeErrorTest()
+        public void DefinirPromocionConParametroFechaInicioAnteriorALaFechaActualDeErrorTest()
         {
             new Promocion("promocion abril", 20, DateTime.Now.AddDays(-1), DateTime.Now.AddDays(10));
         }
