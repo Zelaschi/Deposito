@@ -7,64 +7,69 @@
 
 @inject Controller Controller
 @inject NavigationManager NavigationManager
+<div class="d-flex flex-column min-vh-80">
+
+    <div class="arriba">
+        <h1>
+            Lista Reservas
+        </h1>
+        <h1>
+            <a href="/admin/reserva/seleccionar-fechas" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
+        </h1>
 
 
-<h1>
-    Lista Reservas
-</h1>
-<h1>
-    <a href="/admin/reserva/seleccionar-fechas" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Crear Reserva</a>
-</h1>
-
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Fecha Desde</th>
-        <th>Fecha Hasta</th>
-        <th>Deposito</th>
-        <th>Precio</th> 
-        <th>Estado</th>
-        <th>Cliente</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-        @foreach(var reserva in reservasRegistradas)
-        {
+        <table class="table">
+            <thead>
             <tr>
-                <td>@reserva.Id</td>
-                <td>@reserva.FechaDesde.ToString("MM/dd/yyyy")</td>
-                <td>@reserva.FechaHasta.ToString("MM/dd/yyyy")</td>
-                <td>@reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
-                <td>@reserva.PrecioReserva</td>
-                <td>@reserva.Estado</td>
-                <td>@reserva.Cliente.NombreYApellido</td>
-                <td>
-                    @if (reserva.Pago != null)
-                    {
-                        @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
-                        {
-                            <p>Pago pendiente</p>
-                        }
-                        else
-                        {
-                            @if (reserva.Estado == "Pendiente")
+                <th>Id Reserva</th>
+                <th>Fecha Desde</th>
+                <th>Fecha Hasta</th>
+                <th>Deposito</th>
+                <th>Precio</th> 
+                <th>Estado</th>
+                <th>Cliente</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach(var reserva in reservasRegistradas)
+                {
+                    <tr>
+                        <td>@reserva.Id</td>
+                        <td>@reserva.FechaDesde.ToString("dd/MM/yyyy")</td>
+                        <td>@reserva.FechaHasta.ToString("dd/MM/yyyy")</td>
+                        <td>Nombre: @reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
+                        <td>@reserva.PrecioReserva</td>
+                        <td>@reserva.Estado</td>
+                        <td>@reserva.Cliente.NombreYApellido</td>
+                        <td>
+                            @if (reserva.Pago != null)
                             {
-                                <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
-                                <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
-                                <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
-                                @if (!datosCorrectos)
+                                @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
                                 {
-                                    <p class="text-danger">@mensajeError</p>
+                                    <p>Pago pendiente</p>
+                                }
+                                else
+                                {
+                                    @if (reserva.Estado == "Pendiente")
+                                    {
+                                        <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
+                                        <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
+                                        <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
+                                        @if (!datosCorrectos)
+                                        {
+                                            <p class="text-danger">@mensajeError</p>
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
-                </td>
-            </tr>
-        }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="abajo">
         <div class="form-group m-2">
             <label for="title">Generar Reporte de reservas</label>
             <br />
@@ -83,9 +88,20 @@
         {
             <p class="text-danger">@mensajeError</p>
         }
-    </tbody>
-</table>
-
+    </div>
+</div>
+<style>
+    .arriba{
+        flex:1;
+    }
+    .abajo {
+        margin-top: 20px; 
+        width: 33.33%;
+        background-color: #f8f9fa; /* Fondo claro para distinguir el div */
+        padding: 1rem;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
 
 
 @code {

@@ -74,7 +74,25 @@ namespace Tests.DomainTests
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void DefinirDepositoConParametroDisponibleDesdeAnteriorALaFechaActualDeErrorTest() {
-            new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(-1), DateTime.Today);
+            new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(-1), DateTime.Today.AddDays(10));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DefinirDepositoConTamanioIncorrectoTest() {
+            new Deposito("DepositoPrueba", "A", "Enorme", true, DateTime.Today.AddDays(0), DateTime.Today.AddDays(10));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidarFechasBoolConFechasQueDeErrorTest() { 
+            Deposito depo = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
+            depo.validarDisponibilidadBool(DateTime.Now.AddDays(2), DateTime.Now.AddDays(1));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AgregarFechasNoDisponibleConFechasQueDeErrorTest()
+        {
+            Deposito depo = new Deposito("Nombre", "A", "Grande", true, DateTime.Now, DateTime.Now.AddDays(20));
+            depo.agregarFechaNoDisponible(DateTime.Now.AddDays(2), DateTime.Now.AddDays(1));
         }
 
     }

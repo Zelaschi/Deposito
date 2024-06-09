@@ -135,5 +135,11 @@ namespace Tests.BusinessLogicTests
             Assert.AreEqual("Rechazada", reservaActualizada.Estado);
             Assert.IsNull(reservaActualizada.Pago);
         }
+        [TestMethod]
+        public void PagarReserva() {
+            _reservaLogic.AgregarReserva(reserva);
+            _reservaLogic.PagarReserva(reserva);
+            Assert.AreEqual(reserva.Pago.EstadoPago, "Reservado");
+        }
     }
 }
