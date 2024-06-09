@@ -94,8 +94,8 @@ namespace Domain
             Nombre = nombre;
             fechasNoDisponibles = new List<FechasNoDisponible>
             {
-                new FechasNoDisponible(DateTime.MinValue, disponibleDesde),
-                new FechasNoDisponible(disponibleHasta, DateTime.MaxValue)
+                new FechasNoDisponible(DateTime.MinValue, disponibleDesde.AddDays(-1)),
+                new FechasNoDisponible(disponibleHasta.AddDays(1), DateTime.MaxValue)
             };
         }
 

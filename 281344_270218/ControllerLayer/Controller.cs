@@ -259,11 +259,11 @@ namespace ControllerLayer
             try
             {
                 Promocion promocion = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
-
                 promocion.Etiqueta = DTOPromocionParametro.Etiqueta;
                 promocion.FechaInicio = DTOPromocionParametro.FechaInicio;
                 promocion.FechaFin = DTOPromocionParametro.FechaFin;
                 promocion.PorcentajeDescuento = DTOPromocionParametro.PorcentajeDescuento;
+                _promocionLogic.ActualizarInfoPromocion( promocion );
             }
             catch (ArgumentException e)
             {

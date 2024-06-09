@@ -97,7 +97,8 @@ public class DepositoContext : DbContext
             entity.Property(d => d.Nombre).IsRequired();
             entity.HasMany(d => d.fechasNoDisponibles) // Nombre de la propiedad de navegación en la clase Deposito
                 .WithOne(f => f.Deposito)            // Propiedad de navegación en la clase FechasNoDisponible
-                .HasForeignKey(f => f.DepositoId);
+                .HasForeignKey(f => f.DepositoId)
+                .OnDelete(DeleteBehavior.Cascade); ;
         });
         modelBuilder.Entity<DepositoPromocion>(entity =>
         {
