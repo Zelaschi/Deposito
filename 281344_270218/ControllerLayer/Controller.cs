@@ -120,6 +120,7 @@ namespace ControllerLayer
             try
             {
                 Deposito aDeposito = new Deposito(aDTODeposito.Nombre, aDTODeposito.Area, aDTODeposito.Tamanio, aDTODeposito.Climatizacion, aDTODeposito.DisponibleDesde, aDTODeposito.DisponibleHasta);
+                aDeposito.ValidarFechaInicioNoSeaAnteriorALaDeHoy(aDTODeposito.DisponibleDesde);
                 _depositoLogic.AddDeposito(aDeposito);
                 return aDeposito.DepositoId;
             }
@@ -196,6 +197,7 @@ namespace ControllerLayer
             try
             {
                 Promocion aPromocion = new Promocion(aDTOPromocion.Etiqueta, aDTOPromocion.PorcentajeDescuento, aDTOPromocion.FechaInicio, aDTOPromocion.FechaFin);
+                aPromocion.ValidarFechaInicioNoSeaAnteriorALaDeHoy(aDTOPromocion.FechaInicio);
                 _promocionLogic.AgregarPromocion(aPromocion);
                 return aPromocion.PromocionId;
             }
