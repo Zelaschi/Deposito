@@ -125,5 +125,6 @@ namespace Tests.DomainTests
             reserva.RealizarPago();
             Assert.AreEqual(reserva.Pago.EstadoPago , "Capturado");
         }
+        
     }
 }

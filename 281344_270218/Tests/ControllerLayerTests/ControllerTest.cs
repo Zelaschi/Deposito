@@ -786,7 +786,17 @@ namespace Tests.ControllerLayerTests
             Deposito deposito = _depositoLogic.buscarDepositoPorId(aDTODeposito2.Id);
             Assert.IsFalse(deposito.validarDisponibilidadBool(aDTOReserva.FechaDesde, aDTOReserva.FechaHasta));
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void IntentarRegistrarReservaConFechaInicioAnteriorAHoy()
+        {
+            _controller.RegistrarCliente(aDTOCliente);
+            int nuevoIdDep = _controller.RegistrarDeposito(aDTODeposito2);
+            aDTODeposito2.Id = nuevoIdDep;
+            aDTOReserva.FechaDesde = DateTime.Today.AddDays(-1);
+            _controller.RegistrarReserva(aDTOReserva);
 
+        }
 
         [TestMethod]
         public void RechazarReservaTest()

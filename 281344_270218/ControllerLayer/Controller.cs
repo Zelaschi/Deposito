@@ -281,7 +281,7 @@ namespace ControllerLayer
                 Reserva reservaAAgregar = new Reserva(DTOReservaParametro.FechaDesde, DTOReservaParametro.FechaHasta, depositoEncontrado, clienteEncontrado);
                 Promocion promocionParaReserva = depositoEncontrado.mejorPromocionHoy();
                 reservaAAgregar.PromocionAplicada = promocionParaReserva;
-
+                reservaAAgregar.ValidarFechaInicioNoSeaAnteriorALaDeHoy(DTOReservaParametro.FechaDesde);
                 _reservaLogic.AgregarReserva(reservaAAgregar);
                 return reservaAAgregar.ReservaId;
             }

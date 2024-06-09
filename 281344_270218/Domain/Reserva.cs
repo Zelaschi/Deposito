@@ -33,7 +33,13 @@
         public Promocion? PromocionAplicada { get; set; }
         public int? PagoId { get; set; }
         public Pago? Pago { get; set; }
-
+        public void ValidarFechaInicioNoSeaAnteriorALaDeHoy(DateTime fechaInicio)
+        {
+            if (fechaInicio < DateTime.Today)
+            {
+                throw new ArgumentException("La fecha de inicio debe ser posterior o igual que la actual.");
+            }
+        }
         private bool ValidarFechaInicioSeaAnteriorAFechaFin(DateTime fechaDesde, DateTime fechaHasta)
         {
             return fechaDesde.CompareTo(fechaHasta) <= 0;
