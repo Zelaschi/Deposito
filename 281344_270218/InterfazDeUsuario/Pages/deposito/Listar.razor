@@ -20,6 +20,7 @@
 <table class="table">
     <thead>
     <tr>
+        <th>Nombre</th>
         <th>Id Deposito</th>
         <th>Area</th>
         <th>Tamaño</th>
@@ -31,6 +32,7 @@
         @foreach (var deposito in depositosRegistrados)
         {
             <tr>
+                <td>@deposito.Nombre</td>
                 <td>@deposito.Id</td>
                 <td>@deposito.Area</td>
                 @if (deposito.Tamanio.Equals("Pequenio"))
@@ -42,7 +44,15 @@
                     <td>@deposito.Tamanio</td>
 
                 }
-                <td>@deposito.Climatizacion</td>
+                @if (deposito.Climatizacion)
+                {
+                    <td>Si</td>
+                }
+                else
+                {
+                    <td>No</td>
+
+                }
                 <td>
                     <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito))">Eliminar</button>
                 </td>

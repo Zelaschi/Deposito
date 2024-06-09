@@ -152,6 +152,7 @@ namespace ControllerLayer
             foreach (var deposito in listaDepositos)
             {
                 var DTODeposito = new DTODeposito(deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
+                DTODeposito.Nombre = deposito.Nombre;
                 listaDTODepositos.Add(DTODeposito);
             }
             return listaDTODepositos;
