@@ -445,6 +445,10 @@ namespace ControllerLayer
         public void GenerarReporteReservas(string formato)
         {
             IList<Reserva> reservas = _reservaLogic.ListarTodasLasReservas();
+            if (reservas == null || reservas.Count == 0)
+            {
+                throw new Exception("No se encontraron reservas para generar el reporte.");
+            }
             IExportador exportador;
             switch(formato.ToUpper())
             {

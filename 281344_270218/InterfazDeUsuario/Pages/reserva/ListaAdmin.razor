@@ -84,9 +84,9 @@
         {
             <p class="text-success">@mensajeReporteGenerado</p>
         }
-        @if (!string.IsNullOrEmpty(mensajeError))
+        @if (!string.IsNullOrEmpty(mensajeErrorSinFormato))
         {
-            <p class="text-danger">@mensajeError</p>
+            <p class="text-danger">@mensajeErrorSinFormato</p>
         }
     </div>
 </div>
@@ -110,6 +110,7 @@
     private string unaJustificacion;
     private bool datosCorrectos = true;
     private string mensajeError;
+    private string mensajeErrorSinFormato;
     private string unFormato;
     private bool reporteGenerado = false;
     private string mensajeReporteGenerado;
@@ -170,12 +171,12 @@
     {
         datosCorrectos = true;
         reporteGenerado = false;
-        mensajeError = string.Empty;
+        mensajeErrorSinFormato = string.Empty;
         mensajeReporteGenerado = string.Empty;
 
         if (string.IsNullOrEmpty(unFormato) || unFormato == "Seleccione un formato")
         {
-            mensajeError = "Seleccione un formato para el reporte";
+            mensajeErrorSinFormato = "Seleccione un formato para el reporte";
             datosCorrectos = false;
         }
         else
