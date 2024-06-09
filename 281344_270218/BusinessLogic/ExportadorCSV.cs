@@ -17,7 +17,7 @@ namespace BusinessLogic
             //Directory.CreateDirectory(reportesPath);
             //string path = Path.Combine(reportesPath, "reporte.csv");
             string currentDirectory = AppContext.BaseDirectory;
-            string reportesPath = Path.Combine(currentDirectory, "..", "..", "..", "..", "..", "Reportes");
+            string reportesPath = Path.Combine(currentDirectory, "..", "Reportes");
             Directory.CreateDirectory(reportesPath);
             string path = Path.Combine(reportesPath, "reporte.csv");
             using (StreamWriter writer = new StreamWriter(path))
@@ -27,7 +27,7 @@ namespace BusinessLogic
                 {
                     var depositoDatos = $"ID: {reserva.Deposito.DepositoId}, Nombre: {reserva.Deposito.Nombre}, Area: {reserva.Deposito.Area}, Tamanio: {reserva.Deposito.Tamanio}, Climatizacion: {reserva.Deposito.Climatizacion}";
                     var reservaDatos = $"ID: {reserva.ReservaId}, Desde: {reserva.FechaDesde}, Hasta: {reserva.FechaHasta}, Precio: {reserva.Precio}, Estado: {reserva.Estado}";
-                    if (reserva.Pago.EstadoPago != null)
+                    if (reserva.Pago != null)
                     {
                         writer.WriteLine($"{depositoDatos},{reservaDatos}, Estado del pago: {reserva.Pago.EstadoPago}");
                     }
