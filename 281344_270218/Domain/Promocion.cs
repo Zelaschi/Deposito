@@ -41,7 +41,7 @@
         {
             return fechaInicio < fechaFin ;
         }
-        private void ValidarFechaInicioNoSeaAnteriorALaDeHoy(DateTime fechaInicio)
+        public void ValidarFechaInicioNoSeaAnteriorALaDeHoy(DateTime fechaInicio)
         {
             if (fechaInicio < DateTime.Today)
             {
@@ -50,7 +50,6 @@
         }
         public Promocion(string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
         {
-            ValidarFechaInicioNoSeaAnteriorALaDeHoy(fechaInicio);
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }
@@ -63,7 +62,6 @@
         }
         public Promocion(int id, string etiqueta, int porcentajeDescuento, DateTime fechaInicio, DateTime fechaFin)
         {
-            ValidarFechaInicioNoSeaAnteriorALaDeHoy(fechaInicio);
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(fechaInicio, fechaFin)){
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
             }

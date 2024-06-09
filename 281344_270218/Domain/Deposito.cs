@@ -75,14 +75,13 @@ namespace Domain
         {
              return fechaDesde < fechaHasta;
         }
-        private void ValidarFechaInicioNoSeaAnteriorALaDeHoy(DateTime fechaInicio) {
+        public void ValidarFechaInicioNoSeaAnteriorALaDeHoy(DateTime fechaInicio) {
             if (fechaInicio < DateTime.Today) {
                 throw new ArgumentException("La fecha de inicio debe ser posterior o igual que la actual.");
             }
         }
         public Deposito(string nombre, string area, string tamanio, bool climatizacion, DateTime disponibleDesde, DateTime disponibleHasta)
         {
-            ValidarFechaInicioNoSeaAnteriorALaDeHoy(disponibleDesde);
             if (!ValidarFechaInicioSeaAnteriorAFechaFin(disponibleDesde, disponibleHasta))
             {
                 throw new ArgumentException("La fecha de inicio debe ser anterior que la fecha de fin.");
