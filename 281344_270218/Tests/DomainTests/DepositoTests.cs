@@ -71,11 +71,7 @@ namespace Tests.DomainTests
         {
             new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(3), DateTime.Today);
         }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void DefinirDepositoConParametroDisponibleDesdeAnteriorALaFechaActualDeErrorTest() {
-            new Deposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(-1), DateTime.Today.AddDays(10));
-        }
+        
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void DefinirDepositoConTamanioIncorrectoTest() {

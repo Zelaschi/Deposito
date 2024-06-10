@@ -452,6 +452,13 @@ namespace Tests.ControllerLayerTests
             Assert.AreEqual(aDTODeposito.Climatizacion, _depositoLogic.buscarDepositoPorId(aDTODeposito.Id).Climatizacion);
         }
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void DefinirDepositoConParametroDisponibleDesdeAnteriorALaFechaActualDeErrorTest()
+        {
+            var depoAAgregar = new DTODeposito("DepositoPrueba", "A", "Grande", true, DateTime.Today.AddDays(-1), DateTime.Today.AddDays(10));
+            _controller.RegistrarDeposito(depoAAgregar);
+        }
+        [TestMethod]
         public void RegistrarDepositoDevuelvaIdTest()
         {
             int idRetorno = _controller.RegistrarDeposito(aDTODeposito);
@@ -580,7 +587,13 @@ namespace Tests.ControllerLayerTests
             Assert.AreEqual(aDTOPromocion.FechaInicio, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaInicio);
             Assert.AreEqual(aDTOPromocion.FechaFin, _promocionLogic.buscarPromocionPorId(aDTOPromocion.PromocionId).FechaFin);
         }
-
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void DefinirPromocionConParametroFechaInicioAnteriorALaFechaActualDeErrorTest()
+        {
+            var promoAAgregar = new DTOPromocion(0, "promocion abril", 20, DateTime.Now.AddDays(-1), DateTime.Now.AddDays(10));
+            _controller.RegistrarPromocion(promoAAgregar);
+        }
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void RegistrarPromocionEtiquetaMayorA20Test()

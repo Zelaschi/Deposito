@@ -20,12 +20,7 @@ namespace Tests.DomainTests
         public void FechaFinOcurreAntesQueFechaInicioTest() {
             Promocion promocion = new Promocion( "promocion abril", 20, DateTime.Now.AddDays(10), DateTime.Now);
         }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void DefinirPromocionConParametroFechaInicioAnteriorALaFechaActualDeErrorTest()
-        {
-            new Promocion("promocion abril", 20, DateTime.Now.AddDays(-1), DateTime.Now.AddDays(10));
-        }
+        
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
