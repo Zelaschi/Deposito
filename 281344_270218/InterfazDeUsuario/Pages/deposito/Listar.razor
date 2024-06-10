@@ -27,34 +27,36 @@
     </tr>
     </thead>
     <tbody>
-        @foreach (var deposito in depositosRegistrados)
-        {
-            <tr>
-                <td>@deposito.Nombre</td>
-                <td>@deposito.Id</td>
-                <td>@deposito.Area</td>
-                @if (deposito.Tamanio.Equals("Pequenio"))
-                {
-                    <td>Pequeño</td>
-                }
-                else
-                {
-                    <td>@deposito.Tamanio</td>
+        @if(depositosRegistrados !=null){
+            @foreach (var deposito in depositosRegistrados)
+            {
+                <tr>
+                    <td>@deposito.Nombre</td>
+                    <td>@deposito.Id</td>
+                    <td>@deposito.Area</td>
+                    @if (deposito.Tamanio.Equals("Pequenio"))
+                    {
+                        <td>Pequeño</td>
+                    }
+                    else
+                    {
+                        <td>@deposito.Tamanio</td>
 
-                }
-                @if (deposito.Climatizacion)
-                {
-                    <td>Si</td>
-                }
-                else
-                {
-                    <td>No</td>
+                    }
+                    @if (deposito.Climatizacion)
+                    {
+                        <td>Si</td>
+                    }
+                    else
+                    {
+                        <td>No</td>
 
-                }
-                <td>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito))">Eliminar</button>
-                </td>
-            </tr>
+                    }
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => BorrarDeposito(deposito))">Eliminar</button>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
@@ -65,13 +67,19 @@
 }
 
 @code {
-    private List<DTODeposito> depositosRegistrados;
+    private List<DTODeposito> depositosRegistrados = null;
     private bool datosCorrectos = true;
     private string mensajeError;
 
     protected override void OnInitialized()
     {
-        depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+        try { 
+            depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
     }
 
     private void BorrarDeposito(DTODeposito deposito)
@@ -80,6 +88,10 @@
         {
             Controller.EliminarDeposito(deposito);
             depositosRegistrados = Controller.listarTodosLosDepositos().ToList();
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch (Exception e)
         {

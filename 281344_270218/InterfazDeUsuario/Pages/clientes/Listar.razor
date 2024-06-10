@@ -19,22 +19,31 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var cliente in clientesRegistrados)
-        {
-            <tr>
-                <td>@cliente.NombreYApellido</td>
-                <td>@cliente.Mail</td>
-            </tr>
+        @if(clientesRegistrados != null){
+            @foreach (var cliente in clientesRegistrados)
+            {
+                <tr>
+                    <td>@cliente.NombreYApellido</td>
+                    <td>@cliente.Mail</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
 
 @code {
-    private List<DTOCliente> clientesRegistrados;
+    private List<DTOCliente> clientesRegistrados = null;
 
     protected override void OnInitialized()
     {
-        clientesRegistrados = Controller.listarTodosLosClientes().ToList();
+        try
+        {
+            clientesRegistrados = Controller.listarTodosLosClientes().ToList();
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
     }
 
 }

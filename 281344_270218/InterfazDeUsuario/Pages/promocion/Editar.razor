@@ -45,11 +45,18 @@
 
     protected override void OnInitialized()
     {
-        promocionActual = Controller.BuscarPromocionPorId(PromocionId);
-        unaEtiqueta = promocionActual.Etiqueta;
-        unPorcentajeDescuento = promocionActual.PorcentajeDescuento;
-        unaFechaInicio = promocionActual.FechaInicio;
-        unaFechaFin = promocionActual.FechaFin;
+        try
+        {
+            promocionActual = Controller.BuscarPromocionPorId(PromocionId);
+            unaEtiqueta = promocionActual.Etiqueta;
+            unPorcentajeDescuento = promocionActual.PorcentajeDescuento;
+            unaFechaInicio = promocionActual.FechaInicio;
+            unaFechaFin = promocionActual.FechaFin;
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
     }
 
     private void GuardarCambios()
@@ -73,6 +80,10 @@
         {
             datosCorrectos = false;
             mensajeError = e.Message;
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch(Exception e)
         {

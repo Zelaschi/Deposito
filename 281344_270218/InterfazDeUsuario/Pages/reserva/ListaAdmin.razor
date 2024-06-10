@@ -32,39 +32,42 @@
             </tr>
             </thead>
             <tbody>
-                @foreach(var reserva in reservasRegistradas)
-                {
-                    <tr>
-                        <td>@reserva.Id</td>
-                        <td>@reserva.FechaDesde.ToString("dd/MM/yyyy")</td>
-                        <td>@reserva.FechaHasta.ToString("dd/MM/yyyy")</td>
-                        <td>Nombre: @reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
-                        <td>@reserva.PrecioReserva</td>
-                        <td>@reserva.Estado</td>
-                        <td>@reserva.Cliente.NombreYApellido</td>
-                        <td>
-                            @if (reserva.Pago != null)
-                            {
-                                @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
+                @if (reservasRegistradas != null) 
+                { 
+                    @foreach(var reserva in reservasRegistradas)
+                    {
+                        <tr>
+                            <td>@reserva.Id</td>
+                            <td>@reserva.FechaDesde.ToString("dd/MM/yyyy")</td>
+                            <td>@reserva.FechaHasta.ToString("dd/MM/yyyy")</td>
+                            <td>Nombre: @reserva.Deposito.Nombre Id: @reserva.Deposito.Id</td>
+                            <td>@reserva.PrecioReserva</td>
+                            <td>@reserva.Estado</td>
+                            <td>@reserva.Cliente.NombreYApellido</td>
+                            <td>
+                                @if (reserva.Pago != null)
                                 {
-                                    <p>Pago pendiente</p>
-                                }
-                                else
-                                {
-                                    @if (reserva.Estado == "Pendiente")
+                                    @if (reserva.Pago.EstadoPago.Equals("Pendiente"))
                                     {
-                                        <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
-                                        <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
-                                        <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
-                                        @if (!datosCorrectos)
+                                        <p>Pago pendiente</p>
+                                    }
+                                    else
+                                    {
+                                        @if (reserva.Estado == "Pendiente")
                                         {
-                                            <p class="text-danger">@mensajeError</p>
+                                            <button class="btn btn-success btn-sm" @onclick="(() => AceptarReserva(reserva))">Aceptar</button>
+                                            <button class="btn btn-danger btn-sm" @onclick="(() => GuardarRechazo(reserva))">Rechazar</button>
+                                            <textarea class="form-control" placeholder="Motivo rechazo" @bind="unaJustificacion" rows="1" cols="3"></textarea>
+                                            @if (!datosCorrectos)
+                                            {
+                                                <p class="text-danger">@mensajeError</p>
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
@@ -105,7 +108,7 @@
 
 
 @code {
-    private List<DTOReserva> reservasRegistradas;
+    private List<DTOReserva> reservasRegistradas = null;
     private bool reservaRechazada = false;
     private string unaJustificacion;
     private bool datosCorrectos = true;
@@ -117,7 +120,14 @@
 
     protected override void OnInitialized()
     {
-        reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        try
+        {
+            reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
     }
 
     private void RechazarReserva(DTOReserva reserva)
@@ -135,6 +145,10 @@
             Controller.AceptarReserva(reserva);
             reserva.Estado = "Aprobada";
             reservasRegistradas = Controller.ListarTodasLasReservas().ToList();
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch (Exception e)
         {
@@ -158,6 +172,10 @@
             Controller.RechazarReserva(reserva);
             reserva.Estado = "Rechazada";
             Controller.justificacionRechazo(unaJustificacion, reserva);
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch (Exception e)
         {
@@ -186,6 +204,10 @@
                 Controller.GenerarReporteReservas(unFormato);
                 reporteGenerado = true;
                 mensajeReporteGenerado = "Reporte generado correctamente, lo puede ver en la carpeta Reportes";
+            }
+            catch (DatabaseExceptionController e)
+            {
+                NavigationManager.NavigateTo("/ErrorBD");
             }
             catch (Exception e)
             {

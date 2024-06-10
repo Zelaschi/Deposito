@@ -1,9 +1,6 @@
 ﻿using Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+using Repository.SQL.Exceptions;
 
 namespace Repository.SQL
 {
@@ -13,43 +10,85 @@ namespace Repository.SQL
 
         public PromocionRepository(DepositoContext repositorio)
         {
-            _repositorio = repositorio;
+            try
+            {
+                _repositorio = repositorio;
+            }
+            catch (SqlException)
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Promocion Add(Promocion promocion)
         {
-            _repositorio.Add(promocion);
-            _repositorio.SaveChanges();
-            return _repositorio.Promociones.FirstOrDefault(p => p.PromocionId == promocion.PromocionId);
+            try
+            {
+                _repositorio.Add(promocion);
+                _repositorio.SaveChanges();
+                return _repositorio.Promociones.FirstOrDefault(p => p.PromocionId == promocion.PromocionId);
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public void Delete(int id)
         {
-            Promocion promocionABorrar = _repositorio.Promociones.FirstOrDefault(p => p.PromocionId == id);
-            _repositorio.Promociones.Remove(promocionABorrar);
-            _repositorio.SaveChanges();
+            try
+            {
+                Promocion promocionABorrar = _repositorio.Promociones.FirstOrDefault(p => p.PromocionId == id);
+                _repositorio.Promociones.Remove(promocionABorrar);
+                _repositorio.SaveChanges();
+            }
+            catch (SqlException)
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Promocion? Find(Func<Promocion, bool> filter)
         {
-            return _repositorio.Promociones.FirstOrDefault(filter);
+            try
+            {
+                return _repositorio.Promociones.FirstOrDefault(filter);
+            }
+            catch (SqlException)
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public IList<Promocion> FindAll()
         {
-            return _repositorio.Promociones.ToList();
+            try
+            {
+                return _repositorio.Promociones.ToList();
+            }
+            catch (SqlException)
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Promocion? Update(Promocion promoActualizada)
         {
-            Promocion promocionEncontrada = Find(p => p.PromocionId == promoActualizada.PromocionId);
-
-            if (promocionEncontrada != null)
+            try
             {
-                _repositorio.Entry(promocionEncontrada).CurrentValues.SetValues(promoActualizada);
-                _repositorio.SaveChanges();
+                Promocion promocionEncontrada = Find(p => p.PromocionId == promoActualizada.PromocionId);
+
+                if (promocionEncontrada != null)
+                {
+                    _repositorio.Entry(promocionEncontrada).CurrentValues.SetValues(promoActualizada);
+                    _repositorio.SaveChanges();
+                }
+                return Find(p => p.PromocionId == promoActualizada.PromocionId);
             }
-            return Find(p => p.PromocionId == promoActualizada.PromocionId);
+            catch (SqlException)
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
     }
 

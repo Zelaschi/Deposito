@@ -1,0 +1,37 @@
+﻿@page "/ErrorBD"
+@layout LoginLayout
+
+<PageTitle>Error Base de Datos</PageTitle>
+
+@using ControllerLayer
+
+@inject Controller Controller
+@inject NavigationManager NavigationManager
+@inject DTOSesion DtoSesion
+
+
+<h1 class="mb-4 mt-5">Error</h1>
+<p>Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker</p>
+<button type="button" class="btn btn-primary m-2" @onclick="VolverAIntentar">Volver a intentar</button>
+
+@code {
+    private void VolverAIntentar()
+    {
+        try
+        {
+            if (Controller.esAdministrador(DtoSesion.SesionMail))
+            {
+                NavigationManager.NavigateTo($"/admin");
+            }
+            else
+            {
+                NavigationManager.NavigateTo($"/cliente");
+            }
+        }
+        catch (DatabaseExceptionController)
+        {
+            NavigationManager.NavigateTo($"/ErrorDB");
+        }
+    }
+
+}

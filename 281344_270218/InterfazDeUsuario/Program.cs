@@ -6,6 +6,7 @@ using BusinessLogic;
 using Domain;
 using ControllerLayer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +18,12 @@ builder.Services.AddDbContextFactory<DepositoContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         providerOptions => providerOptions.EnableRetryOnFailure())
-    );
+    , ServiceLifetime.Singleton);
 
-builder.Services.AddScoped< ClienteRepository>();
-builder.Services.AddScoped< DepositoRepository>();
-builder.Services.AddScoped< PromocionRepository>();
+
+builder.Services.AddScoped<ClienteRepository>();
+builder.Services.AddScoped<DepositoRepository>();
+builder.Services.AddScoped<PromocionRepository>();
 builder.Services.AddScoped<AdministradorRepository>();
 builder.Services.AddScoped<ReservaRepository>();
 

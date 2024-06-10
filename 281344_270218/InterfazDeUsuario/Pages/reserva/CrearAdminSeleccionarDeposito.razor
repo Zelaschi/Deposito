@@ -76,12 +76,17 @@
             depositosDisponibles = Controller.DepositosDisponiblesParaReservaPorFecha(unaFechaDesde, unaFechaHasta).ToList();
             clientesDisponibles = Controller.listarTodosLosClientes().ToList();
         }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
         catch (Exception e)
         {
             datosCorrectos = false;
             mensajeError = e.Message;
         }
         
+
     }
 
     private void GuardarCambios()
@@ -94,6 +99,10 @@
             int idReservaReal = Controller.RegistrarReserva(reserva);
             reserva.Id = idReservaReal;
             NavigationManager.NavigateTo("/admin/reserva");
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch (Exception e)
         {

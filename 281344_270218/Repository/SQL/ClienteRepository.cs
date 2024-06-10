@@ -1,4 +1,6 @@
 ﻿using Domain;
+using Microsoft.Data.SqlClient;
+using Repository.SQL.Exceptions;
 using System.Linq;
 
 namespace Repository.SQL
@@ -9,43 +11,85 @@ namespace Repository.SQL
 
         public ClienteRepository(DepositoContext repositorio)
         {
-            _repositorio = repositorio;
+            try
+            {
+                _repositorio = repositorio;
+            }
+            catch (SqlException)
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Cliente Add(Cliente cliente)
         {
-            _repositorio.Personas.Add(cliente);
-            _repositorio.SaveChanges();
-            return _repositorio.Personas.OfType<Cliente>().FirstOrDefault(c => c.Mail == cliente.Mail);
+            try
+            {
+                _repositorio.Personas.Add(cliente);
+                _repositorio.SaveChanges();
+                return _repositorio.Personas.OfType<Cliente>().FirstOrDefault(c => c.Mail == cliente.Mail);
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public void Delete(int id)
         {
-            Cliente clienteABorrar = _repositorio.Personas.OfType<Cliente>().FirstOrDefault(c => c.PersonaId == id);
-            _repositorio.Personas.Remove(clienteABorrar);
-            _repositorio.SaveChanges();
+            try
+            {
+                Cliente clienteABorrar = _repositorio.Personas.OfType<Cliente>().FirstOrDefault(c => c.PersonaId == id);
+                _repositorio.Personas.Remove(clienteABorrar);
+                _repositorio.SaveChanges();
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Cliente? Find(Func<Cliente, bool> filter)
         {
-            return _repositorio.Personas.OfType<Cliente>().FirstOrDefault(filter);
+            try
+            {
+                return _repositorio.Personas.OfType<Cliente>().FirstOrDefault(filter);
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public IList<Cliente> FindAll()
         {
-            return _repositorio.Personas.OfType<Cliente>().ToList();
+            try
+            {
+                return _repositorio.Personas.OfType<Cliente>().ToList();
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Cliente? Update(Cliente clienteActualizado)
         {
-            Cliente clienteEncontrado = Find(x => x.PersonaId == clienteActualizado.PersonaId);
-
-            if (clienteEncontrado != null)
+            try
             {
-                _repositorio.Entry(clienteEncontrado).CurrentValues.SetValues(clienteActualizado);
-                _repositorio.SaveChanges();
+                Cliente clienteEncontrado = Find(x => x.PersonaId == clienteActualizado.PersonaId);
+
+                if (clienteEncontrado != null)
+                {
+                    _repositorio.Entry(clienteEncontrado).CurrentValues.SetValues(clienteActualizado);
+                    _repositorio.SaveChanges();
+                }
+                return Find(x => x.PersonaId == clienteActualizado.PersonaId);
             }
-            return Find(x => x.PersonaId == clienteActualizado.PersonaId);
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
     }
 }

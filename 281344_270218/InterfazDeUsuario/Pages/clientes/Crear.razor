@@ -47,6 +47,10 @@
             Controller.RegistrarCliente(cliente);
             NavigationManager.NavigateTo("/admin/cliente");
         }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
         catch(Exception e)
         {
             datosCorrectos = false;

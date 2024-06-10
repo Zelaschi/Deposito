@@ -86,6 +86,10 @@ else
             Controller.RegistrarAdministrador(admin);
             NavigationManager.NavigateTo("/");
         }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
         catch (Exception e)
         {
             datosCorrectos = false;
@@ -127,6 +131,10 @@ else
 
                 }
             }
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch (Exception e)
         {

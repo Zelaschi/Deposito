@@ -2,6 +2,7 @@
 using Domain;
 using Domain.Exceptions;
 using System.Linq.Expressions;
+using Repository.SQL.Exceptions;
 
 namespace ControllerLayer
 {
@@ -45,29 +46,48 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
+            catch(DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
 
         }
         public IList<DTOCliente> listarTodosLosClientes()
         {
-            IList<Cliente> listaClientes = _clienteLogic.listarTodosLosClientes();
-            List<DTOCliente> listaDTOClientesRetorno = new List<DTOCliente>();
-            foreach (var cliente in listaClientes)
+            try
             {
-                var DTOcliente = new DTOCliente(cliente.NombreYApellido, cliente.Mail, cliente.Password);
-                listaDTOClientesRetorno.Add(DTOcliente);
+                IList<Cliente> listaClientes = _clienteLogic.listarTodosLosClientes();
+                List<DTOCliente> listaDTOClientesRetorno = new List<DTOCliente>();
+                foreach (var cliente in listaClientes)
+                {
+                    var DTOcliente = new DTOCliente(cliente.NombreYApellido, cliente.Mail, cliente.Password);
+                    listaDTOClientesRetorno.Add(DTOcliente);
+                }
+                return listaDTOClientesRetorno;
             }
-            return listaDTOClientesRetorno;
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public DTOCliente buscarClientePorMail(string mailParametro)
         {
-            var clienteEncontrado = _clienteLogic.buscarClientePorMail(mailParametro);
-            if (clienteEncontrado == null) {
-                throw new Exception("Cliente no encontrado!");
-            }
-            var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
+            try
+            {
+                var clienteEncontrado = _clienteLogic.buscarClientePorMail(mailParametro);
+                if (clienteEncontrado == null)
+                {
+                    throw new Exception("Cliente no encontrado!");
+                }
+                var DTOClienteRetorno = new DTOCliente(clienteEncontrado.NombreYApellido, clienteEncontrado.Mail, clienteEncontrado.Password);
 
-            return DTOClienteRetorno;
+                return DTOClienteRetorno;
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public void RegistrarAdministrador(DTOAdministrador aDTOAdministrador)
@@ -89,6 +109,10 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
         public DTOAdministrador ObtenerAdministrador() 
         {
@@ -103,7 +127,11 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
-            
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
+
         }
         public bool EstaRegistradoAdministrador()
         {
@@ -128,7 +156,10 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
-            
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public void AgregarPromocionADeposito(DTOPromocion aDTOPromocion, DTODeposito aDTODeposito)
@@ -143,53 +174,85 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public IList<DTODeposito> listarTodosLosDepositos()
         {
-            IList<Deposito> listaDepositos = _depositoLogic.GetAll();
-            List<DTODeposito> listaDTODepositos = new List<DTODeposito>();
-            foreach (var deposito in listaDepositos)
+            try
             {
-                var DTODeposito = new DTODeposito(deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
-                DTODeposito.Nombre = deposito.Nombre;
-                listaDTODepositos.Add(DTODeposito);
+                IList<Deposito> listaDepositos = _depositoLogic.GetAll();
+                List<DTODeposito> listaDTODepositos = new List<DTODeposito>();
+                foreach (var deposito in listaDepositos)
+                {
+                    var DTODeposito = new DTODeposito(deposito.DepositoId, deposito.Area, deposito.Tamanio, deposito.Climatizacion);
+                    DTODeposito.Nombre = deposito.Nombre;
+                    listaDTODepositos.Add(DTODeposito);
+                }
+                return listaDTODepositos;
             }
-            return listaDTODepositos;
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public DTODeposito BuscarDepositoPorId(int IdParametro)
         {
-            var depositoEncontrado = _depositoLogic.buscarDepositoPorId(IdParametro);
-
-            if (depositoEncontrado == null)
+            try
             {
-                throw new Exception("Deposito no encontrado!");
+                var depositoEncontrado = _depositoLogic.buscarDepositoPorId(IdParametro);
+
+                if (depositoEncontrado == null)
+                {
+                    throw new Exception("Deposito no encontrado!");
+                }
+
+                var DTODepositoRetorno = new DTODeposito(depositoEncontrado.DepositoId, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
+
+                return DTODepositoRetorno;
             }
-
-            var DTODepositoRetorno = new DTODeposito(depositoEncontrado.DepositoId, depositoEncontrado.Area, depositoEncontrado.Tamanio, depositoEncontrado.Climatizacion);
-
-            return DTODepositoRetorno;
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
         public void validarQueDepositoNoEsteAsociadoAReserva(DTODeposito aDTODeposito) 
         {
-            Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-
-            foreach (var reserva in Reservas)
+            try
             {
-                if (reserva.Deposito.DepositoId == depositoEncontradoPorId.DepositoId)
+                Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(aDTODeposito.Id);
+                IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+
+                foreach (var reserva in Reservas)
                 {
-                    throw new Exception("No se puede eliminar un deposito que esta siendo utilizado para una reseva.");
+                    if (reserva.Deposito.DepositoId == depositoEncontradoPorId.DepositoId)
+                    {
+                        throw new Exception("No se puede eliminar un deposito que esta siendo utilizado para una reseva.");
+                    }
                 }
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
             }
         }
 
         public void EliminarDeposito(DTODeposito DTODepositoParametro)
         {
-            Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
-            validarQueDepositoNoEsteAsociadoAReserva(DTODepositoParametro);
-            _depositoLogic.EliminarDeposito(depositoEncontradoPorId.DepositoId);
+            try
+            {
+                Deposito depositoEncontradoPorId = _depositoLogic.buscarDepositoPorId(DTODepositoParametro.Id);
+                validarQueDepositoNoEsteAsociadoAReserva(DTODepositoParametro);
+                _depositoLogic.EliminarDeposito(depositoEncontradoPorId.DepositoId);
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
 
@@ -206,37 +269,62 @@ namespace ControllerLayer
             {
                 throw new Exception(e.Message);
             }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public IList<DTOPromocion> listarTodasLasPromociones()
         {
-            IList<Promocion> listaPromocines = _promocionLogic.listarTodasLasPromociones();
-            List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
-            foreach (var promocion in listaPromocines)
+            try
             {
-                var DTOpromocion = new DTOPromocion(promocion.PromocionId, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
-                listaDTOPromociones.Add(DTOpromocion);
+                IList<Promocion> listaPromocines = _promocionLogic.listarTodasLasPromociones();
+                List<DTOPromocion> listaDTOPromociones = new List<DTOPromocion>();
+                foreach (var promocion in listaPromocines)
+                {
+                    var DTOpromocion = new DTOPromocion(promocion.PromocionId, promocion.Etiqueta, promocion.PorcentajeDescuento, promocion.FechaInicio, promocion.FechaFin);
+                    listaDTOPromociones.Add(DTOpromocion);
+                }
+                return listaDTOPromociones;
             }
-            return listaDTOPromociones;
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
         private void validarQuePromocionNoEsteEnUso(DTOPromocion DTOPromocionParametro) {
-            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-
-            foreach (var reserva in Reservas)
+            try
             {
-                if (reserva.PromocionAplicada.PromocionId == promocionEncontradaPorId.PromocionId) {
-                    throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");                
+                Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
+                IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+
+                foreach (var reserva in Reservas)
+                {
+                    if (reserva.PromocionAplicada.PromocionId == promocionEncontradaPorId.PromocionId)
+                    {
+                        throw new Exception("No se puede eliminar promocion que esta siendo utilizada para una reseva.");
+                    }
                 }
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
             }
         }
         public void ElminarPromocion(DTOPromocion DTOPromocionParametro)
         {
-            Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
-            validarQuePromocionNoEsteEnUso(DTOPromocionParametro);
+            try
+            {
+                Promocion promocionEncontradaPorId = _promocionLogic.buscarPromocionPorId(DTOPromocionParametro.PromocionId);
+                validarQuePromocionNoEsteEnUso(DTOPromocionParametro);
 
-            _promocionLogic.EliminarPromocion(promocionEncontradaPorId.PromocionId);
-
+                _promocionLogic.EliminarPromocion(promocionEncontradaPorId.PromocionId);
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public DTOPromocion BuscarPromocionPorId(int IdParametro)
@@ -252,7 +340,11 @@ namespace ControllerLayer
             catch (NullReferenceException ) {
                 throw new Exception("Promocion no encontrada!");
             }
-            
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
+
         }
 
         public void ActualizarPromocion(DTOPromocion DTOPromocionParametro)
@@ -269,6 +361,10 @@ namespace ControllerLayer
             catch (ArgumentException e)
             {
                 throw new Exception(e.Message);
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
             }
         }
 
@@ -289,43 +385,63 @@ namespace ControllerLayer
             { 
                 throw new Exception (e.Message);
             }
-            
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
+
         }
         public DTOReserva BuscarReservaPorId(int idParametro)
         {
-            Reserva reservaEncontrada = _reservaLogic.BuscarReservaPorId(idParametro);
-            if (reservaEncontrada == null)
+            try
             {
-                throw new Exception("Reserva no encontrada!");
+                Reserva reservaEncontrada = _reservaLogic.BuscarReservaPorId(idParametro);
+                if (reservaEncontrada == null)
+                {
+                    throw new Exception("Reserva no encontrada!");
+                }
+
+                DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
+                DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.DepositoId, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
+
+                DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.ReservaId, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
+                if (!reservaEncontrada.Estado.Equals("Rechazada"))
+                {
+                    reservaRetorno.Pago = new DTOPago(reservaEncontrada.Pago.PagoId, reservaEncontrada.Pago.EstadoPago);
+                }
+                reservaRetorno.Estado = reservaEncontrada.Estado;
+
+                return reservaRetorno;
             }
-
-            DTOCliente clienteAuxiliar = new DTOCliente(reservaEncontrada.Cliente.NombreYApellido, reservaEncontrada.Cliente.Mail, reservaEncontrada.Cliente.Password);
-            DTODeposito depositoAuxiliar = new DTODeposito(reservaEncontrada.Deposito.DepositoId, reservaEncontrada.Deposito.Area, reservaEncontrada.Deposito.Tamanio, reservaEncontrada.Deposito.Climatizacion);
-
-            DTOReserva reservaRetorno = new DTOReserva(reservaEncontrada.ReservaId, reservaEncontrada.FechaDesde, reservaEncontrada.FechaHasta, depositoAuxiliar, clienteAuxiliar, reservaEncontrada.Precio);
-            if (!reservaEncontrada.Estado.Equals("Rechazada")) {
-                reservaRetorno.Pago = new DTOPago(reservaEncontrada.Pago.PagoId, reservaEncontrada.Pago.EstadoPago);
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
             }
-            reservaRetorno.Estado = reservaEncontrada.Estado;
-
-            return reservaRetorno; 
         }
         public IList<DTOReserva> ListarTodasLasReservas()
         {
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-            List<DTOReserva> DTOReservas = new List<DTOReserva>();
-            foreach (var reserva in Reservas)
+            try
             {
-                DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                if (reserva.Pago != null) {
-                    reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+                List<DTOReserva> DTOReservas = new List<DTOReserva>();
+                foreach (var reserva in Reservas)
+                {
+                    DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
+                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                    if (reserva.Pago != null)
+                    {
+                        reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                    }
+                    reservaAuxiliar.Estado = reserva.Estado;
+                    DTOReservas.Add(reservaAuxiliar);
                 }
-                reservaAuxiliar.Estado = reserva.Estado;
-                DTOReservas.Add(reservaAuxiliar);
+                return DTOReservas;
             }
-            return DTOReservas;
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
         public void PagarReserva(DTOReserva DTOReservaParametro) {
             try
@@ -336,6 +452,10 @@ namespace ControllerLayer
             catch (InvalidOperationException e)
             {
                 throw new Exception(e.Message);
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
             }
         }
 
@@ -352,40 +472,64 @@ namespace ControllerLayer
             catch (InvalidOperationException e) {
                 throw new Exception(e.Message);
             }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
         public void RechazarReserva(DTOReserva DTOReservaParametro)
         {
-            Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
-            _reservaLogic.RechazarReserva(ReservaEncontrada);
+            try
+            {
+                Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+                _reservaLogic.RechazarReserva(ReservaEncontrada);
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
 
         public IList<DTOReserva> listarReservasDeCliente(DTOCliente aDTOCliente) {
-            IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
-            List<DTOReserva> DTOReservas = new List<DTOReserva>();
-            foreach (var reserva in Reservas)
+            try
             {
-                if (reserva.Cliente.Mail.Equals(aDTOCliente.Mail))
+                IList<Reserva> Reservas = _reservaLogic.ListarTodasLasReservas();
+                List<DTOReserva> DTOReservas = new List<DTOReserva>();
+                foreach (var reserva in Reservas)
                 {
-                    DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
-                    DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
-                    DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
-                    if (reserva.Pago != null)
+                    if (reserva.Cliente.Mail.Equals(aDTOCliente.Mail))
                     {
-                        reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                        DTOCliente clienteAuxiliar = new DTOCliente(reserva.Cliente.NombreYApellido, reserva.Cliente.Mail, reserva.Cliente.Password);
+                        DTODeposito depositoAuxiliar = new DTODeposito(reserva.Deposito.Nombre, reserva.Deposito.DepositoId, reserva.Deposito.Area, reserva.Deposito.Tamanio, reserva.Deposito.Climatizacion);
+                        DTOReserva reservaAuxiliar = new DTOReserva(reserva.ReservaId, reserva.FechaDesde, reserva.FechaHasta, depositoAuxiliar, clienteAuxiliar, reserva.Precio);
+                        if (reserva.Pago != null)
+                        {
+                            reservaAuxiliar.Pago = new DTOPago(reserva.Pago.PagoId, reserva.Pago.EstadoPago);
+                        }
+                        reservaAuxiliar.Estado = reserva.Estado;
+                        DTOReservas.Add(reservaAuxiliar);
                     }
-                    reservaAuxiliar.Estado = reserva.Estado;
-                    DTOReservas.Add(reservaAuxiliar);
                 }
+                return DTOReservas;
             }
-            return DTOReservas;
-
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public void justificacionRechazo(String rechazo, DTOReserva DTOReservaParametro)
         {
-            Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
-            ReservaEncontrada.JustificacionRechazo = rechazo;
+            try
+            {
+                Reserva ReservaEncontrada = _reservaLogic.BuscarReservaPorId(DTOReservaParametro.Id);
+                ReservaEncontrada.JustificacionRechazo = rechazo;
+            }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
 
         public bool LogIn(string Mail, string Pwd)
@@ -416,6 +560,10 @@ namespace ControllerLayer
             catch (InvalidOperationException e) {
                 throw new Exception(e.Message);
             }
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
         }
         public bool esAdministrador(string mail) 
         {
@@ -440,29 +588,40 @@ namespace ControllerLayer
             catch (ArgumentException e) {
                 throw new Exception(e.Message);
             }
-            
+            catch (DatabaseException e)
+            {
+                throw new DatabaseExceptionController(e.Message);
+            }
+
         }
 
         public void GenerarReporteReservas(string formato)
         {
-            IList<Reserva> reservas = _reservaLogic.ListarTodasLasReservas();
-            if (reservas == null || reservas.Count == 0)
+            try
             {
-                throw new Exception("No se encontraron reservas para generar el reporte.");
+                IList<Reserva> reservas = _reservaLogic.ListarTodasLasReservas();
+                if (reservas == null || reservas.Count == 0)
+                {
+                    throw new Exception("No se encontraron reservas para generar el reporte.");
+                }
+                IExportador exportador;
+                switch (formato.ToUpper())
+                {
+                    case "TXT":
+                        exportador = new ExportadorTXT();
+                        break;
+                    case "CSV":
+                        exportador = new ExportadorCSV();
+                        break;
+                    default:
+                        throw new Exception("Fromato no disponible");
+                }
+                exportador.Exportar(reservas);
             }
-            IExportador exportador;
-            switch(formato.ToUpper())
+            catch (DatabaseException e)
             {
-                case "TXT":
-                    exportador = new ExportadorTXT();
-                    break;
-                case "CSV":
-                    exportador = new ExportadorCSV();
-                    break;
-                default:
-                    throw new Exception("Fromato no disponible");
+                throw new DatabaseExceptionController(e.Message);
             }
-            exportador.Exportar(reservas);
         }
     }
 }

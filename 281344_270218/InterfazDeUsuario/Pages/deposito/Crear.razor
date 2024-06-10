@@ -49,14 +49,16 @@
     <div class="form-group m2">
         <label class="m-2">Promociones</label>
         <br />
-        @foreach (var promocion in promociones)
-        {
-            <div class="m-2">
-                <input class="form-check-input " type="checkbox" value="" id="Promocion" @bind="@promocionesSeleccionadas[promocion]">
+        @if (promociones != null) {
+            @foreach (var promocion in promociones)
+            {
+                <div class="m-2">
+                    <input class="form-check-input " type="checkbox" value="" id="Promocion" @bind="@promocionesSeleccionadas[promocion]">
                 <label class="form-check-label " for="Promocion">
                     @promocion.Etiqueta
                 </label>
             </div>
+            }
         }
     </div>
 
@@ -78,20 +80,27 @@
     private string nombre;
     private DateTime disponibleDesde;
     private DateTime disponibleHasta;
-    private List<DTOPromocion> promociones;
+    private List<DTOPromocion> promociones =null;
     private Dictionary<DTOPromocion, bool> promocionesSeleccionadas; 
 
     protected override void OnInitialized()
     {
-        promociones = Controller.listarTodasLasPromociones().ToList();
-
-        promocionesSeleccionadas = new Dictionary<DTOPromocion, bool>();
-        foreach (var promocion in promociones)
+        try
         {
-            promocionesSeleccionadas.Add(promocion, false);
+            promociones = Controller.listarTodasLasPromociones().ToList();
+
+            promocionesSeleccionadas = new Dictionary<DTOPromocion, bool>();
+            foreach (var promocion in promociones)
+            {
+                promocionesSeleccionadas.Add(promocion, false);
+            }
+            disponibleDesde = DateTime.Today;
+            disponibleHasta = disponibleDesde;
         }
-        disponibleDesde = DateTime.Today;
-        disponibleHasta = disponibleDesde;
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
 
 
     }
@@ -116,7 +125,10 @@
         {
             datosCorrectos = false;
             mensajeError = e.Message;
-
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
         }
         catch (Exception e)
         {

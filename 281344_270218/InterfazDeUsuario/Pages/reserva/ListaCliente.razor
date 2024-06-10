@@ -66,24 +66,38 @@
 
     protected override void OnInitialized()
     {
-        if (DtoSesion.LogIn)
+        try
         {
-            try
+            if (DtoSesion.LogIn)
             {
-                clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
-                reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("esto no deberia pasar nunca");
+                try
+                {
+                    clienteActual = Controller.buscarClientePorMail(DtoSesion.SesionMail);
+                    reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("esto no deberia pasar nunca");
+                }
             }
         }
-        
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
+
     }
     private void PagarReserva(DTOReserva reserva)
     {
-        Controller.PagarReserva(reserva);
-        reserva.Pago.EstadoPago = "Reservado";
-        reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
+        try
+        {
+            Controller.PagarReserva(reserva);
+            reserva.Pago.EstadoPago = "Reservado";
+            reservasDeCliente = Controller.listarReservasDeCliente(clienteActual).ToList();
+        }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
     }
 }

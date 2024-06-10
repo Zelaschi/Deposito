@@ -1,5 +1,7 @@
 ﻿using Domain;
-using System.Linq;
+using Microsoft.Data.SqlClient;
+using Repository.SQL.Exceptions;
+
 
 namespace Repository.SQL
 {
@@ -9,42 +11,82 @@ namespace Repository.SQL
 
         public AdministradorRepository(DepositoContext repositorio) 
         {
-            _repositorio = repositorio;
+            try {
+                _repositorio = repositorio;
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
         public Administrador Add(Administrador admin)
         {
-            _repositorio.Personas.Add(admin);
-            _repositorio.SaveChanges();
-            return _repositorio.Personas.OfType<Administrador>().FirstOrDefault(c => c.Mail == admin.Mail);
+            try {
+                _repositorio.Personas.Add(admin);
+                _repositorio.SaveChanges();
+                return _repositorio.Personas.OfType<Administrador>().FirstOrDefault(c => c.Mail == admin.Mail);
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public void Delete(int id)
         {
-            Administrador adminABorrar = _repositorio.Personas.OfType<Administrador>().FirstOrDefault(c => c.PersonaId == id);
-            _repositorio.Personas.Remove(adminABorrar);
-            _repositorio.SaveChanges();
+            try
+            {
+                Administrador adminABorrar = _repositorio.Personas.OfType<Administrador>().FirstOrDefault(c => c.PersonaId == id);
+                _repositorio.Personas.Remove(adminABorrar);
+                _repositorio.SaveChanges();
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Administrador? Find(Func<Administrador, bool> filter)
         {
-            return _repositorio.Personas.OfType<Administrador>().FirstOrDefault(filter);
+            try
+            {
+                return _repositorio.Personas.OfType<Administrador>().FirstOrDefault(filter);
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public IList<Administrador> FindAll()
         {
-            return _repositorio.Personas.OfType<Administrador>().ToList();
+            try
+            {
+                return _repositorio.Personas.OfType<Administrador>().ToList();
+            }
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
 
         public Administrador? Update(Administrador administradorActualizado)
         {
-            Administrador adminEncontrado = _repositorio.Personas.OfType<Administrador>().FirstOrDefault();
-
-            if (adminEncontrado != null)
+            try
             {
-                _repositorio.Entry(adminEncontrado).CurrentValues.SetValues(administradorActualizado);
-                _repositorio.SaveChanges();
+                Administrador adminEncontrado = _repositorio.Personas.OfType<Administrador>().FirstOrDefault();
+
+                if (adminEncontrado != null)
+                {
+                    _repositorio.Entry(adminEncontrado).CurrentValues.SetValues(administradorActualizado);
+                    _repositorio.SaveChanges();
+                }
+                return Find(x => x.PersonaId == adminEncontrado.PersonaId);
             }
-            return Find(x => x.PersonaId == adminEncontrado.PersonaId);
+            catch (SqlException )
+            {
+                throw new DatabaseException("Error relacionado con la base de datos, por favor verifique la conexion y el estado del contenedor docker");
+            }
         }
     }
 }

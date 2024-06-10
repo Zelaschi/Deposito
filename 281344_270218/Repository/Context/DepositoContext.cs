@@ -1,6 +1,7 @@
 using Domain;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-
+using System.Net.Sockets;
 
 public class DepositoContext : DbContext
 {
@@ -18,8 +19,8 @@ public class DepositoContext : DbContext
     public DepositoContext(DbContextOptions<DepositoContext> options) : base(options) {
         if (!Database.IsInMemory()) 
         {
-            Database.Migrate();
-        }
+                Database.Migrate();
+         }
 
     }
 

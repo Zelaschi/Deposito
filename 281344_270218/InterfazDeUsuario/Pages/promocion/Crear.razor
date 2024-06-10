@@ -60,6 +60,10 @@
             datosCorrectos = false;
             mensajeError = e.Message;
         }
+        catch (DatabaseExceptionController e)
+        {
+            NavigationManager.NavigateTo("/ErrorBD");
+        }
         catch(Exception e)
         {
             datosCorrectos = false;
