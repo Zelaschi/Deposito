@@ -24,7 +24,7 @@ The goal of this project was to apply newly acquired skills, including Test-Driv
 
 1. Clone the Git repository:
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/Zelaschi/Deposito.git
     ```
 2. Run the Docker container:
     ```bash
