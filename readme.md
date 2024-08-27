@@ -14,16 +14,22 @@ The goal of this project was to apply newly acquired skills, including Test-Driv
 - EntityFramework
 - Git
 
-## How to run 
-###Prerequisites 
--Docker installed and running on your computer
--.NET SDK 6 installed
--Git (optional, but useful)
+## How to Run
 
-1. Clone the git repository
-    -git clone url
-2. Run the Docker container
-    -docker-compose up
-3. Run the program 
-    -Go to Entrega2/Publish
-    -Run InterfazDeUsuario.exe
+### Prerequisites
+
+- Docker installed and running on your computer
+- .NET SDK 6 installed
+- Git (optional, but useful)
+
+1. Clone the Git repository:
+    ```bash
+    git clone <repository_url>
+    ```
+2. Run the Docker container:
+    ```bash
+    docker-compose up
+    ```
+3. Run the application:
+    - Navigate to `Entrega2/Publish`
+    - Execute `InterfazDeUsuario.exe`
